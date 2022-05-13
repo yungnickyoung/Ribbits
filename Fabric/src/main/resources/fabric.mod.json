@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "ribbits",
+  "version": "${version}",
+  "name": "Ribbits",
+  "description": "Adds cute lil froggy bois to swamps!",
+  "authors": [
+    "Joosh",
+    "YUNGNICKYOUNG",
+    "HellionGames"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/ribbits-fabric",
+    "sources": "https://github.com/yungnickyoung/Ribbits",
+    "issues": "https://github.com/yungnickyoung/Ribbits/issues",
+    "discord": "discord.gg/sGwxnFV"
+  },
+  "license": "LGPLv3",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.yungnickyoung.minecraft.ribbits.RibbitsFabric"
+    ],
+    "modmenu": [
+      "com.yungnickyoung.minecraft.ribbits.config.gui.RibbitsModMenu"
+    ]
+  },
+  "mixins": [
+    "ribbits.mixins.json",
+    "ribbits_fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.5",
+    "fabric": ">=0.47.8",
+    "minecraft": ">=1.18.2",
+    "cloth-config2": ">=6.2.57",
+    "java": ">=17",
+    "yungsapi": ">=1.18.2-Fabric-2.0.8"
+  }
+}

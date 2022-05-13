@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.yungnickyoung.minecraft.ribbits.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ribbits.refmap.json",
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

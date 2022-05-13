@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "ribbits:ribbit_village",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 2937541,
+    "spacing": 10,
+    "separation": 5,
+    "type": "minecraft:random_spread"
+  }
+}

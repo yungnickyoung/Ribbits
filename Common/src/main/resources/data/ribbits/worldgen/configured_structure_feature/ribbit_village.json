@@ -1,0 +1,11 @@
+{
+  "type": "ribbits:ribbit_village",
+  "config": {
+    "start_pool": "ribbits:starts",
+    "size": 20
+  },
+  "biomes": "#ribbits:has_structure/has_ribbit_village",
+  "adapt_noise": false,
+  "spawn_overrides": {
+  }
+}
