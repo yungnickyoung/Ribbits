@@ -7,9 +7,6 @@ import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.minecraft.world.InteractionResult;
 
 public class ConfigModuleFabric {
-    public static final String CUSTOM_CONFIG_PATH = "ribbits";
-    public static final String VERSION_PATH = "fabric-1_18_2";
-
     public static void init() {
         AutoConfig.register(RibbitsConfigFabric.class, Toml4jConfigSerializer::new);
         AutoConfig.getConfigHolder(RibbitsConfigFabric.class).registerSaveListener(ConfigModuleFabric::bakeConfig);
