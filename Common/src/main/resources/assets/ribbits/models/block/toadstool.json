@@ -1,0 +1,51 @@
+{
+	"parent": "block/block",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "ribbits:block/toadstool",
+		"particle": "ribbits:block/toadstool"
+	},
+	"elements": [
+		{
+			"from": [5, 0, 5],
+			"to": [11, 4, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4.5, 8]},
+			"faces": {
+				"north": {"uv": [7, 7.75, 8.5, 8.75], "texture": "#0"},
+				"east": {"uv": [0, 8, 1.5, 9], "texture": "#0"},
+				"south": {"uv": [1.5, 8, 3, 9], "texture": "#0"},
+				"west": {"uv": [8.25, 6.5, 9.75, 7.5], "texture": "#0"},
+				"up": {"uv": [8.5, 1.5, 7, 0], "texture": "#0"},
+				"down": {"uv": [8.5, 1.5, 7, 3], "texture": "#0"}
+			}
+		},
+		{
+			"from": [3, 4, 3],
+			"to": [13, 10, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4.5, 8]},
+			"faces": {
+				"north": {"uv": [2.5, 4, 5, 5.5], "texture": "#0"},
+				"east": {"uv": [4.5, 0, 7, 1.5], "texture": "#0"},
+				"south": {"uv": [4.5, 1.5, 7, 3], "texture": "#0"},
+				"west": {"uv": [0, 5, 2.5, 6.5], "texture": "#0"},
+				"up": {"uv": [2.5, 2.5, 0, 0], "texture": "#0"},
+				"down": {"uv": [2.5, 2.5, 0, 5], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "main",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "mushroom",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": [0, 1]
+				}
+			]
+		}
+	]
+}

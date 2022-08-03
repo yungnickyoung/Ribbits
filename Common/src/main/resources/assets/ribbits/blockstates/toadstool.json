@@ -1,0 +1,66 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "ribbits:block/toadstool"
+      },
+      {
+        "model": "ribbits:block/toadstool",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/toadstool",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/toadstool",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/toadstool_2"
+      },
+      {
+        "model": "ribbits:block/toadstool_2",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/toadstool_2",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/toadstool_2",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/toadstool_3"
+      },
+      {
+        "model": "ribbits:block/toadstool_3",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/toadstool_3",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/toadstool_3",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/toadstool_4"
+      },
+      {
+        "model": "ribbits:block/toadstool_4",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/toadstool_4",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/toadstool_4",
+        "y": 270
+      }
+    ]
+  }
+}

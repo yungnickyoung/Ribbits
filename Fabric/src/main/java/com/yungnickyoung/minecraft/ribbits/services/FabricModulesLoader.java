@@ -4,8 +4,8 @@ import com.yungnickyoung.minecraft.ribbits.module.*;
 
 public class FabricModulesLoader implements IModulesLoader {
     @Override
-    public void loadModules() {
-        IModulesLoader.super.loadModules(); // Load common modules
+    public void loadCommonModules() {
+        IModulesLoader.super.loadCommonModules(); // Load common modules
         ConfigModuleFabric.init();
     }
 }

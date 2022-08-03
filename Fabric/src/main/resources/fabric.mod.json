@@ -22,6 +22,9 @@
     "main": [
       "com.yungnickyoung.minecraft.ribbits.RibbitsFabric"
     ],
+    "client": [
+      "com.yungnickyoung.minecraft.ribbits.client.RibbitsFabricClient"
+    ],
     "modmenu": [
       "com.yungnickyoung.minecraft.ribbits.config.gui.RibbitsModMenu"
     ]

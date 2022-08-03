@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "ribbits:block/swamp_lantern"
+    },
+    "hanging=true": {
+      "model": "ribbits:block/swamp_lantern_hanging"
+    }
+  }
+}
