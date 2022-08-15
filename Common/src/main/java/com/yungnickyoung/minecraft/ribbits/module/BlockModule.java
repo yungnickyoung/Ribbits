@@ -22,7 +22,7 @@ public class BlockModule {
                             .of(Material.WOOD, MaterialColor.DIRT)
                             .strength(0.2f)
                             .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("red_toadstool")
     public static AutoRegisterBlock RED_TOADSTOOL = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
@@ -30,7 +30,7 @@ public class BlockModule {
                             .of(Material.WOOD, MaterialColor.COLOR_RED)
                             .strength(0.2f)
                             .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("toadstool_stem")
     public static AutoRegisterBlock TOADSTOOL_STEM = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
@@ -38,7 +38,7 @@ public class BlockModule {
                             .of(Material.WOOD, MaterialColor.WOOL)
                             .strength(0.2f)
                             .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("swamp_lantern")
     public static AutoRegisterBlock SWAMP_LANTERN = AutoRegisterBlock.of(() -> new SwampLanternBlock(
@@ -49,7 +49,7 @@ public class BlockModule {
                             .sound(SoundType.LANTERN)
                             .lightLevel(ignored -> 15)
                             .noOcclusion()))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("giant_lilypad")
     public static AutoRegisterBlock GIANT_LILYPAD = AutoRegisterBlock.of(() -> new GiantLilyPadBlock(
@@ -58,7 +58,7 @@ public class BlockModule {
                             .instabreak()
                             .sound(SoundType.LILY_PAD)
                             .noOcclusion()))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("swamp_daisy")
     public static AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampPlantBlock(
@@ -68,7 +68,7 @@ public class BlockModule {
                             .noCollission()
                             .noOcclusion()
                             .sound(SoundType.BIG_DRIPLEAF)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("toadstool")
     public static AutoRegisterBlock TOADSTOOL = AutoRegisterBlock.of(() -> new SwampPlantBlock(
@@ -77,7 +77,7 @@ public class BlockModule {
                             .instabreak()
                             .noCollission()
                             .sound(SoundType.SMALL_DRIPLEAF)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("mossy_oak_planks")
     public static AutoRegisterBlock MOSSY_OAK_PLANKS = AutoRegisterBlock.of(() -> new Block(
@@ -85,7 +85,7 @@ public class BlockModule {
                             .of(Material.WOOD, MaterialColor.WOOD)
                             .strength(2.0f, 3.0f)
                             .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("umbrella_leaf")
     public static AutoRegisterBlock UMBRELLA_LEAF = AutoRegisterBlock.of(() -> new SwampPlantBlock(
@@ -94,5 +94,5 @@ public class BlockModule {
                             .instabreak()
                             .noCollission()
                             .sound(SoundType.SMALL_DRIPLEAF)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 }
