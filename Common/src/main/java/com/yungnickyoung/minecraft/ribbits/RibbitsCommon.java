@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.ribbits;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.ConfigModule;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
+import com.yungnickyoung.minecraft.yungsapi.api.YungAutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterCreativeTab;
 import net.minecraft.world.item.ItemStack;
@@ -22,6 +23,7 @@ public class RibbitsCommon {
             .iconItem(() -> new ItemStack(BlockModule.RED_TOADSTOOL.get()))
             .build();
     public static void init() {
+        YungAutoRegister.scanPackageForAnnotations("com.yungnickyoung.minecraft.ribbits");
         Services.MODULES.loadCommonModules();
     }
 }

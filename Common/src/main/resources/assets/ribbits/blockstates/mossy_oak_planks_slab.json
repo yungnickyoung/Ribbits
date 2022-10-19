@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ribbits:block/mossy_oak_planks_slab"
+    },
+    "type=double": {
+      "model": "ribbits:block/mossy_oak_planks"
+    },
+    "type=top": {
+      "model": "ribbits:block/mossy_oak_planks_slab_top"
+    }
+  }
+}

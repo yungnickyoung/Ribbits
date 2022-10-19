@@ -16,8 +16,8 @@ repositories {
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
-    modImplementation "com.yungnickyoung.minecraft.yungsapi:YungsApi:${minecraft_version}-Fabric-${yungsapi_version}"
-//    modImplementation files("libs/YungsApi-1.18.2-Fabric-2.1.5.jar")
+//    modImplementation "com.yungnickyoung.minecraft.yungsapi:YungsApi:${minecraft_version}-Fabric-${yungsapi_version}"
+    modImplementation files("libs/YungsApi-1.18.2-Fabric-2.2.5.jar")
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
@@ -53,9 +53,19 @@ loom {
 processResources {
     from project(":Common").sourceSets.main.resources
     inputs.property "version", project.version
+    inputs.property "yungsapi_version", project.yungsapi_version
+    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "mod_description", project.mod_description
+    inputs.property "mod_full_name", project.mod_full_name
+    inputs.property "mod_id", project.mod_id
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand "version": project.version,
+                "yungsapi_version": project.yungsapi_version,
+                "minecraft_version": project.minecraft_version,
+                "mod_description": project.mod_description,
+                "mod_full_name": project.mod_full_name,
+                "mod_id": project.mod_id
     }
 }
 

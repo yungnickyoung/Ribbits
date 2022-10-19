@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_side",
+  "textures": {
+    "texture": "ribbits:block/mossy_oak_planks"
+  }
+}

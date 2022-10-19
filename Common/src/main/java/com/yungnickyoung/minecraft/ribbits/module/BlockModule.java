@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -85,7 +86,11 @@ public class BlockModule {
                             .of(Material.WOOD, MaterialColor.WOOD)
                             .strength(2.0f, 3.0f)
                             .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()))
+            .withSlab()
+            .withStairs()
+            .withFence()
+            .withFenceGate();
 
     @AutoRegister("umbrella_leaf")
     public static AutoRegisterBlock UMBRELLA_LEAF = AutoRegisterBlock.of(() -> new SwampPlantBlock(

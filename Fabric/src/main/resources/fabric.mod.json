@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "ribbits",
+  "id": "${mod_id}",
   "version": "${version}",
-  "name": "Ribbits",
-  "description": "Adds cute lil froggy bois to swamps!",
+  "name": "${mod_full_name}",
+  "description": "${mod_description}",
   "authors": [
     "Joosh",
     "YUNGNICKYOUNG",
@@ -39,6 +39,6 @@
     "minecraft": ">=1.18.2",
     "cloth-config2": ">=6.2.57",
     "java": ">=17",
-    "yungsapi": ">=1.18.2-Fabric-2.0.8"
+    "yungsapi": ">=${minecraft_version}-Fabric-${yungsapi_version}"
   }
 }

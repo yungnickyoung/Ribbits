@@ -9,6 +9,10 @@
   "block.ribbits.swamp_daisy": "Swamp Daisy",
   "block.ribbits.toadstool": "Toadstool",
   "block.ribbits.mossy_oak_planks": "Mossy Oak Planks",
+  "block.ribbits.mossy_oak_planks_stairs": "Mossy Oak Stairs",
+  "block.ribbits.mossy_oak_planks_slab": "Mossy Oak Slab",
+  "block.ribbits.mossy_oak_planks_fence": "Mossy Oak Fence",
+  "block.ribbits.mossy_oak_planks_fence_gate": "Mossy Oak Fence Gate",
   "block.ribbits.umbrella_leaf": "Umbrella Leaf",
 
   "text.autoconfig.ribbits-fabric-1_18_2.title": "Ribbits"
