@@ -4,13 +4,11 @@ import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.block.GiantLilyPadBlock;
 import com.yungnickyoung.minecraft.ribbits.block.SwampPlantBlock;
 import com.yungnickyoung.minecraft.ribbits.block.SwampLanternBlock;
+import com.yungnickyoung.minecraft.ribbits.mixin.DoorBlockAccessor;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterBlock;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HugeMushroomBlock;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -91,6 +89,15 @@ public class BlockModule {
             .withStairs()
             .withFence()
             .withFenceGate();
+
+    @AutoRegister("mossy_oak_door")
+    public static AutoRegisterBlock MOSSY_OAK_DOOR = AutoRegisterBlock.of(() ->
+            DoorBlockAccessor.createDoorBlock(BlockBehaviour.Properties
+                    .of(Material.WOOD, MaterialColor.WOOD)
+                    .strength(3.0f)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()))
+            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("umbrella_leaf")
     public static AutoRegisterBlock UMBRELLA_LEAF = AutoRegisterBlock.of(() -> new SwampPlantBlock(

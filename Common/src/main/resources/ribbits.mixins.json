@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "ribbits.refmap.json",
   "mixins": [
+    "DoorBlockAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

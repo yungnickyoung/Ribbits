@@ -13,5 +13,6 @@ public class RibbitsFabricClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockModule.SWAMP_DAISY.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockModule.TOADSTOOL.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockModule.UMBRELLA_LEAF.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockModule.MOSSY_OAK_DOOR.get(), RenderType.cutout());
     }
 }
