@@ -1,0 +1,69 @@
+{
+  "name": "ribbits:paths",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_straight_0",
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_driveway",
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+//    {
+//      "weight": 1,
+//      "element": {
+//        "location": "ribbits:paths/path_intersection_3",
+//        "processors": "ribbits:main",
+//        "projection": "terrain_matching",
+//        "element_type": "minecraft:single_pool_element"
+//      }
+//    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_intersection_3_driveway",
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_intersection_2_straight",
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_intersection_2_turn",
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+//    {
+//      "weight": 1,
+//      "element": {
+//        "location": "ribbits:paths/path_intersection_4",
+//        "processors": "ribbits:main",
+//        "projection": "terrain_matching",
+//        "element_type": "minecraft:single_pool_element"
+//      }
+//    }
+  ]
+}

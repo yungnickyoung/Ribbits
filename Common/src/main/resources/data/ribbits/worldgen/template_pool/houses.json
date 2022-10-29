@@ -1,13 +1,13 @@
 {
-  "name": "ribbits:starts",
+  "name": "ribbits:houses",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "ribbits:paths/path_straight_0",
+        "location": "ribbits:houses/small_house_red_2",
         "processors": "ribbits:main",
-        "projection": "terrain_matching",
+        "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     }
