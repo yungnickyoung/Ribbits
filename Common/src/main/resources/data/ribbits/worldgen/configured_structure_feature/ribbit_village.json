@@ -2,7 +2,7 @@
   "type": "ribbits:ribbit_village",
   "config": {
     "start_pool": "ribbits:starts",
-    "size": 20
+    "size": 6
   },
   "biomes": "#ribbits:has_structure/ribbit_village",
   "adapt_noise": true,

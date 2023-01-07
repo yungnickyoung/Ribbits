@@ -3,7 +3,7 @@
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
         "location": "ribbits:paths/path_straight_0",
         "processors": "ribbits:main",
@@ -14,25 +14,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "ribbits:paths/path_driveway",
-        "processors": "ribbits:main",
-        "projection": "terrain_matching",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-//    {
-//      "weight": 1,
-//      "element": {
-//        "location": "ribbits:paths/path_intersection_3",
-//        "processors": "ribbits:main",
-//        "projection": "terrain_matching",
-//        "element_type": "minecraft:single_pool_element"
-//      }
-//    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "ribbits:paths/path_intersection_3_driveway",
+        "location": "ribbits:paths/path_turn_0",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
         "element_type": "minecraft:single_pool_element"
@@ -41,7 +23,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "ribbits:paths/path_intersection_2_straight",
+        "location": "ribbits:paths/path_turn_1",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
         "element_type": "minecraft:single_pool_element"
@@ -50,20 +32,35 @@
     {
       "weight": 1,
       "element": {
-        "location": "ribbits:paths/path_intersection_2_turn",
+        "location": "ribbits:paths/path_deadend_0",
+        "name": "path_deadend",
+        "max_count": 1,
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "yungsapi:max_count_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_deadend_1",
+        "name": "path_deadend",
+        "max_count": 1,
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "yungsapi:max_count_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_3_0",
+        "name": "path_3",
+        "max_count": 1,
         "processors": "ribbits:main",
         "projection": "terrain_matching",
         "element_type": "minecraft:single_pool_element"
       }
     }
-//    {
-//      "weight": 1,
-//      "element": {
-//        "location": "ribbits:paths/path_intersection_4",
-//        "processors": "ribbits:main",
-//        "projection": "terrain_matching",
-//        "element_type": "minecraft:single_pool_element"
-//      }
-//    }
   ]
 }

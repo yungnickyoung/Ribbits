@@ -1,22 +1,138 @@
 {
   "processors": [
     {
-      "processor_type": "minecraft:rule",
-      "rules": [
-        {
-          "input_predicate": {
-            "block": "minecraft:podzol",
-            "predicate_type": "minecraft:random_block_match",
-            "probability": 0.3
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          },
-          "output_state": {
-            "Name": "minecraft:coarse_dirt"
-          }
-        }
-      ]
+      "processor_type": "ribbits:podzol_processor"
+    },
+    {
+      "processor_type": "ribbits:warped_nylium_processor"
+    },
+    {
+      "processor_type": "ribbits:pillar_processor",
+      "target_block": {
+        "Name": "minecraft:end_stone"
+      },
+      "target_block_output": {
+        "Name": "minecraft:cobblestone"
+      },
+      "pillar_states": {
+        "defaultBlockState": {
+          "Name": "minecraft:cobblestone"
+        },
+        "entries": [
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:pillar_processor",
+      "target_block": {
+        "Name": "minecraft:end_stone_brick_wall"
+      },
+      "target_block_output": {
+        "Name": "minecraft:stone_brick_wall"
+      },
+      "pillar_states": {
+        "defaultBlockState": {
+          "Name": "minecraft:stone_brick_wall"
+        },
+        "entries": [
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:pillar_processor",
+      "target_block": {
+        "Name": "minecraft:orange_stained_glass"
+      },
+      "target_block_output": {
+        "Name": "ribbits:toadstool_stem"
+      },
+      "pillar_states": {
+        "defaultBlockState": {
+          "Name": "ribbits:toadstool_stem"
+        },
+        "entries": [
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:pillar_processor",
+      "target_block": {
+        "Name": "minecraft:crimson_fence"
+      },
+      "target_block_output": {
+        "Name": "minecraft:oak_fence"
+      },
+      "pillar_states": {
+        "defaultBlockState": {
+          "Name": "minecraft:oak_fence"
+        },
+        "entries": [
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:pillar_processor",
+      "target_block": {
+        "Name": "minecraft:stripped_crimson_stem"
+      },
+      "target_block_output": {
+        "Name": "minecraft:stripped_oak_log"
+      },
+      "pillar_states": {
+        "defaultBlockState": {
+          "Name": "minecraft:stripped_oak_log"
+        },
+        "entries": [
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:pillar_processor",
+      "target_block": {
+        "Name": "minecraft:warped_planks"
+      },
+      "target_block_output": {
+        "Name": "minecraft:oak_planks"
+      },
+      "pillar_states": {
+        "defaultBlockState": {
+          "Name": "ribbits:toadstool_stem"
+        },
+        "entries": [
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:pillar_processor",
+      "target_block": {
+        "Name": "minecraft:crimson_planks"
+      },
+      "target_block_output": {
+        "Name": "minecraft:oak_planks"
+      },
+      "pillar_states": {
+        "defaultBlockState": {
+          "Name": "minecraft:oak_planks"
+        },
+        "entries": [
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:pillar_processor",
+      "target_block": {
+        "Name": "minecraft:red_nether_bricks"
+      },
+      "target_block_output": {
+        "Name": "minecraft:moss_block"
+      },
+      "pillar_states": {
+        "defaultBlockState": {
+          "Name": "ribbits:toadstool_stem"
+        },
+        "entries": [
+        ]
+      }
     }
   ]
 }
