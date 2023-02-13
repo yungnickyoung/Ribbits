@@ -11,6 +11,7 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
+apply from: "https://moddingtutorials.org/applesilicon.gradle"
 
 archivesBaseName = "${mod_name}"
 version = "${minecraft_version}-Forge-${version}"
