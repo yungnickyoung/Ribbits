@@ -16,7 +16,7 @@ import net.minecraft.world.level.material.MaterialColor;
 @AutoRegister(RibbitsCommon.MOD_ID)
 public class BlockModule {
     @AutoRegister("brown_toadstool")
-    public static AutoRegisterBlock BROWN_TOADSTOOL = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
+    public static final AutoRegisterBlock BROWN_TOADSTOOL = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
                     BlockBehaviour.Properties
                             .of(Material.WOOD, MaterialColor.DIRT)
                             .strength(0.2f)
@@ -24,7 +24,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("red_toadstool")
-    public static AutoRegisterBlock RED_TOADSTOOL = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
+    public static final AutoRegisterBlock RED_TOADSTOOL = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
                     BlockBehaviour.Properties
                             .of(Material.WOOD, MaterialColor.COLOR_RED)
                             .strength(0.2f)
@@ -32,7 +32,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("toadstool_stem")
-    public static AutoRegisterBlock TOADSTOOL_STEM = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
+    public static final AutoRegisterBlock TOADSTOOL_STEM = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
                     BlockBehaviour.Properties
                             .of(Material.WOOD, MaterialColor.WOOL)
                             .strength(0.2f)
@@ -40,7 +40,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("swamp_lantern")
-    public static AutoRegisterBlock SWAMP_LANTERN = AutoRegisterBlock.of(() -> new SwampLanternBlock(
+    public static final AutoRegisterBlock SWAMP_LANTERN = AutoRegisterBlock.of(() -> new SwampLanternBlock(
                     BlockBehaviour.Properties
                             .of(Material.METAL)
                             .requiresCorrectToolForDrops()
@@ -51,7 +51,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("giant_lilypad")
-    public static AutoRegisterBlock GIANT_LILYPAD = AutoRegisterBlock.of(() -> new GiantLilyPadBlock(
+    public static final AutoRegisterBlock GIANT_LILYPAD = AutoRegisterBlock.of(() -> new GiantLilyPadBlock(
                     BlockBehaviour.Properties
                             .of(Material.PLANT)
                             .instabreak()
@@ -60,7 +60,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("swamp_daisy")
-    public static AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampPlantBlock(
+    public static final AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampPlantBlock(
                     BlockBehaviour.Properties
                             .of(Material.PLANT)
                             .strength(0.1f)
@@ -70,7 +70,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("toadstool")
-    public static AutoRegisterBlock TOADSTOOL = AutoRegisterBlock.of(() -> new SwampPlantBlock(
+    public static final AutoRegisterBlock TOADSTOOL = AutoRegisterBlock.of(() -> new SwampPlantBlock(
                     BlockBehaviour.Properties
                             .of(Material.PLANT, MaterialColor.COLOR_RED)
                             .instabreak()
@@ -79,7 +79,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("mossy_oak_planks")
-    public static AutoRegisterBlock MOSSY_OAK_PLANKS = AutoRegisterBlock.of(() -> new Block(
+    public static final AutoRegisterBlock MOSSY_OAK_PLANKS = AutoRegisterBlock.of(() -> new Block(
                     BlockBehaviour.Properties
                             .of(Material.WOOD, MaterialColor.WOOD)
                             .strength(2.0f, 3.0f)
@@ -91,7 +91,7 @@ public class BlockModule {
             .withFenceGate();
 
     @AutoRegister("mossy_oak_door")
-    public static AutoRegisterBlock MOSSY_OAK_DOOR = AutoRegisterBlock.of(() ->
+    public static final AutoRegisterBlock MOSSY_OAK_DOOR = AutoRegisterBlock.of(() ->
             DoorBlockAccessor.createDoorBlock(BlockBehaviour.Properties
                     .of(Material.WOOD, MaterialColor.WOOD)
                     .strength(3.0f)
@@ -100,7 +100,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("umbrella_leaf")
-    public static AutoRegisterBlock UMBRELLA_LEAF = AutoRegisterBlock.of(() -> new SwampPlantBlock(
+    public static final AutoRegisterBlock UMBRELLA_LEAF = AutoRegisterBlock.of(() -> new SwampPlantBlock(
                     BlockBehaviour.Properties
                             .of(Material.PLANT)
                             .instabreak()
