@@ -25,7 +25,7 @@ issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
 
 [[dependencies.${mod_id}]]
     modId="yungsapi"
-    versionRange="[${minecraft_version}-Forge-${yungsapi_version},)"
+    versionRange="[${mc_version}-Forge-${yungsapi_version},)"
     mandatory=true
     ordering="NONE"
     side="BOTH"
