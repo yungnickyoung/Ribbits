@@ -2,23 +2,23 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.world.feature.config.RibbitsSimplePlantBlockConfig;
-import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
+import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
+import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterConfiguredFeature;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 import java.util.List;
 
+@AutoRegister(RibbitsCommon.MOD_ID)
 public class ConfiguredFeatureModule {
-    public static final ConfiguredFeature<RandomPatchConfiguration, ?> VEG_PATCH = register("veg_patch",
+    @AutoRegister("veg_patch")
+    public static final AutoRegisterConfiguredFeature VEG_PATCH = AutoRegisterConfiguredFeature.of(() ->
             new ConfiguredFeature<>(
                     Feature.FLOWER,
                     new RandomPatchConfiguration(
@@ -34,11 +34,4 @@ public class ConfiguredFeatureModule {
                                                     .build()),
                                             List.of(Blocks.PODZOL.defaultBlockState(),
                                                     Blocks.COARSE_DIRT.defaultBlockState()))))));
-
-    private static <FC extends FeatureConfiguration> ConfiguredFeature<FC, ?> register(String key, ConfiguredFeature<FC, ?> feature) {
-        return Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(RibbitsCommon.MOD_ID, key), feature);
-    }
-
-    public static void bootstrap() {
-    }
 }

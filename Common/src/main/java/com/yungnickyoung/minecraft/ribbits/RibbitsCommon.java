@@ -2,8 +2,6 @@ package com.yungnickyoung.minecraft.ribbits;
 
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.ConfigModule;
-import com.yungnickyoung.minecraft.ribbits.module.ConfiguredFeatureModule;
-import com.yungnickyoung.minecraft.ribbits.module.PlacedFeatureModule;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
 import com.yungnickyoung.minecraft.yungsapi.api.YungAutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
@@ -27,7 +25,5 @@ public class RibbitsCommon {
     public static void init() {
         YungAutoRegister.scanPackageForAnnotations("com.yungnickyoung.minecraft.ribbits");
         Services.MODULES.loadCommonModules();
-        ConfiguredFeatureModule.bootstrap();
-        PlacedFeatureModule.bootstrap();
     }
 }
