@@ -1,0 +1,17 @@
+package com.yungnickyoung.minecraft.ribbits.services;
+
+import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
+import com.yungnickyoung.minecraft.ribbits.entity.FrostMinerEntity;
+import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModuleFabric;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import software.bernie.geckolib3.GeckoLib;
+
+public class RibbitsFabric implements ModInitializer {
+    @Override
+    public void onInitialize() {
+        GeckoLib.initialize();
+        RibbitsCommon.init();
+        FabricDefaultAttributeRegistry.register(EntityTypeModuleFabric.FROST_MINER, FrostMinerEntity.createAttributes());
+    }
+}

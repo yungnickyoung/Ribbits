@@ -29,3 +29,10 @@ issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
     mandatory=true
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="geckolib3"
+    versionRange="[${forge_geckolib_version},)"
+    mandatory=true
+    ordering="NONE"
+    side="BOTH"

@@ -20,7 +20,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.yungnickyoung.minecraft.ribbits.RibbitsFabric"
+      "com.yungnickyoung.minecraft.ribbits.services.RibbitsFabric"
     ],
     "client": [
       "com.yungnickyoung.minecraft.ribbits.client.RibbitsFabricClient"
@@ -39,6 +39,7 @@
     "minecraft": ">=1.18.2",
     "cloth-config2": ">=6.2.57",
     "java": ">=17",
-    "yungsapi": ">=${mc_version}-Fabric-${yungsapi_version}"
+    "yungsapi": ">=${mc_version}-Fabric-${yungsapi_version}",
+    "geckolib3": ">=${fabric_geckolib_version}"
   }
 }

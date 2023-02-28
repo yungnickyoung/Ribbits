@@ -13,6 +13,7 @@ repositories {
     maven { url "https://maven.fabricmc.net" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases/" }
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
 }
 
 dependencies {
@@ -26,6 +27,9 @@ dependencies {
     }
     implementation("org.reflections:reflections:0.10.2")
     include("org.reflections:reflections:0.10.2")
+
+    // GeckoLib
+    modImplementation files("libs/geckolib-fabric-1.18-${fabric_geckolib_version}.jar")
 
     // Fabric API + Loader
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
@@ -68,6 +72,7 @@ processResources {
     inputs.property "mod_description", project.mod_description
     inputs.property "mod_full_name", project.mod_full_name
     inputs.property "mod_id", project.mod_id
+    inputs.property "fabric_geckolib_version", project.fabric_geckolib_version
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,
@@ -75,6 +80,7 @@ processResources {
                 "mc_version": project.mc_version,
                 "mod_description": project.mod_description,
                 "mod_full_name": project.mod_full_name,
+                "fabric_geckolib_version": project.fabric_geckolib_version,
                 "mod_id": project.mod_id
     }
 }

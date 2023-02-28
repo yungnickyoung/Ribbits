@@ -23,6 +23,10 @@ minecraft {
     }
 }
 
+repositories {
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+}
+
 dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
@@ -32,4 +36,6 @@ dependencies {
     } else {
         compileOnly("com.yungnickyoung.minecraft.yungsapi:YungsApi:${mc_version}-Common-${yungsapi_version}")
     }
+
+    compileOnly("software.bernie.geckolib:geckolib-forge-1.18:${forge_geckolib_version}")
 }

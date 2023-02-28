@@ -78,11 +78,18 @@ minecraft {
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
+repositories {
+    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
     // YUNG's API
     implementation fg.deobf("com.yungnickyoung.minecraft.yungsapi:YungsApi:${mc_version}-Forge-${yungsapi_version}")
+
+    // GeckoLib
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.18:${forge_geckolib_version}")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly project(":Common")
@@ -100,6 +107,7 @@ processResources {
     inputs.property "mod_description", project.mod_description
     inputs.property "mod_full_name", project.mod_full_name
     inputs.property "mod_id", project.mod_id
+    inputs.property "forge_geckolib_version", project.forge_geckolib_version
 
     filesMatching("META-INF/mods.toml") {
         expand "version": project.version,
@@ -107,6 +115,7 @@ processResources {
                 "mc_version": project.mc_version,
                 "mod_description": project.mod_description,
                 "mod_full_name": project.mod_full_name,
+                "forge_geckolib_version": project.forge_geckolib_version,
                 "mod_id": project.mod_id
     }
 }
