@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
-import com.yungnickyoung.minecraft.ribbits.entity.FrostMinerEntity;
+import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -13,10 +13,10 @@ import net.minecraftforge.registries.RegistryObject;
 public class EntityTypeModuleForge {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, RibbitsCommon.MOD_ID);
 
-    public static final RegistryObject<EntityType<FrostMinerEntity>> FROST_MINER = ENTITY_TYPES.register("frost_miner",
-                    () -> EntityType.Builder.of(FrostMinerEntity::new, MobCategory.MONSTER)
-                    .sized(2.5f, 3.0f)
-                    .build( "frost_miner"));
+    public static final RegistryObject<EntityType<RibbitEntity>> RIBBIT = ENTITY_TYPES.register("ribbit",
+                    () -> EntityType.Builder.of(RibbitEntity::new, MobCategory.CREATURE)
+                    .sized(0.75f, 0.9f)
+                    .build( "ribbit"));
 
     public static void init() {
         ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -24,6 +24,6 @@ public class EntityTypeModuleForge {
     }
 
     public static void addEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(FROST_MINER.get(), FrostMinerEntity.createAttributes().build());
+        event.put(RIBBIT.get(), RibbitEntity.createMobAttributes().build());
     }
 }

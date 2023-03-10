@@ -16,5 +16,7 @@
   "block.ribbits.mossy_oak_door": "Mossy Oak Door",
   "block.ribbits.umbrella_leaf": "Umbrella Leaf",
 
+  "entity.ribbits.ribbit": "Ribbit",
+
   "text.autoconfig.ribbits-fabric-1_18_2.title": "Ribbits"
 }

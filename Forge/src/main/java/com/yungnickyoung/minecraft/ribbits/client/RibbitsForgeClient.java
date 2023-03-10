@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.client;
 
-import com.yungnickyoung.minecraft.ribbits.client.render.FrostMinerRenderer;
+import com.yungnickyoung.minecraft.ribbits.client.render.RibbitRenderer;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModuleForge;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -25,6 +25,6 @@ public class RibbitsForgeClient {
     }
 
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityTypeModuleForge.FROST_MINER.get(), FrostMinerRenderer::new);
+        event.registerEntityRenderer(EntityTypeModuleForge.RIBBIT.get(), RibbitRenderer::new);
     }
 }
