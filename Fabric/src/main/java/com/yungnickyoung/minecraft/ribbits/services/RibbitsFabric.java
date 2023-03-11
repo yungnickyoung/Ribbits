@@ -12,6 +12,6 @@ public class RibbitsFabric implements ModInitializer {
     public void onInitialize() {
         GeckoLib.initialize();
         RibbitsCommon.init();
-        FabricDefaultAttributeRegistry.register(EntityTypeModuleFabric.RIBBIT, RibbitEntity.createMobAttributes());
+        FabricDefaultAttributeRegistry.register(EntityTypeModuleFabric.RIBBIT, RibbitEntity.createRibbitAttributes());
     }
 }

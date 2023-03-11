@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"frog_idle": {
+		"idle": {
 			"loop": true,
 			"animation_length": 0.96,
 			"bones": {
@@ -60,7 +60,7 @@
 				}
 			}
 		},
-		"frog_idle_holding_1": {
+		"idle_holding_1": {
 			"loop": true,
 			"animation_length": 0.96,
 			"bones": {
@@ -122,7 +122,7 @@
 				}
 			}
 		},
-		"frog_idle_holding_2": {
+		"idle_holding_2": {
 			"loop": true,
 			"animation_length": 0.96,
 			"bones": {
@@ -286,7 +286,7 @@
 				}
 			}
 		},
-		"frog_walk": {
+		"walk": {
 			"loop": true,
 			"animation_length": 0.8,
 			"bones": {
@@ -502,7 +502,7 @@
 				}
 			}
 		},
-		"frog_walk_holding_1": {
+		"walk_holding_1": {
 			"loop": true,
 			"animation_length": 0.8,
 			"bones": {
@@ -740,7 +740,7 @@
 				}
 			}
 		},
-		"frog_walk_holding_2": {
+		"walk_holding_2": {
 			"loop": true,
 			"animation_length": 0.8,
 			"bones": {

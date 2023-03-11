@@ -24,6 +24,6 @@ public class EntityTypeModuleForge {
     }
 
     public static void addEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(RIBBIT.get(), RibbitEntity.createMobAttributes().build());
+        event.put(RIBBIT.get(), RibbitEntity.createRibbitAttributes().build());
     }
 }

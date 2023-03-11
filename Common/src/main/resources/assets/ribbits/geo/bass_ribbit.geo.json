@@ -44,7 +44,7 @@
 					]
 				},
 				{
-					"name": "bass",
+					"name": "instrument",
 					"parent": "body",
 					"pivot": [2.1, 1, -6],
 					"rotation": [-5, 22.5, -2.5],

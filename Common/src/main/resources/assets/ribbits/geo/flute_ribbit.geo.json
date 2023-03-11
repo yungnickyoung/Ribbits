@@ -44,7 +44,7 @@
 					]
 				},
 				{
-					"name": "flute",
+					"name": "instrument",
 					"parent": "body",
 					"pivot": [2, 7.5, -5.9],
 					"rotation": [81, 29, 80],
