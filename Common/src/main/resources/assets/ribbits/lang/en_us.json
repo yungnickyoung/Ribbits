@@ -18,5 +18,15 @@
 
   "entity.ribbits.ribbit": "Ribbit",
 
+  "subtitles.entity.ribbit.ambient": "Ribbit croaks",
+  "subtitles.entity.ribbit.death": "Ribbit dies",
+  "subtitles.entity.ribbit.hurt": "Ribbit hurts",
+  "subtitles.entity.ribbit.step": "Ribbit hops",
+  "subtitles.music.ribbit.bass": "Ribbit plays bass",
+  "subtitles.music.ribbit.bongo": "Ribbit plays bongos",
+  "subtitles.music.ribbit.flute": "Ribbit plays flute",
+  "subtitles.music.ribbit.guitar": "Ribbit plays guitar",
+  "subtitles.music.ribbit.maracas": "Player plays maracas",
+
   "text.autoconfig.ribbits-fabric-1_18_2.title": "Ribbits"
 }
