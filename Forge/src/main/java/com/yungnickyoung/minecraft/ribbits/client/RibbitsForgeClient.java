@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.ribbits.client;
 
 import com.yungnickyoung.minecraft.ribbits.client.render.RibbitRenderer;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
-import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModuleForge;
+import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -25,6 +25,6 @@ public class RibbitsForgeClient {
     }
 
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityTypeModuleForge.RIBBIT.get(), RibbitRenderer::new);
+        event.registerEntityRenderer(EntityTypeModule.RIBBIT.get(), RibbitRenderer::new);
     }
 }
