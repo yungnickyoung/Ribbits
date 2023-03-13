@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.ribbits.services;
+package com.yungnickyoung.minecraft.ribbits;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;

@@ -20,7 +20,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.yungnickyoung.minecraft.ribbits.services.RibbitsFabric"
+      "com.yungnickyoung.minecraft.ribbits.RibbitsFabric"
     ],
     "client": [
       "com.yungnickyoung.minecraft.ribbits.client.RibbitsFabricClient"
