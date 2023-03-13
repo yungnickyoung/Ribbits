@@ -91,9 +91,9 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
     private PlayState predicate(AnimationEvent event) {
         if (event.getLimbSwingAmount() > 0.15D || event.getLimbSwingAmount() < -0.15D) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() ? "walk_holding_1" : "walk", ILoopType.EDefaultLoopTypes.LOOP));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() ? "idle_holding_1" : "idle", ILoopType.EDefaultLoopTypes.LOOP));
         }
         return PlayState.CONTINUE;
     }

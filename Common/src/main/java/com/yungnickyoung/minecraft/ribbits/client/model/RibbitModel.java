@@ -32,6 +32,10 @@ public class RibbitModel extends AnimatedGeoModel<RibbitEntity> {
 
     @Override
     public ResourceLocation getModelLocation(RibbitEntity object) {
+        if (object.getLevel().isRaining()) {
+            return UMBRELLA_MODELS.get(object.getRibbitData().getUmbrellaType());
+        }
+
         if (object.getRibbitData().getProfession() == 0) {
             return MUSIC_MODELS.get(object.getRibbitData().getInstrument());
         } else {
