@@ -1,7 +1,13 @@
 package com.yungnickyoung.minecraft.ribbits.entity;
 
+import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -29,6 +35,32 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 public class RibbitEntity extends AgeableMob implements IAnimatable {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
+    /**
+     * Creating and then registering the data serializer for Ribbits. This mimics the serializer used for
+     * vanilla VillagerData, but tweaked for our purposes. This can be moved elsewhere if necessary.
+     */
+    public static final EntityDataSerializer<RibbitData> RIBBIT_DATA_SERIALIZER = new EntityDataSerializer<>() {
+        public void write(FriendlyByteBuf buff, RibbitData data) {
+            buff.writeVarInt(data.getProfession());
+            buff.writeVarInt(data.getInstrument());
+            buff.writeVarInt(data.getUmbrellaType());
+        }
+
+        public RibbitData read(FriendlyByteBuf buf) {
+            return new RibbitData(buf.readVarInt(), buf.readVarInt(), buf.readVarInt());
+        }
+
+        public RibbitData copy(RibbitData data) {
+            return data;
+        }
+    };
+
+    static {
+        EntityDataSerializers.registerSerializer(RIBBIT_DATA_SERIALIZER);
+    }
+
+    private static final EntityDataAccessor<RibbitData> RIBBIT_DATA = SynchedEntityData.defineId(RibbitEntity.class, RIBBIT_DATA_SERIALIZER);
+
     public RibbitEntity(EntityType<RibbitEntity> entityType, Level level) {
         super(entityType, level);
     }
@@ -41,10 +73,20 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1.0D));
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(RIBBIT_DATA, new RibbitData(this.random.nextInt(3), this.random.nextInt(4), this.random.nextInt(3)));
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob parent) {
         return null;
+    }
+
+    public RibbitData getRibbitData() {
+        return this.entityData.get(RIBBIT_DATA);
     }
 
     private PlayState predicate(AnimationEvent event) {
