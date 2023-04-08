@@ -1,6 +1,8 @@
 package com.yungnickyoung.minecraft.ribbits.entity;
 
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
+import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfessions;
+import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitUmbrellaTypes;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -42,13 +44,12 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
      */
     public static final EntityDataSerializer<RibbitData> RIBBIT_DATA_SERIALIZER = new EntityDataSerializer<>() {
         public void write(FriendlyByteBuf buff, RibbitData data) {
-            buff.writeVarInt(data.getProfession());
-            buff.writeVarInt(data.getInstrument());
-            buff.writeVarInt(data.getUmbrellaType());
+            buff.writeVarInt(data.getProfession().getId());
+            buff.writeVarInt(data.getUmbrellaType().getId());
         }
 
         public RibbitData read(FriendlyByteBuf buf) {
-            return new RibbitData(buf.readVarInt(), buf.readVarInt(), buf.readVarInt());
+            return new RibbitData(RibbitProfessions.getProfession(buf.readVarInt()), RibbitUmbrellaTypes.getUmbrellaType(buf.readVarInt()));
         }
 
         public RibbitData copy(RibbitData data) {
@@ -77,7 +78,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(RIBBIT_DATA, new RibbitData(this.random.nextInt(3), this.random.nextInt(4), this.random.nextInt(3)));
+        this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessions.getRandomProfession(), RibbitUmbrellaTypes.getRandomUmbrellaType()));
     }
 
     @Nullable
@@ -92,9 +93,9 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
     private PlayState predicate(AnimationEvent event) {
         if (event.getLimbSwingAmount() > 0.15D || event.getLimbSwingAmount() < -0.15D) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() ? "walk_holding_1" : "walk", ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() && this.isInWaterOrRain() && !this.isInWater() ? "walk_holding_1" : "walk", ILoopType.EDefaultLoopTypes.LOOP));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() ? "idle_holding_1" : "idle", ILoopType.EDefaultLoopTypes.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() && this.isInWaterOrRain() && !this.isInWater() ? "idle_holding_1" : "idle", ILoopType.EDefaultLoopTypes.LOOP));
         }
         return PlayState.CONTINUE;
     }
