@@ -67,6 +67,12 @@
           "Name": "minecraft:oak_fence"
         },
         "entries": [
+          {
+            "blockState": {
+              "Name": "ribbits:mossy_oak_planks_fence"
+            },
+            "probability": 0.6
+          }
         ]
       }
     },
@@ -115,6 +121,12 @@
           "Name": "minecraft:oak_planks"
         },
         "entries": [
+          {
+            "blockState": {
+              "Name": "ribbits:mossy_oak_planks"
+            },
+            "probability": 0.6
+          }
         ]
       }
     },
@@ -131,6 +143,106 @@
           "Name": "ribbits:toadstool_stem"
         },
         "entries": [
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:block_replace_processor",
+      "copy_input_properties": true,
+      "target_block": {
+        "Name": "minecraft:oak_planks"
+      },
+      "output": {
+        "defaultBlockState": {
+          "Name": "minecraft:oak_planks"
+        },
+        "entries": [
+          {
+            "blockState": {
+              "Name": "ribbits:mossy_oak_planks"
+            },
+            "probability": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:block_replace_processor",
+      "copy_input_properties": true,
+      "target_block": {
+        "Name": "minecraft:oak_slab"
+      },
+      "output": {
+        "defaultBlockState": {
+          "Name": "minecraft:oak_slab"
+        },
+        "entries": [
+          {
+            "blockState": {
+              "Name": "ribbits:mossy_oak_planks_slab"
+            },
+            "probability": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:block_replace_processor",
+      "copy_input_properties": true,
+      "target_block": {
+        "Name": "minecraft:oak_stairs"
+      },
+      "output": {
+        "defaultBlockState": {
+          "Name": "minecraft:oak_stairs"
+        },
+        "entries": [
+          {
+            "blockState": {
+              "Name": "ribbits:mossy_oak_planks_stairs"
+            },
+            "probability": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:block_replace_processor",
+      "copy_input_properties": true,
+      "target_block": {
+        "Name": "minecraft:oak_fence"
+      },
+      "output": {
+        "defaultBlockState": {
+          "Name": "minecraft:oak_fence"
+        },
+        "entries": [
+          {
+            "blockState": {
+              "Name": "ribbits:mossy_oak_planks_fence"
+            },
+            "probability": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "processor_type": "ribbits:block_replace_processor",
+      "copy_input_properties": true,
+      "target_block": {
+        "Name": "minecraft:oak_fence_gate"
+      },
+      "output": {
+        "defaultBlockState": {
+          "Name": "minecraft:oak_fence_gate"
+        },
+        "entries": [
+          {
+            "blockState": {
+              "Name": "ribbits:mossy_oak_planks_fence_gate"
+            },
+            "probability": 0.6
+          }
         ]
       }
     }
