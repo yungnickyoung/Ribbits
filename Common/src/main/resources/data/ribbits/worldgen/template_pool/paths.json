@@ -8,6 +8,29 @@
         "location": "ribbits:paths/path_straight_0",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "ribbits:houses/brown_fishing_house",
+              "ribbits:houses/brown_sorcerer_house",
+              "ribbits:houses/lg_brown_house_1",
+              "ribbits:houses/lg_red_house_1",
+              "ribbits:houses/md_brown_house_1",
+              "ribbits:houses/md_red_house_1",
+              "ribbits:houses/red_fishing_house",
+              "ribbits:houses/red_sorcerer_house",
+              "ribbits:houses/small_house_brown_1",
+              "ribbits:houses/small_house_brown_2",
+              "ribbits:houses/small_house_brown_3",
+              "ribbits:houses/small_house_red_1",
+              "ribbits:houses/small_house_red_2",
+              "ribbits:houses/small_house_red_3"
+            ],
+            "above_range": 5
+          }
+        },
         "element_type": "yungsapi:yung_single_element"
       }
     },
@@ -17,6 +40,29 @@
         "location": "ribbits:paths/path_turn_0",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "ribbits:houses/brown_fishing_house",
+              "ribbits:houses/brown_sorcerer_house",
+              "ribbits:houses/lg_brown_house_1",
+              "ribbits:houses/lg_red_house_1",
+              "ribbits:houses/md_brown_house_1",
+              "ribbits:houses/md_red_house_1",
+              "ribbits:houses/red_fishing_house",
+              "ribbits:houses/red_sorcerer_house",
+              "ribbits:houses/small_house_brown_1",
+              "ribbits:houses/small_house_brown_2",
+              "ribbits:houses/small_house_brown_3",
+              "ribbits:houses/small_house_red_1",
+              "ribbits:houses/small_house_red_2",
+              "ribbits:houses/small_house_red_3"
+            ],
+            "above_range": 5
+          }
+        },
         "element_type": "yungsapi:yung_single_element"
       }
     },
@@ -26,6 +72,29 @@
         "location": "ribbits:paths/path_turn_1",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "ribbits:houses/brown_fishing_house",
+              "ribbits:houses/brown_sorcerer_house",
+              "ribbits:houses/lg_brown_house_1",
+              "ribbits:houses/lg_red_house_1",
+              "ribbits:houses/md_brown_house_1",
+              "ribbits:houses/md_red_house_1",
+              "ribbits:houses/red_fishing_house",
+              "ribbits:houses/red_sorcerer_house",
+              "ribbits:houses/small_house_brown_1",
+              "ribbits:houses/small_house_brown_2",
+              "ribbits:houses/small_house_brown_3",
+              "ribbits:houses/small_house_red_1",
+              "ribbits:houses/small_house_red_2",
+              "ribbits:houses/small_house_red_3"
+            ],
+            "above_range": 5
+          }
+        },
         "element_type": "yungsapi:yung_single_element"
       }
     },
@@ -37,6 +106,29 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "terrain_matching",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "ribbits:houses/brown_fishing_house",
+              "ribbits:houses/brown_sorcerer_house",
+              "ribbits:houses/lg_brown_house_1",
+              "ribbits:houses/lg_red_house_1",
+              "ribbits:houses/md_brown_house_1",
+              "ribbits:houses/md_red_house_1",
+              "ribbits:houses/red_fishing_house",
+              "ribbits:houses/red_sorcerer_house",
+              "ribbits:houses/small_house_brown_1",
+              "ribbits:houses/small_house_brown_2",
+              "ribbits:houses/small_house_brown_3",
+              "ribbits:houses/small_house_red_1",
+              "ribbits:houses/small_house_red_2",
+              "ribbits:houses/small_house_red_3"
+            ],
+            "above_range": 5
+          }
+        },
         "element_type": "yungsapi:yung_single_element"
       }
     },
@@ -48,6 +140,29 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "terrain_matching",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "ribbits:houses/brown_fishing_house",
+              "ribbits:houses/brown_sorcerer_house",
+              "ribbits:houses/lg_brown_house_1",
+              "ribbits:houses/lg_red_house_1",
+              "ribbits:houses/md_brown_house_1",
+              "ribbits:houses/md_red_house_1",
+              "ribbits:houses/red_fishing_house",
+              "ribbits:houses/red_sorcerer_house",
+              "ribbits:houses/small_house_brown_1",
+              "ribbits:houses/small_house_brown_2",
+              "ribbits:houses/small_house_brown_3",
+              "ribbits:houses/small_house_red_1",
+              "ribbits:houses/small_house_red_2",
+              "ribbits:houses/small_house_red_3"
+            ],
+            "above_range": 5
+          }
+        },
         "element_type": "yungsapi:yung_single_element"
       }
     },
@@ -59,6 +174,29 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "terrain_matching",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "ribbits:houses/brown_fishing_house",
+              "ribbits:houses/brown_sorcerer_house",
+              "ribbits:houses/lg_brown_house_1",
+              "ribbits:houses/lg_red_house_1",
+              "ribbits:houses/md_brown_house_1",
+              "ribbits:houses/md_red_house_1",
+              "ribbits:houses/red_fishing_house",
+              "ribbits:houses/red_sorcerer_house",
+              "ribbits:houses/small_house_brown_1",
+              "ribbits:houses/small_house_brown_2",
+              "ribbits:houses/small_house_brown_3",
+              "ribbits:houses/small_house_red_1",
+              "ribbits:houses/small_house_red_2",
+              "ribbits:houses/small_house_red_3"
+            ],
+            "above_range": 5
+          }
+        },
         "element_type": "yungsapi:yung_single_element"
       }
     }

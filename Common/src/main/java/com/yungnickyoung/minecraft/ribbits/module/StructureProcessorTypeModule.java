@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.world.processor.BlockReplaceProcessor;
+import com.yungnickyoung.minecraft.ribbits.world.processor.LapisBlockProcessor;
 import com.yungnickyoung.minecraft.ribbits.world.processor.PillarProcessor;
 import com.yungnickyoung.minecraft.ribbits.world.processor.PodzolProcessor;
 import com.yungnickyoung.minecraft.ribbits.world.processor.WarpedNyliumProcessor;
@@ -21,4 +22,7 @@ public class StructureProcessorTypeModule {
 
     @AutoRegister("block_replace_processor")
     public static StructureProcessorType<BlockReplaceProcessor> BLOCK_REPLACE_PROCESSOR = () -> BlockReplaceProcessor.CODEC;
+
+    @AutoRegister("lapis_block_processor")
+    public static StructureProcessorType<LapisBlockProcessor> LAPIS_BLOCK_PROCESSOR = () -> LapisBlockProcessor.CODEC;
 }

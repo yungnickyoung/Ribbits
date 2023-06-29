@@ -8,6 +8,16 @@
         "location": "ribbits:houses/small_house_red_1",
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -36,6 +46,16 @@
         "location": "ribbits:houses/small_house_brown_1",
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -64,6 +84,16 @@
         "location": "ribbits:houses/small_house_red_2",
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -92,6 +122,16 @@
         "location": "ribbits:houses/small_house_brown_2",
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -120,6 +160,16 @@
         "location": "ribbits:houses/small_house_red_3",
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -148,6 +198,16 @@
         "location": "ribbits:houses/small_house_brown_3",
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -178,6 +238,16 @@
         "max_count": 2,
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -208,6 +278,16 @@
         "max_count": 2,
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -238,6 +318,16 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -268,6 +358,16 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -298,6 +398,16 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -328,6 +438,16 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -358,6 +478,16 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
@@ -388,6 +518,16 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
+        "condition": {
+          "type": "yungsapi:not",
+          "condition": {
+            "type": "yungsapi:piece_in_range",
+            "pieces": [
+              "yungsapi:all"
+            ],
+            "below_range": 5
+          }
+        },
         "modifiers": [
           {
             "condition": {
