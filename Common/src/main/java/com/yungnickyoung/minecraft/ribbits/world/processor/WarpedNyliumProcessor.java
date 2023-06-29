@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
@@ -17,7 +16,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.material.Fluids;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Random;
 
 /**
  * Replaces warped nylium with grass block if no water present.
@@ -42,20 +40,8 @@ public class WarpedNyliumProcessor extends StructureProcessor {
             }
 
             BlockState currState = levelReader.getBlockState(blockInfoGlobal.pos);
-            if (currState.isAir()) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.AIR.defaultBlockState(), null);
-                // Schedule ticks for adjacent fluids
-                BlockPos pos = blockInfoGlobal.pos;
-                ChunkPos chunkPos = new ChunkPos(pos);
-                if (levelReader instanceof WorldGenRegion worldGenRegion) {
-                    Direction.Plane.HORIZONTAL.forEach(direction -> {
-                        BlockPos neighborPos = pos.relative(direction);
-                        if (chunkPos.equals(new ChunkPos(neighborPos))) {
-                            worldGenRegion.scheduleTick(neighborPos, Fluids.WATER, 0);
-                        }
-                    });
-                }
-            } else if (currState.getFluidState().is(Fluids.WATER)) {
+
+            if (currState.getFluidState().is(Fluids.WATER)) {
                 blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.WATER.defaultBlockState(), null);
                 if (levelReader instanceof WorldGenRegion worldGenRegion) {
                     worldGenRegion.scheduleTick(blockInfoGlobal.pos, Fluids.WATER, 0);
@@ -65,17 +51,6 @@ public class WarpedNyliumProcessor extends StructureProcessor {
             }
 
             // Generate pillar of dirt to fill any air/water below
-//            BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos.mutable().move(Direction.DOWN);
-//            BlockState currBlockState = levelReader.getBlockState(mutable);
-//            while (mutable.getY() > levelReader.getMinBuildHeight()
-//                    && mutable.getY() < levelReader.getMaxBuildHeight()
-//                    && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
-//                levelReader.getChunk(mutable).setBlockState(mutable, Blocks.DIRT.defaultBlockState(), false);
-//
-//                // Update to next position
-//                mutable.move(Direction.DOWN);
-//                currBlockState = levelReader.getBlockState(mutable);
-//            }
         }
 
         return blockInfoGlobal;

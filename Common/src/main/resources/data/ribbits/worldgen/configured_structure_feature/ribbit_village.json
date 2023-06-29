@@ -2,7 +2,14 @@
   "type": "ribbits:ribbit_village",
   "config": {
     "start_pool": "ribbits:starts",
-    "size": 6
+    "size": 6,
+    "enhanced_terrain_adaptation": {
+      "type": "yungsapi:custom",
+      "carves": true,
+      "beards": true,
+      "kernel_size": 24,
+      "kernel_distance": 24
+    }
   },
   "biomes": "#ribbits:has_structure/ribbit_village",
   "adapt_noise": true,

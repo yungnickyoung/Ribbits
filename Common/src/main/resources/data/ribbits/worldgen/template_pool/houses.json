@@ -8,7 +8,26 @@
         "location": "ribbits:houses/small_house_red_1",
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/small_house_red_1"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -17,7 +36,26 @@
         "location": "ribbits:houses/small_house_brown_1",
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/small_house_brown_1"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -26,7 +64,26 @@
         "location": "ribbits:houses/small_house_red_2",
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/small_house_red_2"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -35,7 +92,26 @@
         "location": "ribbits:houses/small_house_brown_2",
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/small_house_brown_2"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -44,7 +120,26 @@
         "location": "ribbits:houses/small_house_red_3",
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/small_house_red_3"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -53,7 +148,26 @@
         "location": "ribbits:houses/small_house_brown_3",
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/small_house_brown_3"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -64,7 +178,26 @@
         "max_count": 2,
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "yungsapi:max_count_single_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/md_red_house_1"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -75,7 +208,26 @@
         "max_count": 2,
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "yungsapi:max_count_single_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/md_brown_house_1"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -86,7 +238,26 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "yungsapi:max_count_single_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/lg_red_house_1"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -97,7 +268,26 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "yungsapi:max_count_single_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/lg_brown_house_1"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -108,7 +298,26 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "yungsapi:max_count_single_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/red_fishing_house"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -119,7 +328,26 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "yungsapi:max_count_single_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/brown_fishing_house"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -130,7 +358,26 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "yungsapi:max_count_single_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/red_sorcerer_house"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -141,7 +388,26 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "yungsapi:max_count_single_element"
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:houses/brown_sorcerer_house"]
+              }
+            ]
+          }
+        ],
+        "element_type": "yungsapi:yung_single_element"
       }
     }
   ]

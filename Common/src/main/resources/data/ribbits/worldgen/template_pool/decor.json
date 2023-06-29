@@ -8,7 +8,7 @@
         "location": "ribbits:decor/lamp_post",
         "processors": "ribbits:main",
         "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {

@@ -10,7 +10,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
@@ -65,7 +67,12 @@ public class PillarProcessor extends StructureProcessor {
             while (mutable.getY() > levelReader.getMinBuildHeight()
                     && mutable.getY() < levelReader.getMaxBuildHeight()
                     && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
-                levelReader.getChunk(mutable).setBlockState(mutable, this.pillarStates.get(random), false);
+                BlockState blockState = this.pillarStates.get(random);
+                if (currBlockState.is(Blocks.WATER) && blockState.hasProperty(BlockStateProperties.WATERLOGGED)) {
+                    blockState = blockState.setValue(BlockStateProperties.WATERLOGGED, true);
+                }
+
+                levelReader.getChunk(mutable).setBlockState(mutable, blockState, false);
 
                 // Update to next position
                 mutable.move(Direction.DOWN);

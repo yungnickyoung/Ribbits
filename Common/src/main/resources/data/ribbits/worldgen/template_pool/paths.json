@@ -8,7 +8,7 @@
         "location": "ribbits:paths/path_straight_0",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -17,7 +17,7 @@
         "location": "ribbits:paths/path_turn_0",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -26,7 +26,7 @@
         "location": "ribbits:paths/path_turn_1",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -37,7 +37,7 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "terrain_matching",
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -48,7 +48,7 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "terrain_matching",
-        "element_type": "yungsapi:max_count_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     },
     {
@@ -59,7 +59,7 @@
         "max_count": 1,
         "processors": "ribbits:main",
         "projection": "terrain_matching",
-        "element_type": "minecraft:single_pool_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     }
   ]

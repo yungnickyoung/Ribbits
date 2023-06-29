@@ -16,7 +16,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
@@ -31,7 +30,7 @@ public class PodzolProcessor extends StructureProcessor {
     public static final PodzolProcessor INSTANCE = new PodzolProcessor();
     public static final Codec<PodzolProcessor> CODEC = Codec.unit(() -> INSTANCE);
 
-    private final BlockStateRandomizer randomOutputState = new BlockStateRandomizer(Blocks.PODZOL.defaultBlockState())
+    private final BlockStateRandomizer OUTPUT = new BlockStateRandomizer(Blocks.PODZOL.defaultBlockState())
             .addBlock(Blocks.COARSE_DIRT.defaultBlockState(), .3f);
 
     @Override
@@ -46,11 +45,16 @@ public class PodzolProcessor extends StructureProcessor {
                 return blockInfoGlobal;
             }
 
-            int y = levelReader.getHeight(Heightmap.Types.WORLD_SURFACE_WG, blockInfoGlobal.pos.getX(), blockInfoGlobal.pos.getZ());
-            FluidState currState = levelReader.getFluidState(new BlockPos(blockInfoGlobal.pos.getX(), y - 1, blockInfoGlobal.pos.getZ()));
-            if (currState.isEmpty()) {
-                Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, randomOutputState.get(random), null);
+            Random random = structurePlacementData.getRandom(blockInfoGlobal.pos);
+            int y = levelReader.getHeight(Heightmap.Types.WORLD_SURFACE_WG, blockInfoGlobal.pos.getX(), blockInfoGlobal.pos.getZ()) - 1;
+            BlockPos blockPos = new BlockPos(blockInfoGlobal.pos.getX(), y, blockInfoGlobal.pos.getZ());
+
+            FluidState fluidState = levelReader.getFluidState(blockPos);
+            BlockState blockStateBelow = levelReader.getBlockState(blockPos.below());
+
+            // Extra solid check for the block below prevents podzol from being replaced with planks if it's on top of a solid block.
+            if (fluidState.isEmpty() || blockStateBelow.getMaterial().isSolid()) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, OUTPUT.get(random), null);
             } else {
                 blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.OAK_PLANKS.defaultBlockState(), null);
             }

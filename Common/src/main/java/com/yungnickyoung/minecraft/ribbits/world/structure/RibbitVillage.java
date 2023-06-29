@@ -15,12 +15,12 @@ public class RibbitVillage extends StructureFeature<YungJigsawConfig> {
 
     public RibbitVillage() {
         super(YungJigsawConfig.CODEC, context -> {
-            BlockPos startPos = new BlockPos(context.chunkPos().getMiddleBlockX(), -1, context.chunkPos().getMiddleBlockZ());
+            BlockPos startPos = new BlockPos(context.chunkPos().getMiddleBlockX(), 0, context.chunkPos().getMiddleBlockZ());
             return YungJigsawManager.assembleJigsawStructure(
                     context,
                     PoolElementStructurePiece::new,
                     startPos,
-                    false,
+                    true,
                     true,
                     80);
         });
