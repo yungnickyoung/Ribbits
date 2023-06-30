@@ -231,6 +231,25 @@
             "above_range": 5
           }
         },
+        "modifiers": [
+          {
+            "condition": {
+              "type": "yungsapi:always_true"
+            },
+            "target_selector": {
+              "type": "yungsapi:self"
+            },
+            "actions": [
+              {
+                "type": "yungsapi:transform",
+                "x_offset": 0,
+                "y_offset": -1,
+                "z_offset": 0 ,
+                "output": ["ribbits:paths/path_bridge"]
+              }
+            ]
+          }
+        ],
         "deadend_pool": "ribbits:paths_fallback",
         "element_type": "yungsapi:yung_single_element"
       }
