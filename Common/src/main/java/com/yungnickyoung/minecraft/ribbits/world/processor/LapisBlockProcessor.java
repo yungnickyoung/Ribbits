@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.ribbits.world.processor;
 
 import com.mojang.serialization.Codec;
+import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -44,6 +45,10 @@ public class LapisBlockProcessor extends StructureProcessor {
             blockInfoGlobal = random.nextFloat() < 0.9f
                     ? new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.WATER.defaultBlockState(), null)
                     : new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.SEAGRASS.defaultBlockState(), null);
+
+            if (random.nextFloat() < 0.1f) {
+                levelReader.getChunk(blockInfoGlobal.pos.above()).setBlockState(blockInfoGlobal.pos.above(), BlockModule.GIANT_LILYPAD.get().defaultBlockState(), false);
+            }
 
             // Set block below to dirt if not solid
             BlockState blockStateBelow = levelReader.getBlockState(blockInfoGlobal.pos.below());
