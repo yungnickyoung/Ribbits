@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "mossy_oak_planks",
+  "ingredients": [
+    {
+      "item": "minecraft:oak_slab"
+    },
+    {
+      "item": "minecraft:moss_block"
+    }
+  ],
+  "result": {
+    "item": "ribbits:mossy_oak_planks_slab"
+  }
+}
