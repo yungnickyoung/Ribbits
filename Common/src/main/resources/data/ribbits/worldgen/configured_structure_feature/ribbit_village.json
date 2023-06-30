@@ -9,7 +9,12 @@
       "beards": true,
       "kernel_size": 24,
       "kernel_distance": 24
-    }
+    },
+    "structure_set_avoid_radius_check": 6,
+    "structure_set_avoid": [
+      "minecraft:swamp_huts",
+      "minecraft:villages"
+    ]
   },
   "biomes": "#ribbits:has_structure/ribbit_village",
   "adapt_noise": true,
