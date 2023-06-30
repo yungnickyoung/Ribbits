@@ -1,3 +1,6 @@
 {
-  "parent": "ribbits:block/swamp_lantern"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ribbits:item/swamp_lantern"
+  }
 }

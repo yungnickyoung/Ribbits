@@ -1,3 +1,6 @@
 {
-  "parent": "ribbits:block/umbrella_leaf"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ribbits:item/umbrella_leaf"
+  }
 }
