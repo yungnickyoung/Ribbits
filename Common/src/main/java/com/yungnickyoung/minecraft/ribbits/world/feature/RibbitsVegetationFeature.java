@@ -16,12 +16,6 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStatePr
 import java.util.List;
 
 public class RibbitsVegetationFeature extends Feature<NoneFeatureConfiguration> {
-    private final BlockStateProvider blockStates = new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
-            .add(BlockModule.UMBRELLA_LEAF.get().defaultBlockState(), 1)
-            .add(BlockModule.TOADSTOOL.get().defaultBlockState(), 3)
-            .add(BlockModule.SWAMP_DAISY.get().defaultBlockState(), 1)
-            .build());
-
     private final List<BlockState> cannotPlaceOn = List.of(Blocks.PODZOL.defaultBlockState(),
             Blocks.COARSE_DIRT.defaultBlockState());
 
@@ -32,7 +26,12 @@ public class RibbitsVegetationFeature extends Feature<NoneFeatureConfiguration> 
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         WorldGenLevel worldGenLevel = ctx.level();
         BlockPos origin = ctx.origin();
-        BlockState toPlace = this.blockStates.getState(ctx.random(), origin);
+        BlockStateProvider blockStates = new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder()
+                .add(BlockModule.UMBRELLA_LEAF.get().defaultBlockState(), 1)
+                .add(BlockModule.TOADSTOOL.get().defaultBlockState(), 3)
+                .add(BlockModule.SWAMP_DAISY.get().defaultBlockState(), 1)
+                .build());
+        BlockState toPlace = blockStates.getState(ctx.random(), origin);
 
         // Check for water, in which case we place lily pads instead.
         if (worldGenLevel.getBlockState(origin.below()).is(Blocks.WATER)) {
