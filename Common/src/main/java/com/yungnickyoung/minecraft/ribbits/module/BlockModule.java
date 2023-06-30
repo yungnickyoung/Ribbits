@@ -2,13 +2,15 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.block.GiantLilyPadBlock;
-import com.yungnickyoung.minecraft.ribbits.block.SwampPlantBlock;
 import com.yungnickyoung.minecraft.ribbits.block.SwampLanternBlock;
+import com.yungnickyoung.minecraft.ribbits.block.SwampPlantBlock;
 import com.yungnickyoung.minecraft.ribbits.mixin.DoorBlockAccessor;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterBlock;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HugeMushroomBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -56,8 +58,7 @@ public class BlockModule {
                             .of(Material.PLANT)
                             .instabreak()
                             .sound(SoundType.LILY_PAD)
-                            .noOcclusion()))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+                            .noOcclusion()));
 
     @AutoRegister("swamp_daisy")
     public static final AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampPlantBlock(
