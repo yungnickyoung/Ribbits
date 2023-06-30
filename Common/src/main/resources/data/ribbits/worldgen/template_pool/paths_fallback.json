@@ -1,0 +1,15 @@
+{
+  "name": "ribbits:paths_fallback",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_deadend_nohouse",
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "yungsapi:yung_single_element"
+      }
+    }
+  ]
+}

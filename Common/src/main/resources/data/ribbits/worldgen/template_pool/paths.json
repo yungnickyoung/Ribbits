@@ -1,6 +1,6 @@
 {
   "name": "ribbits:paths",
-  "fallback": "minecraft:empty",
+  "fallback": "ribbits:paths_fallback",
   "elements": [
     {
       "weight": 5,
@@ -231,6 +231,7 @@
             "above_range": 5
           }
         },
+        "deadend_pool": "ribbits:paths_fallback",
         "element_type": "yungsapi:yung_single_element"
       }
     }
