@@ -3,10 +3,10 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.gardener_ribbit",
+				"identifier": "geometry.frog_base",
 				"texture_width": 128,
 				"texture_height": 128,
-				"visible_bounds_width": 3,
+				"visible_bounds_width": 2,
 				"visible_bounds_height": 2.5,
 				"visible_bounds_offset": [0, 0.75, 0]
 			},
@@ -44,26 +44,35 @@
 					]
 				},
 				{
-					"name": "watering_can",
-					"parent": "right_arm",
-					"pivot": [-0.6, 2.4, -2.4],
-					"rotation": [-74.5, 25, -7.5],
+					"name": "accessories",
+					"parent": "body",
+					"pivot": [0, 2, -1]
+				},
+				{
+					"name": "fishing_rod",
+					"parent": "accessories",
+					"pivot": [0, 5.5, -5.5],
+					"rotation": [-50, 0, 0],
 					"cubes": [
-						{"origin": [-5.6, -0.6, -5.4], "size": [3, 3, 3], "uv": [30, 11], "mirror": true},
-						{"origin": [-4.6, -3.6, -3.4], "size": [1, 3, 1], "pivot": [-4.1, -0.6, -2.4], "rotation": [-45, 0, 0], "uv": [34, 5], "mirror": true},
-						{"origin": [-4.6, 2.4, -5.4], "size": [1, 1, 2], "uv": [34, 0], "mirror": true}
+						{"origin": [-0.5, 5, -15], "size": [1, 1, 10], "uv": [30, 0]},
+						{"origin": [-2.5, 4.4, -15.1], "size": [5, 4, 0], "pivot": [0, 7.5, -14], "rotation": [27.5, 0, 0], "uv": [28, 18]}
 					]
 				},
 				{
-					"name": "gardener_hat",
-					"parent": "body",
-					"pivot": [0, 11.4, 0.9],
-					"rotation": [-27.5, 45, -20],
+					"name": "fishing_rod_2",
+					"parent": "fishing_rod",
+					"pivot": [0, 5, -14],
+					"rotation": [50, 0, 0],
 					"cubes": [
-						{"origin": [-4.5, 11.1, -4.6], "size": [10, 1, 10], "uv": [54, 0]},
-						{"origin": [-2.5, 12.1, -2.6], "size": [6, 3, 6], "uv": [38, 11]},
-						{"origin": [2.58873, 11.1, -1.8], "size": [4, 4, 0], "pivot": [0.38873, 11.001, 0.4], "rotation": [0, -45, 0], "uv": [62, 17]},
-						{"origin": [3.96376, 11.1, 3.52061], "size": [4, 4, 0], "pivot": [-0.03624, 11.001, 2.52061], "rotation": [0, 45, 0], "uv": [62, 17]}
+						{"origin": [0, -5.5, -14.5], "size": [0, 11, 1], "uv": [52, -1]}
+					]
+				},
+				{
+					"name": "fishing_rod_3",
+					"parent": "fishing_rod_2",
+					"pivot": [0, -5.5, -14],
+					"cubes": [
+						{"origin": [-1, -7.5, -15], "size": [2, 2, 2], "uv": [54, 0]}
 					]
 				},
 				{

@@ -26,32 +26,12 @@
 					]
 				},
 				{
-					"name": "left_arm",
-					"parent": "body",
-					"pivot": [3.9, 5.6, 0],
-					"rotation": [0, 0, -27.5],
-					"cubes": [
-						{"origin": [3, 2.6, -1], "size": [2, 4, 2], "uv": [23, 0]}
-					]
-				},
-				{
 					"name": "right_arm",
 					"parent": "body",
 					"pivot": [-3.9, 5.6, 0],
 					"rotation": [0, 0, 27.5],
 					"cubes": [
 						{"origin": [-5, 2.6, -1], "size": [2, 4, 2], "uv": [23, 0], "mirror": true}
-					]
-				},
-				{
-					"name": "instrument",
-					"parent": "body",
-					"pivot": [2.1, 1, -6],
-					"rotation": [-5, 22.5, -2.5],
-					"cubes": [
-						{"origin": [-1, 0, -7], "size": [6, 8, 2], "uv": [62, 26]},
-						{"origin": [1, 8, -7], "size": [2, 7, 1], "uv": [78, 26]},
-						{"origin": [0, 13, -6.5], "size": [4, 2, 0], "uv": [78, 34]}
 					]
 				},
 				{
@@ -70,6 +50,26 @@
 					"cubes": [
 						{"origin": [1, 0, -1.5], "size": [2, 2, 2], "uv": [8, 25]},
 						{"origin": [1, 0, -2.5], "size": [3, 0, 3], "uv": [0, 31]}
+					]
+				},
+				{
+					"name": "bass",
+					"parent": "main",
+					"pivot": [2.1, 1, -6],
+					"rotation": [-5, 22.5, -2.5],
+					"cubes": [
+						{"origin": [-1, 0, -7], "size": [6, 8, 2], "uv": [62, 26]},
+						{"origin": [1, 8, -7], "size": [2, 7, 1], "uv": [78, 26]},
+						{"origin": [0, 13, -6.5], "size": [4, 2, 0], "uv": [78, 34]}
+					]
+				},
+				{
+					"name": "left_arm",
+					"parent": "bass",
+					"pivot": [3.9, 5.6, 0],
+					"rotation": [0, 0, -27.5],
+					"cubes": [
+						{"origin": [3, 2.6, -1], "size": [2, 4, 2], "uv": [23, 0]}
 					]
 				}
 			]
