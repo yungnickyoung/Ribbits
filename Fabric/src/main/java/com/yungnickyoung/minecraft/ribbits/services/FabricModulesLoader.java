@@ -7,5 +7,6 @@ public class FabricModulesLoader implements IModulesLoader {
     public void loadCommonModules() {
         IModulesLoader.super.loadCommonModules(); // Load common modules
         ConfigModuleFabric.init();
+        NetworkModuleFabric.registerC2SPackets();
     }
 }

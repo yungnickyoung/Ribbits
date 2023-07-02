@@ -1,5 +1,8 @@
 package com.yungnickyoung.minecraft.ribbits.services;
 
+import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
+import net.minecraft.server.level.ServerLevel;
+
 public interface IPlatformHelper {
     /**
      * Gets the name of the current platform
@@ -22,4 +25,6 @@ public interface IPlatformHelper {
      * @return True if in a development environment, false otherwise.
      */
     boolean isDevelopmentEnvironment();
+
+    void sendRibbitMusicS2CPacket(ServerLevel serverLevel, RibbitEntity ribbit);
 }

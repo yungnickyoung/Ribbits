@@ -7,5 +7,6 @@ public class ForgeModulesLoader implements IModulesLoader {
     public void loadCommonModules() {
         IModulesLoader.super.loadCommonModules(); // Load common modules
         ConfigModuleForge.init();
+        NetworkModuleForge.init();
     }
 }
