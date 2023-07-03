@@ -1,6 +1,5 @@
 package com.yungnickyoung.minecraft.ribbits.network;
 
-import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -9,10 +8,12 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class RibbitMusicS2CPacket {
-    private int ribbitId;
+    private final int ribbitId;
+    private final int tickOffset;
 
-    public RibbitMusicS2CPacket(int ribbitId) {
+    public RibbitMusicS2CPacket(int ribbitId, int tickOffset) {
         this.ribbitId = ribbitId;
+        this.tickOffset = tickOffset;
     }
 
     /**
@@ -20,6 +21,7 @@ public class RibbitMusicS2CPacket {
      */
     public RibbitMusicS2CPacket(FriendlyByteBuf buf) {
         this.ribbitId = buf.readInt();
+        this.tickOffset = buf.readInt();
     }
 
     /**
@@ -27,6 +29,7 @@ public class RibbitMusicS2CPacket {
      */
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(this.ribbitId);
+        buf.writeInt(this.tickOffset);
     }
 
     /**
@@ -43,5 +46,9 @@ public class RibbitMusicS2CPacket {
 
     public int getRibbitId() {
         return this.ribbitId;
+    }
+
+    public int getTickOffset() {
+        return this.tickOffset;
     }
 }

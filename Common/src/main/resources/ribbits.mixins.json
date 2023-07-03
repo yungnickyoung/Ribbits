@@ -4,7 +4,12 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "ribbits.refmap.json",
   "mixins": [
-    "DoorBlockAccessor"
+    "DoorBlockAccessor",
+    "client.SoundBufferAccessor"
+  ],
+  "client": [
+    "client.ChannelMixin",
+    "client.SoundEngineMixin"
   ],
   "injectors": {
     "defaultRequire": 1

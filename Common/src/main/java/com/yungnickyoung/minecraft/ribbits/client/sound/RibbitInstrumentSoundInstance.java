@@ -1,25 +1,26 @@
 package com.yungnickyoung.minecraft.ribbits.client.sound;
 
+import com.mojang.blaze3d.audio.SoundBuffer;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-
-import java.util.List;
 
 public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance {
     private final RibbitEntity ribbit;
+    private int sourceId;
+    private final int ticksOffset;
 
-    public RibbitInstrumentSoundInstance(RibbitEntity ribbit, SoundEvent soundEvent) {
+
+    public RibbitInstrumentSoundInstance(RibbitEntity ribbit, int ticksOffset, SoundEvent soundEvent) {
         super(soundEvent, SoundSource.NEUTRAL);
         this.ribbit = ribbit;
+        this.ticksOffset = ticksOffset;
         this.attenuation = SoundInstance.Attenuation.NONE;
         this.looping = true;
         this.delay = 0;
-        this.volume = 0.0F;
+        this.volume = 1.0F;
     }
 
     @Override
@@ -28,17 +29,8 @@ public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance
         this.y = this.ribbit.getY();
         this.z = this.ribbit.getZ();
 
-        List<RibbitEntity> nearbyRibbits = this.ribbit.level.getNearbyEntities(RibbitEntity.class, TargetingConditions.DEFAULT, this.ribbit, this.ribbit.getBoundingBox().inflate(20.0d, 5.0d, 20.0d));
-
-        if (this.ribbit.isRemoved() || nearbyRibbits.stream().noneMatch(RibbitEntity::getPlayingInstrument)) {
-            this.ribbit.setPlayingMusic(false);
+        if (this.ribbit.isRemoved()) {
             this.stop();
-        }
-
-        if (this.ribbit.getPlayingInstrument()) {
-            this.volume = 1.0f;
-        } else {
-            this.volume = 0.0f;
         }
     }
 
@@ -50,5 +42,17 @@ public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance
     @Override
     public boolean canPlaySound() {
         return super.canPlaySound();
+    }
+
+    public int getTicksOffset() {
+        return ticksOffset;
+    }
+
+    public int getSourceId() {
+        return this.sourceId;
+    }
+
+    public void setSourceId(int sourceId) {
+        this.sourceId = sourceId;
     }
 }

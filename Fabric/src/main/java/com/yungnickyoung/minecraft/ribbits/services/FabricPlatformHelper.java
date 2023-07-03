@@ -9,6 +9,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 public class FabricPlatformHelper implements IPlatformHelper {
@@ -28,12 +29,47 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void sendRibbitMusicS2CPacket(ServerLevel serverLevel, RibbitEntity ribbit) {
+    public void sendRibbitMusicS2CPacketToAll(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
         FriendlyByteBuf buf = PacketByteBufs.create();
 
-        buf.writeInt(ribbit.getId());
+        if (newRibbit.equals(masterRibbit)) {
+            buf.writeInt(newRibbit.getId());
+            buf.writeInt(masterRibbit.getTicksPlayingMusic());
 
-        for (ServerPlayer player : PlayerLookup.all(serverLevel.getServer())) {
+            for (ServerPlayer player : PlayerLookup.all(serverLevel.getServer())) {
+                ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
+
+                for (RibbitEntity ribbit : masterRibbit.getRibbitsPlayingMusic()) {
+                    buf = PacketByteBufs.create();
+
+                    buf.writeInt(ribbit.getId());
+                    buf.writeInt(-1);
+                    ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
+                }
+            }
+        } else {
+            buf.writeInt(newRibbit.getId());
+            buf.writeInt(-1);
+
+            for (ServerPlayer player : PlayerLookup.all(serverLevel.getServer())) {
+                ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
+            }
+        }
+    }
+
+    @Override
+    public void sendRibbitMusicS2CPacketToPlayer(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
+        FriendlyByteBuf buf = PacketByteBufs.create();
+
+        buf.writeInt(newRibbit.getId());
+        buf.writeInt(masterRibbit.getTicksPlayingMusic());
+        ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
+
+        for (RibbitEntity ribbit : masterRibbit.getRibbitsPlayingMusic()) {
+            buf = PacketByteBufs.create();
+
+            buf.writeInt(ribbit.getId());
+            buf.writeInt(-1);
             ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
         }
     }

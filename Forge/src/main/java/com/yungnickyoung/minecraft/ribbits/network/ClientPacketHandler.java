@@ -15,11 +15,9 @@ public class ClientPacketHandler {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         if (clientLevel != null) {
             RibbitEntity ribbit = (RibbitEntity) clientLevel.getEntity(packet.getRibbitId());
+            int ticksPlaying = packet.getTickOffset();
 
-            if (!ribbit.getPlayingMusic()) {
-                Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, ribbit.getRibbitData().getProfession().getInstrumentTrack()));
-                ribbit.setPlayingMusic(true);
-            }
+            Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, ticksPlaying, ribbit.getRibbitData().getProfession().getInstrumentTrack()));
         }
     }
 }

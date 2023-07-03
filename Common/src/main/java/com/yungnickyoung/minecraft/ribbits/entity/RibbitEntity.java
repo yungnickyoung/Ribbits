@@ -47,6 +47,9 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class RibbitEntity extends AgeableMob implements IAnimatable {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -75,11 +78,14 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         EntityDataSerializers.registerSerializer(RIBBIT_DATA_SERIALIZER);
     }
 
-    // NOTE: This boolean will only be set and tracked on the Client!
-    private boolean playingMusic = false;
-
     private static final EntityDataAccessor<RibbitData> RIBBIT_DATA = SynchedEntityData.defineId(RibbitEntity.class, RIBBIT_DATA_SERIALIZER);
     private static final EntityDataAccessor<Boolean> PLAYING_INSTRUMENT = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
+
+    // NOTE: Fields below here are used only on Server
+    private int ticksPlayingMusic;
+    private final Set<RibbitEntity> ribbitsPlayingMusic = new HashSet<>();
+    private final Set<Player> playersHearingMusic = new HashSet<>();
+    private RibbitEntity masterRibbit;
 
     public RibbitEntity(EntityType<RibbitEntity> entityType, Level level) {
         super(entityType, level);
@@ -154,12 +160,56 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         this.entityData.set(PLAYING_INSTRUMENT, playingInstrument);
     }
 
-    public boolean getPlayingMusic() {
-        return this.playingMusic;
+    public int getTicksPlayingMusic() {
+        return this.ticksPlayingMusic;
     }
 
-    public void setPlayingMusic(boolean playingMusic) {
-        this.playingMusic = playingMusic;
+    public void setTicksPlayingMusic(int ticksPlayingMusic) {
+        this.ticksPlayingMusic = ticksPlayingMusic;
+    }
+
+    public Set<RibbitEntity> getRibbitsPlayingMusic() {
+        return ribbitsPlayingMusic;
+    }
+
+    public void addRibbitToPlayingMusic(RibbitEntity ribbit) {
+        this.ribbitsPlayingMusic.add(ribbit);
+    }
+
+    public Set<Player> getPlayersHearingMusic() {
+        return this.playersHearingMusic;
+    }
+
+    public RibbitEntity getMasterRibbit() {
+        return this.masterRibbit;
+    }
+
+    public void setMasterRibbit(RibbitEntity masterRibbit) {
+        this.masterRibbit = masterRibbit;
+    }
+
+    public void findNewMasterRibbit() {
+        RibbitEntity newMaster = this.getRibbitsPlayingMusic().stream().findAny().orElse(null);
+
+        if (newMaster != null) {
+            for (RibbitEntity ribbit : this.getRibbitsPlayingMusic()) {
+                ribbit.setMasterRibbit(newMaster);
+            }
+
+            this.getRibbitsPlayingMusic().remove(newMaster);
+            newMaster.getRibbitsPlayingMusic().addAll(this.getRibbitsPlayingMusic());
+            newMaster.getPlayersHearingMusic().addAll(this.getPlayersHearingMusic());
+            newMaster.setTicksPlayingMusic(this.getTicksPlayingMusic());
+        }
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+
+        if (this.equals(this.getMasterRibbit())) {
+            findNewMasterRibbit();
+        }
     }
 
     public static AttributeSupplier.Builder createRibbitAttributes() {

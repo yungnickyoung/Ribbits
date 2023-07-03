@@ -2,6 +2,8 @@ package com.yungnickyoung.minecraft.ribbits.services;
 
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 public interface IPlatformHelper {
     /**
@@ -26,5 +28,7 @@ public interface IPlatformHelper {
      */
     boolean isDevelopmentEnvironment();
 
-    void sendRibbitMusicS2CPacket(ServerLevel serverLevel, RibbitEntity ribbit);
+    void sendRibbitMusicS2CPacketToAll(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit);
+
+    void sendRibbitMusicS2CPacketToPlayer(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit);
 }
