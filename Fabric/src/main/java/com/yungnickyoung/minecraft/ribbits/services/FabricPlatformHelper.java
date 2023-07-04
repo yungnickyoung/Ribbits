@@ -38,14 +38,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
             for (ServerPlayer player : PlayerLookup.all(serverLevel.getServer())) {
                 ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
-
-                for (RibbitEntity ribbit : masterRibbit.getRibbitsPlayingMusic()) {
-                    buf = PacketByteBufs.create();
-
-                    buf.writeInt(ribbit.getId());
-                    buf.writeInt(-1);
-                    ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
-                }
             }
         } else {
             buf.writeInt(newRibbit.getId());

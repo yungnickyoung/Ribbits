@@ -12,7 +12,8 @@ public class RibbitMusicS2CPacket {
                                ClientPacketListener clientPacketListener,
                                FriendlyByteBuf buf,
                                PacketSender responseSender) {
-        RibbitEntity ribbit = (RibbitEntity) client.level.getEntity(buf.readInt());
+        int entityId = buf.readInt();
+        RibbitEntity ribbit = (RibbitEntity) client.level.getEntity(entityId);
         int ticksPlaying = buf.readInt();
 
         client.execute(() -> {

@@ -45,16 +45,14 @@ public class SoundEngineMixin {
         if (soundInstance instanceof RibbitInstrumentSoundInstance ribbitInstrumentSoundInstance) {
             this.soundBuffers.getCompleteBuffer(sound.getPath()).thenAccept((soundBuffer) -> {
                 channelAccess.execute((channel) -> {
-                    if (ribbitInstrumentSoundInstance.getTicksOffset() > 0) {
-                        ((ChannelAccessor) channel).attachStaticBufferWithTickOffset(ribbitInstrumentSoundInstance, soundBuffer, ribbitInstrumentSoundInstance.getTicksOffset());
-                    } else if (ribbitInstrumentSoundInstance.getTicksOffset() == -1) {
+                    if (ribbitInstrumentSoundInstance.getTicksOffset() == -1) {
                         RibbitInstrumentSoundInstance instrumentSoundInstance = (RibbitInstrumentSoundInstance) this.tickingSounds.stream().filter((instance) -> instance instanceof RibbitInstrumentSoundInstance).findAny().orElse(null);
 
                         if (instrumentSoundInstance != null) {
                             ((ChannelAccessor) channel).attachStaticBufferWithByteOffset(ribbitInstrumentSoundInstance, soundBuffer, instrumentSoundInstance.getSourceId());
                         }
                     } else {
-                        channel.attachStaticBuffer(soundBuffer);
+                        ((ChannelAccessor) channel).attachStaticBufferWithTickOffset(ribbitInstrumentSoundInstance, soundBuffer, ribbitInstrumentSoundInstance.getTicksOffset());
                     }
 
                     channel.play();
