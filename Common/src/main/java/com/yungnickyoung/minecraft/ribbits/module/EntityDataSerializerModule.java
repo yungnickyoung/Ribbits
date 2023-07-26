@@ -2,8 +2,6 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
-import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfessions;
-import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitUmbrellaTypes;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
@@ -17,13 +15,12 @@ public class EntityDataSerializerModule {
      * This mimics the serializer used for vanilla VillagerData, but tweaked for our purposes.
      */
     public static final EntityDataSerializer<RibbitData> RIBBIT_DATA_SERIALIZER = new EntityDataSerializer<>() {
-        public void write(FriendlyByteBuf buff, RibbitData data) {
-            buff.writeVarInt(data.getProfession().getId());
-            buff.writeVarInt(data.getUmbrellaType().getId());
+        public void write(@NotNull FriendlyByteBuf buf, RibbitData data) {
+            data.write(buf);
         }
 
-        public @NotNull RibbitData read(FriendlyByteBuf buf) {
-            return new RibbitData(RibbitProfessions.getProfession(buf.readVarInt()), RibbitUmbrellaTypes.getUmbrellaType(buf.readVarInt()));
+        public @NotNull RibbitData read(@NotNull FriendlyByteBuf buf) {
+            return new RibbitData(buf);
         }
 
         public @NotNull RibbitData copy(@NotNull RibbitData data) {

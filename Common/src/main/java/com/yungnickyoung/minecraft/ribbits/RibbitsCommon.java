@@ -6,6 +6,7 @@ import com.yungnickyoung.minecraft.ribbits.services.Services;
 import com.yungnickyoung.minecraft.yungsapi.api.YungAutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterCreativeTab;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,5 +26,9 @@ public class RibbitsCommon {
     public static void init() {
         YungAutoRegister.scanPackageForAnnotations("com.yungnickyoung.minecraft.ribbits");
         Services.MODULES.loadCommonModules();
+    }
+
+    public static ResourceLocation id(String path) {
+        return new ResourceLocation(MOD_ID, path);
     }
 }

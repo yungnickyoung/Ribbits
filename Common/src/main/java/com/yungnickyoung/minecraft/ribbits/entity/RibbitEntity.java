@@ -2,10 +2,9 @@ package com.yungnickyoung.minecraft.ribbits.entity;
 
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitPlayMusicGoal;
-import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfession;
-import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfessions;
-import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitUmbrellaTypes;
 import com.yungnickyoung.minecraft.ribbits.module.EntityDataSerializerModule;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -72,7 +71,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessions.getRandomProfession(), RibbitUmbrellaTypes.getRandomUmbrellaType()));
+        this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.getRandomProfession(), RibbitUmbrellaTypeModule.getRandomUmbrellaType()));
         this.entityData.define(PLAYING_INSTRUMENT, false);
     }
 
@@ -102,7 +101,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
         this.goalSelector.removeGoal(this.musicGoal);
 
-        if (RibbitProfession.nitwitProfessions.contains(this.getRibbitData().getProfession())) {
+        if (RibbitProfessionModule.isNitwit(this.getRibbitData().getProfession())) {
             this.goalSelector.addGoal(1, this.musicGoal);
         }
     }
