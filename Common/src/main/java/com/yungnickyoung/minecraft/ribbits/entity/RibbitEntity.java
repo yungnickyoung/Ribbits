@@ -5,18 +5,15 @@ import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitPlayMusicGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfessions;
 import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitUmbrellaTypes;
+import com.yungnickyoung.minecraft.ribbits.module.EntityDataSerializerModule;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
@@ -28,11 +25,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -48,37 +41,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class RibbitEntity extends AgeableMob implements IAnimatable {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final RibbitPlayMusicGoal musicGoal = new RibbitPlayMusicGoal(this);
 
-    /**
-     * Creating and then registering the data serializer for Ribbits. This mimics the serializer used for
-     * vanilla VillagerData, but tweaked for our purposes. This can be moved elsewhere if necessary.
-     */
-    public static final EntityDataSerializer<RibbitData> RIBBIT_DATA_SERIALIZER = new EntityDataSerializer<>() {
-        public void write(FriendlyByteBuf buff, RibbitData data) {
-            buff.writeVarInt(data.getProfession().getId());
-            buff.writeVarInt(data.getUmbrellaType().getId());
-        }
-
-        public RibbitData read(FriendlyByteBuf buf) {
-            return new RibbitData(RibbitProfessions.getProfession(buf.readVarInt()), RibbitUmbrellaTypes.getUmbrellaType(buf.readVarInt()));
-        }
-
-        public RibbitData copy(RibbitData data) {
-            return data;
-        }
-    };
-
-    static {
-        EntityDataSerializers.registerSerializer(RIBBIT_DATA_SERIALIZER);
-    }
-
-    private static final EntityDataAccessor<RibbitData> RIBBIT_DATA = SynchedEntityData.defineId(RibbitEntity.class, RIBBIT_DATA_SERIALIZER);
+    private static final EntityDataAccessor<RibbitData> RIBBIT_DATA = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializerModule.RIBBIT_DATA_SERIALIZER);
     private static final EntityDataAccessor<Boolean> PLAYING_INSTRUMENT = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
 
     // NOTE: Fields below here are used only on Server

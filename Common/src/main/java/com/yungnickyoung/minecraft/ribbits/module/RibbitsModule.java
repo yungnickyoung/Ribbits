@@ -18,6 +18,8 @@ public class RibbitsModule {
      */
     @AutoRegister("_ignored")
     public static void postInit() {
+        RibbitsCommon.LOGGER.info("Registering Ribbit professions and umbrella types...");
+
         RibbitProfessions.addProfession(RibbitProfession.SORCERER.getId(), RibbitProfession.SORCERER);
         RibbitProfessions.addProfession(RibbitProfession.GARDENER.getId(), RibbitProfession.GARDENER);
         RibbitProfessions.addProfession(RibbitProfession.BASSIST.getId(), RibbitProfession.BASSIST);
