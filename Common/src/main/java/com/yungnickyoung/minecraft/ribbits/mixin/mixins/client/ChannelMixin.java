@@ -1,28 +1,23 @@
-package com.yungnickyoung.minecraft.ribbits.mixin.client;
+package com.yungnickyoung.minecraft.ribbits.mixin.mixins.client;
 
 import com.mojang.blaze3d.audio.Channel;
 import com.mojang.blaze3d.audio.SoundBuffer;
-import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
-import com.yungnickyoung.minecraft.ribbits.access.client.ChannelAccessor;
+import com.yungnickyoung.minecraft.ribbits.mixin.interfaces.client.IChannelDuck;
 import com.yungnickyoung.minecraft.ribbits.client.sound.RibbitInstrumentSoundInstance;
+import com.yungnickyoung.minecraft.ribbits.mixin.mixins.client.accessor.SoundBufferAccessor;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.AL11;
-import org.lwjgl.openal.ALCapabilities;
-import org.lwjgl.openal.SOFTSourceLatency;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import java.nio.IntBuffer;
-import java.nio.LongBuffer;
 import java.util.OptionalInt;
 
-
 @Mixin(Channel.class)
-public class ChannelMixin implements ChannelAccessor {
+public class ChannelMixin implements IChannelDuck {
 
     @Shadow @Final private int source;
 

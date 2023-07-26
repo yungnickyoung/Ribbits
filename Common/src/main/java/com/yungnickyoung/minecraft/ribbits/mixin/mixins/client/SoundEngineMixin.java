@@ -1,6 +1,6 @@
-package com.yungnickyoung.minecraft.ribbits.mixin.client;
+package com.yungnickyoung.minecraft.ribbits.mixin.mixins.client;
 
-import com.yungnickyoung.minecraft.ribbits.access.client.ChannelAccessor;
+import com.yungnickyoung.minecraft.ribbits.mixin.interfaces.client.IChannelDuck;
 import com.yungnickyoung.minecraft.ribbits.client.sound.RibbitInstrumentSoundInstance;
 import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -49,10 +49,10 @@ public class SoundEngineMixin {
                         RibbitInstrumentSoundInstance instrumentSoundInstance = (RibbitInstrumentSoundInstance) this.tickingSounds.stream().filter((instance) -> instance instanceof RibbitInstrumentSoundInstance).findAny().orElse(null);
 
                         if (instrumentSoundInstance != null) {
-                            ((ChannelAccessor) channel).attachStaticBufferWithByteOffset(ribbitInstrumentSoundInstance, soundBuffer, instrumentSoundInstance.getSourceId());
+                            ((IChannelDuck) channel).attachStaticBufferWithByteOffset(ribbitInstrumentSoundInstance, soundBuffer, instrumentSoundInstance.getSourceId());
                         }
                     } else {
-                        ((ChannelAccessor) channel).attachStaticBufferWithTickOffset(ribbitInstrumentSoundInstance, soundBuffer, ribbitInstrumentSoundInstance.getTicksOffset());
+                        ((IChannelDuck) channel).attachStaticBufferWithTickOffset(ribbitInstrumentSoundInstance, soundBuffer, ribbitInstrumentSoundInstance.getTicksOffset());
                     }
 
                     channel.play();

@@ -4,7 +4,7 @@ import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.block.GiantLilyPadBlock;
 import com.yungnickyoung.minecraft.ribbits.block.SwampLanternBlock;
 import com.yungnickyoung.minecraft.ribbits.block.SwampPlantBlock;
-import com.yungnickyoung.minecraft.ribbits.mixin.DoorBlockAccessor;
+import com.yungnickyoung.minecraft.ribbits.mixin.mixins.accessor.DoorBlockAccessor;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterBlock;
 import net.minecraft.world.item.Item;

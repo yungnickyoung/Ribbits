@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.ribbits.mixin.client;
+package com.yungnickyoung.minecraft.ribbits.mixin.mixins.client.accessor;
 
 import com.mojang.blaze3d.audio.SoundBuffer;
 import org.spongepowered.asm.mixin.Mixin;
