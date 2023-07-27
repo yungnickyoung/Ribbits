@@ -1,10 +1,15 @@
 {
   "required": true,
-  "package": "com.yungnickyoung.minecraft.ribbits.mixin",
+  "package": "com.yungnickyoung.minecraft.ribbits.mixin.mixins",
   "compatibilityLevel": "JAVA_17",
   "refmap": "ribbits.refmap.json",
   "mixins": [
-    "DoorBlockAccessor"
+    "accessor.DoorBlockAccessor"
+  ],
+  "client": [
+    "client.ChannelMixin",
+    "client.SoundEngineMixin",
+    "client.accessor.SoundBufferAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

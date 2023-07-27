@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.ribbits.mixin;
+package com.yungnickyoung.minecraft.ribbits.mixin.mixins.accessor;
 
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;

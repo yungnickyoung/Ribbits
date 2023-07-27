@@ -1,35 +1,36 @@
 package com.yungnickyoung.minecraft.ribbits.entity.npc;
 
-import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+
+import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class RibbitProfession {
-    public static final RibbitProfession GARDENER = new RibbitProfession("gardener", new ResourceLocation(RibbitsCommon.MOD_ID, "geo/gardener_ribbit.geo.json"));
-    public static final RibbitProfession SORCERER = new RibbitProfession("sorcerer", new ResourceLocation(RibbitsCommon.MOD_ID, "geo/sorcerer_ribbit.geo.json"));
-    public static final RibbitProfession BASSIST = new RibbitProfession("bassist", new ResourceLocation(RibbitsCommon.MOD_ID, "geo/bass_ribbit.geo.json"));
-    public static final RibbitProfession BONGOIST = new RibbitProfession("bongoist", new ResourceLocation(RibbitsCommon.MOD_ID, "geo/bongo_ribbit.geo.json"));
-    public static final RibbitProfession FLAUTIST = new RibbitProfession("flautist", new ResourceLocation(RibbitsCommon.MOD_ID, "geo/flute_ribbit.geo.json"));
-    public static final RibbitProfession GUITARIST = new RibbitProfession("guitarist", new ResourceLocation(RibbitsCommon.MOD_ID, "geo/guitar_ribbit.geo.json"));
+    public static final Codec<RibbitProfession> CODEC = RecordCodecBuilder.create(instance -> instance
+            .group(
+                    ResourceLocation.CODEC.fieldOf("id").forGetter(profession -> profession.id),
+                    ResourceLocation.CODEC.fieldOf("model_location").forGetter(profession -> profession.modelLocation),
+                    SoundEvent.CODEC.optionalFieldOf("instrument_track").forGetter(profession -> profession.instrumentSoundEvent))
+            .apply(instance, instance.stable(RibbitProfession::new)));
 
-    private final String name;
+    private final ResourceLocation id;
     private final ResourceLocation modelLocation;
-    private final int id;
+    private final Optional<SoundEvent> instrumentSoundEvent;
 
-    private static int nextId = 0;
-
-    private RibbitProfession(String name, ResourceLocation modelLocation) {
-        this.name = name;
+    private RibbitProfession(ResourceLocation id, ResourceLocation modelLocation, Optional<SoundEvent> instrumentSoundEvent) {
+        this.id = id;
         this.modelLocation = modelLocation;
-        this.id = nextId;
-
-        nextId++;
+        this.instrumentSoundEvent = instrumentSoundEvent;
     }
 
-    public String getName() {
-        return this.name;
+    public RibbitProfession(ResourceLocation id, ResourceLocation modelLocation, @Nullable SoundEvent instrumentSoundEvent) {
+        this(id, modelLocation, Optional.ofNullable(instrumentSoundEvent));
     }
 
-    public int getId() {
+    public ResourceLocation getId() {
         return this.id;
     }
 
@@ -37,7 +38,23 @@ public class RibbitProfession {
         return this.modelLocation;
     }
 
+    public Optional<SoundEvent> getInstrumentSoundEvent() {
+        return this.instrumentSoundEvent;
+    }
+
+    @Override
     public String toString() {
-        return this.name;
+        return this.id.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (!(obj instanceof RibbitProfession other)) {
+            return false;
+        } else {
+            return this.id.equals(other.getId());
+        }
     }
 }
