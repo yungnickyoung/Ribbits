@@ -21,6 +21,12 @@ public class ChannelMixin implements IChannelDuck {
 
     @Shadow @Final private int source;
 
+    /**
+     * Attaches a buffer to the current source using a byte offset grabbed from another existing source.
+     * @param instance the sound instance about to be started
+     * @param soundBuffer the buffer that the sound should be played on
+     * @param sourceId the source id of the source that the offset should be fetched from
+     */
     @Override
     public void attachStaticBufferWithByteOffset(SoundInstance instance, SoundBuffer soundBuffer, int sourceId) {
         OptionalInt bufferId = ((SoundBufferAccessor) soundBuffer).callGetAlBuffer();
@@ -45,6 +51,13 @@ public class ChannelMixin implements IChannelDuck {
         }
     }
 
+    /**
+     * Attaches a buffer to the current source using a sample offset that is matched as closely as possible to an
+     * existing source by the number of ticks the other sound has been playing.
+     * @param instance the sound instance about to be started
+     * @param soundBuffer the buffer that the sound should be played on
+     * @param ticksToOffset the number of ticks the already playing sound has been active
+     */
     @Override
     public void attachStaticBufferWithTickOffset(SoundInstance instance, SoundBuffer soundBuffer, int ticksToOffset) {
         IntBuffer frequency = BufferUtils.createIntBuffer(1);
