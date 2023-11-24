@@ -50,6 +50,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
     private static final EntityDataAccessor<RibbitData> RIBBIT_DATA = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializerModule.RIBBIT_DATA_SERIALIZER);
     private static final EntityDataAccessor<Boolean> PLAYING_INSTRUMENT = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> UMBRELLA_FALLING = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
 
     // NOTE: Fields below here are used only on Server
     private int ticksPlayingMusic;
@@ -71,10 +72,28 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     }
 
     @Override
+    public void aiStep() {
+        super.aiStep();
+
+        if (!this.level.isClientSide) {
+            if (this.onGround && this.getUmbrellaFalling()) {
+                this.setUmbrellaFalling(false);
+            }
+
+            if (this.fallDistance >= 4 || this.getUmbrellaFalling()) {
+                this.resetFallDistance();
+                this.push(0.0f, 0.075f, 0.0f);
+                this.setUmbrellaFalling(true);
+            }
+        }
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.getRandomProfession(), RibbitUmbrellaTypeModule.getRandomUmbrellaType()));
         this.entityData.define(PLAYING_INSTRUMENT, false);
+        this.entityData.define(UMBRELLA_FALLING, false);
     }
 
     @Override
@@ -128,6 +147,14 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
     public void setPlayingInstrument(boolean playingInstrument) {
         this.entityData.set(PLAYING_INSTRUMENT, playingInstrument);
+    }
+
+    public boolean getUmbrellaFalling() {
+        return this.entityData.get(UMBRELLA_FALLING);
+    }
+
+    public void setUmbrellaFalling(boolean umbrellaFalling) {
+        this.entityData.set(UMBRELLA_FALLING, umbrellaFalling);
     }
 
     public int getTicksPlayingMusic() {
@@ -214,7 +241,9 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     }
 
     private PlayState predicate(AnimationEvent<RibbitEntity> event) {
-        if (getPlayingInstrument()) {
+        if (this.getUmbrellaFalling()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN) ? "idle_holding_2" : "idle_holding_1"));
+        } else if (getPlayingInstrument()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation(getInstrumentAnimName()));
         } else if (event.getLimbSwingAmount() > 0.15D || event.getLimbSwingAmount() < -0.15D) {
             if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN)) {

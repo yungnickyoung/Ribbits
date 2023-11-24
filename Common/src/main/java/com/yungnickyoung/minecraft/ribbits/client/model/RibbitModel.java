@@ -13,7 +13,7 @@ public class RibbitModel extends AnimatedGeoModel<RibbitEntity> {
 
     @Override
     public ResourceLocation getModelLocation(RibbitEntity object) {
-        if (object.getLevel().isRaining() && object.isInWaterOrRain() && !object.isInWater()) {
+        if (object.getUmbrellaFalling() || (object.getLevel().isRaining() && object.isInWaterOrRain() && !object.isInWater())) {
             return object.getRibbitData().getUmbrellaType().getModelLocation();
         } else {
             return object.getRibbitData().getProfession().getModelLocation();
