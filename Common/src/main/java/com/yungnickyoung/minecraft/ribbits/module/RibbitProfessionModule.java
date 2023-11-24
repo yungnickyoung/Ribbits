@@ -21,6 +21,7 @@ public class RibbitProfessionModule {
     /* Registration of built-in RibbitProfessions. */
     public static final RibbitProfession GARDENER = register("gardener", "geo/gardener_ribbit.geo.json", null);
     public static final RibbitProfession SORCERER = register("sorcerer", "geo/sorcerer_ribbit.geo.json", null);
+    public static final RibbitProfession FISHERMAN = register("fisherman", "geo/fisherman_ribbit.geo.json", null);
     public static final RibbitProfession BASSIST = register("bassist", "geo/bass_ribbit.geo.json", SoundModule.MUSIC_RIBBIT_BASS.get());
     public static final RibbitProfession BONGOIST = register("bongoist", "geo/bongo_ribbit.geo.json", SoundModule.MUSIC_RIBBIT_BONGO.get());
     public static final RibbitProfession FLAUTIST = register("flautist", "geo/flute_ribbit.geo.json", SoundModule.MUSIC_RIBBIT_FLUTE.get());

@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.ribbits.entity;
 
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitPlayMusicGoal;
+import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.module.EntityDataSerializerModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
@@ -28,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -213,13 +215,37 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
     private PlayState predicate(AnimationEvent<RibbitEntity> event) {
         if (getPlayingInstrument()) {
-          event.getController().setAnimation(new AnimationBuilder().addAnimation("play_bongo"));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(getInstrumentAnimName()));
         } else if (event.getLimbSwingAmount() > 0.15D || event.getLimbSwingAmount() < -0.15D) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() && this.isInWaterOrRain() && !this.isInWater() ? "walk_holding_1" : "walk", ILoopType.EDefaultLoopTypes.LOOP));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() && this.isInWaterOrRain() && !this.isInWater() ? "idle_holding_1" : "idle", ILoopType.EDefaultLoopTypes.LOOP));
+            if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN)) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("walk_holding_2"));
+            } else {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() && this.isInWaterOrRain() && !this.isInWater() ? "walk_holding_1" : "walk", ILoopType.EDefaultLoopTypes.LOOP));
+            }
+          } else {
+            if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN)) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("idle_holding_2"));
+            } else {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation(this.level.isRaining() && this.isInWaterOrRain() && !this.isInWater() ? "idle_holding_1" : "idle", ILoopType.EDefaultLoopTypes.LOOP));
+            }
         }
         return PlayState.CONTINUE;
+    }
+
+    private String getInstrumentAnimName() {
+        String instrumentAnimName;
+        RibbitProfession profession = this.getRibbitData().getProfession();
+
+        if (profession.equals(RibbitProfessionModule.BASSIST)) {
+            instrumentAnimName = "play_bass";
+        } else if (profession.equals(RibbitProfessionModule.BONGOIST)) {
+            instrumentAnimName = "play_bongo";
+        } else if (profession.equals(RibbitProfessionModule.FLAUTIST)) {
+            instrumentAnimName = "play_flute";
+        } else {
+            instrumentAnimName = "play_guitar";
+        }
+        return instrumentAnimName;
     }
 
     @Override
