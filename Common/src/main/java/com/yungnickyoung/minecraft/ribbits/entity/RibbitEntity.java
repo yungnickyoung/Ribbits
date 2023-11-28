@@ -1,7 +1,10 @@
 package com.yungnickyoung.minecraft.ribbits.entity;
 
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
+import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitApplyBuffGoal;
+import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitFishGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitPlayMusicGoal;
+import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitWaterCropsGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.module.EntityDataSerializerModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
@@ -16,6 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -29,7 +33,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -47,16 +50,23 @@ import java.util.Set;
 public class RibbitEntity extends AgeableMob implements IAnimatable {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final RibbitPlayMusicGoal musicGoal = new RibbitPlayMusicGoal(this);
+    private final RibbitWaterCropsGoal waterCropsGoal = new RibbitWaterCropsGoal(this, 8.0d, 100);
+    private final RibbitFishGoal fishGoal = new RibbitFishGoal(this, 16.0d);
+    private final RibbitApplyBuffGoal applyBuffGoal = new RibbitApplyBuffGoal(this, 16.0d, 100, 600, MobEffects.REGENERATION, MobEffects.DAMAGE_RESISTANCE, MobEffects.DAMAGE_BOOST, MobEffects.JUMP, MobEffects.DIG_SPEED, MobEffects.HEALTH_BOOST);
 
     private static final EntityDataAccessor<RibbitData> RIBBIT_DATA = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializerModule.RIBBIT_DATA_SERIALIZER);
     private static final EntityDataAccessor<Boolean> PLAYING_INSTRUMENT = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> UMBRELLA_FALLING = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> WATERING = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FISHING = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
 
     // NOTE: Fields below here are used only on Server
     private int ticksPlayingMusic;
     private final Set<RibbitEntity> ribbitsPlayingMusic = new HashSet<>();
-    private final Set<Player> playersHearingMusic = new HashSet<>();
+    private Set<Player> playersHearingMusic = new HashSet<>();
     private RibbitEntity masterRibbit;
+
+    private int buffCooldown = 0;
 
     public RibbitEntity(EntityType<RibbitEntity> entityType, Level level) {
         super(entityType, level);
@@ -85,6 +95,10 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
                 this.push(0.0f, 0.075f, 0.0f);
                 this.setUmbrellaFalling(true);
             }
+
+            if (this.buffCooldown > 0) {
+                this.buffCooldown--;
+            }
         }
     }
 
@@ -94,6 +108,8 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.getRandomProfession(), RibbitUmbrellaTypeModule.getRandomUmbrellaType()));
         this.entityData.define(PLAYING_INSTRUMENT, false);
         this.entityData.define(UMBRELLA_FALLING, false);
+        this.entityData.define(WATERING, false);
+        this.entityData.define(FISHING, false);
     }
 
     @Override
@@ -121,9 +137,16 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         }
 
         this.goalSelector.removeGoal(this.musicGoal);
+        this.goalSelector.removeGoal(this.waterCropsGoal);
 
         if (RibbitProfessionModule.isNitwit(this.getRibbitData().getProfession())) {
-            this.goalSelector.addGoal(1, this.musicGoal);
+            this.goalSelector.addGoal(3, this.musicGoal);
+        } else if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.GARDENER)) {
+            this.goalSelector.addGoal(3, this.waterCropsGoal);
+        } else if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN)) {
+            this.goalSelector.addGoal(3, this.fishGoal);
+        } else if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.SORCERER)) {
+            this.goalSelector.addGoal(3, this.applyBuffGoal);
         }
     }
 
@@ -131,6 +154,14 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     @Override
     public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob parent) {
         return null;
+    }
+
+    public int getBuffCooldown() {
+        return this.buffCooldown;
+    }
+
+    public void setBuffCooldown(int cooldown) {
+        this.buffCooldown = cooldown;
     }
 
     public RibbitData getRibbitData() {
@@ -157,6 +188,22 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         this.entityData.set(UMBRELLA_FALLING, umbrellaFalling);
     }
 
+    public boolean getWatering() {
+        return this.entityData.get(WATERING);
+    }
+
+    public void setWatering(boolean isWatering) {
+        this.entityData.set(WATERING, isWatering);
+    }
+
+    public boolean getFishing() {
+        return this.entityData.get(FISHING);
+    }
+
+    public void setFishing(boolean isFishing) {
+        this.entityData.set(FISHING, isFishing);
+    }
+
     public int getTicksPlayingMusic() {
         return this.ticksPlayingMusic;
     }
@@ -175,6 +222,10 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
     public Set<Player> getPlayersHearingMusic() {
         return this.playersHearingMusic;
+    }
+
+    public void setPlayersHearingMusic(Set<Player> playersHearingMusic) {
+        this.playersHearingMusic = playersHearingMusic;
     }
 
     public RibbitEntity getMasterRibbit() {

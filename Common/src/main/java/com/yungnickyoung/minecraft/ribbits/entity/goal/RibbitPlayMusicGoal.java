@@ -10,6 +10,8 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class RibbitPlayMusicGoal extends Goal {
@@ -22,7 +24,7 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return true;
+        return !this.ribbit.getUmbrellaFalling() && !this.ribbit.isDeadOrDying();
     }
 
     @Override
@@ -59,13 +61,17 @@ public class RibbitPlayMusicGoal extends Goal {
     @Override
     public void tick() {
         if (this.ribbit.equals(this.ribbit.getMasterRibbit())) {
+            Set<Player> newPlayers = new HashSet<>();
+
             for (Player player : this.ribbit.level.getEntitiesOfClass(Player.class, this.ribbit.getBoundingBox().inflate(20.0d, 5.0d, 20.0d))) {
+                newPlayers.add(player);
+
                 if (!this.ribbit.getPlayersHearingMusic().contains(player)) {
-                    //Services.PLATFORM.sendRibbitMusicS2CPacketToPlayer((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
+                    Services.PLATFORM.sendRibbitMusicS2CPacketToPlayer((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
                 }
             }
 
-            this.ribbit.getPlayersHearingMusic().stream().filter(Entity::isRemoved).toList().forEach(this.ribbit.getPlayersHearingMusic()::remove);
+            this.ribbit.setPlayersHearingMusic(newPlayers);
         }
     }
 }

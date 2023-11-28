@@ -20,6 +20,8 @@ public class RibbitMusicS2CPacket {
         RibbitEntity ribbit = (RibbitEntity) client.level.getEntity(entityId);
         int ticksPlaying = buf.readInt();
 
+        if (ribbit == null) return;
+
         Optional<SoundEvent> instrumentTrackOptional = ribbit.getRibbitData().getProfession().getInstrumentSoundEvent();
         if (instrumentTrackOptional.isEmpty()) {
             RibbitsCommon.LOGGER.error("Tried to play music for a ribbit with no instrument track defined!");
