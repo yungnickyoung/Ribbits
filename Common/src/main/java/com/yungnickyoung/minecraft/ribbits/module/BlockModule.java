@@ -2,8 +2,10 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.block.GiantLilyPadBlock;
+import com.yungnickyoung.minecraft.ribbits.block.SwampDaisyBlock;
 import com.yungnickyoung.minecraft.ribbits.block.SwampLanternBlock;
-import com.yungnickyoung.minecraft.ribbits.block.SwampPlantBlock;
+import com.yungnickyoung.minecraft.ribbits.block.ToadstoolBlock;
+import com.yungnickyoung.minecraft.ribbits.block.UmbrellaLeafBlock;
 import com.yungnickyoung.minecraft.ribbits.mixin.mixins.accessor.DoorBlockAccessor;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterBlock;
@@ -61,7 +63,7 @@ public class BlockModule {
                             .noOcclusion()));
 
     @AutoRegister("swamp_daisy")
-    public static final AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampPlantBlock(
+    public static final AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampDaisyBlock(
                     BlockBehaviour.Properties
                             .of(Material.PLANT)
                             .strength(0.1f)
@@ -71,7 +73,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("toadstool")
-    public static final AutoRegisterBlock TOADSTOOL = AutoRegisterBlock.of(() -> new SwampPlantBlock(
+    public static final AutoRegisterBlock TOADSTOOL = AutoRegisterBlock.of(() -> new ToadstoolBlock(
                     BlockBehaviour.Properties
                             .of(Material.PLANT, MaterialColor.COLOR_RED)
                             .instabreak()
@@ -101,7 +103,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("umbrella_leaf")
-    public static final AutoRegisterBlock UMBRELLA_LEAF = AutoRegisterBlock.of(() -> new SwampPlantBlock(
+    public static final AutoRegisterBlock UMBRELLA_LEAF = AutoRegisterBlock.of(() -> new UmbrellaLeafBlock(
                     BlockBehaviour.Properties
                             .of(Material.PLANT)
                             .instabreak()
