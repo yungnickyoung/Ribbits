@@ -236,6 +236,10 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         this.masterRibbit = masterRibbit;
     }
 
+    public boolean isMasterRibbit() {
+        return this.equals(this.getMasterRibbit());
+    }
+
     public void findNewMasterRibbit() {
         RibbitEntity newMaster = this.getRibbitsPlayingMusic().stream().findAny().orElse(null);
 
@@ -255,7 +259,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     public void remove(RemovalReason reason) {
         super.remove(reason);
 
-        if (this.equals(this.getMasterRibbit())) {
+        if (this.isMasterRibbit()) {
             findNewMasterRibbit();
         }
     }

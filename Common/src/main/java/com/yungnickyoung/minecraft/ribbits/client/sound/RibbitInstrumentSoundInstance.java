@@ -1,6 +1,5 @@
 package com.yungnickyoung.minecraft.ribbits.client.sound;
 
-import com.mojang.blaze3d.audio.SoundBuffer;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -10,6 +9,11 @@ import net.minecraft.sounds.SoundSource;
 public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance {
     private final RibbitEntity ribbit;
     private int sourceId;
+
+    /**
+     * The number of ticks to offset the sound by when playback is started.
+     * Used to sync up the instrument track with other instruments.
+     */
     private final int ticksOffset;
 
 

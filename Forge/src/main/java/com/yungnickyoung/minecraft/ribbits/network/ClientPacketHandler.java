@@ -16,7 +16,13 @@ public class ClientPacketHandler {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         if (clientLevel != null) {
             RibbitEntity ribbit = (RibbitEntity) clientLevel.getEntity(packet.getRibbitId());
-            int ticksPlaying = packet.getTickOffset();
+
+            if (ribbit == null) {
+                RibbitsCommon.LOGGER.error("Received RibbitMusicS2CPacket for a ribbit with ID " + packet.getRibbitId() + " that doesn't exist!");
+                return;
+            }
+
+            int tickOffset = packet.getTickOffset();
 
             Optional<SoundEvent> instrumentTrackOptional = ribbit.getRibbitData().getProfession().getInstrumentSoundEvent();
             if (instrumentTrackOptional.isEmpty()) {
@@ -24,7 +30,7 @@ public class ClientPacketHandler {
                 return;
             }
 
-            Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, ticksPlaying, instrumentTrackOptional.get()));
+            Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, tickOffset, instrumentTrackOptional.get()));
         }
     }
 }

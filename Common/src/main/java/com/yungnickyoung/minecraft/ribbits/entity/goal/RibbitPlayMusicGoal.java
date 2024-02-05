@@ -4,15 +4,13 @@ import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public class RibbitPlayMusicGoal extends Goal {
     private final RibbitEntity ribbit;
@@ -32,26 +30,29 @@ public class RibbitPlayMusicGoal extends Goal {
         this.ribbit.getNavigation().stop();
         this.ribbit.setPlayingInstrument(true);
 
+        // Scan for other ribbits playing music and sync master ribbit with them
         this.ribbit.level.getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(20.0d, 5.0d, 20.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
             if (ribbit.getMasterRibbit() != null) {
                 this.ribbit.setMasterRibbit(ribbit.getMasterRibbit());
             }
         });
 
+        // If this ribbit is the first to start playing music, it becomes the master ribbit
         if (this.ribbit.getMasterRibbit() == null) {
             this.ribbit.setMasterRibbit(this.ribbit);
         }
 
         Services.PLATFORM.sendRibbitMusicS2CPacketToAll((ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
 
-        if (!this.ribbit.equals(this.ribbit.getMasterRibbit())) {
+        // If this ribbit is not the master ribbit, add it to the master ribbit's list of ribbits playing music
+        if (!this.ribbit.isMasterRibbit()) {
             this.ribbit.getMasterRibbit().addRibbitToPlayingMusic(this.ribbit);
         }
     }
 
     @Override
     public void stop() {
-        if (this.ribbit.getMasterRibbit().equals(this.ribbit)) {
+        if (this.ribbit.isMasterRibbit()) {
             this.ribbit.findNewMasterRibbit();
         }
 
@@ -60,18 +61,25 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public void tick() {
+        // While playing music, only the master ribbit will send music packets to players
         if (this.ribbit.equals(this.ribbit.getMasterRibbit())) {
-            Set<Player> newPlayers = new HashSet<>();
+            Set<Player> playersPreviouslyHearingMusic = this.ribbit.getPlayersHearingMusic();
+            Set<Player> playersCurrentlyHearingMusic = new HashSet<>();
 
-            for (Player player : this.ribbit.level.getEntitiesOfClass(Player.class, this.ribbit.getBoundingBox().inflate(20.0d, 5.0d, 20.0d))) {
-                newPlayers.add(player);
+            List<Player> playersInRange = this.ribbit.level.getEntitiesOfClass(Player.class, this.ribbit.getBoundingBox().inflate(20.0d, 10.0d, 20.0d));
+            for (Player player : playersInRange) {
+                playersCurrentlyHearingMusic.add(player);
 
-                if (!this.ribbit.getPlayersHearingMusic().contains(player)) {
+                // If the player was not already hearing music, send them a packet to start hearing music
+                if (!playersPreviouslyHearingMusic.contains(player)) {
                     Services.PLATFORM.sendRibbitMusicS2CPacketToPlayer((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
                 }
             }
 
-            this.ribbit.setPlayersHearingMusic(newPlayers);
+            // If the player was previously hearing music but is no longer in range, send them a packet to stop hearing music?
+            // TODO
+
+            this.ribbit.setPlayersHearingMusic(playersCurrentlyHearingMusic);
         }
     }
 }
