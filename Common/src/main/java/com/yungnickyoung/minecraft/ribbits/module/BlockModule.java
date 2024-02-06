@@ -1,12 +1,12 @@
 package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
-import com.yungnickyoung.minecraft.ribbits.block.GiantLilyPadBlock;
 import com.yungnickyoung.minecraft.ribbits.block.SwampDaisyBlock;
 import com.yungnickyoung.minecraft.ribbits.block.SwampLanternBlock;
 import com.yungnickyoung.minecraft.ribbits.block.ToadstoolBlock;
 import com.yungnickyoung.minecraft.ribbits.block.UmbrellaLeafBlock;
 import com.yungnickyoung.minecraft.ribbits.mixin.mixins.accessor.DoorBlockAccessor;
+import com.yungnickyoung.minecraft.ribbits.services.Services;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterBlock;
 import net.minecraft.world.item.Item;
@@ -55,12 +55,7 @@ public class BlockModule {
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("giant_lilypad")
-    public static final AutoRegisterBlock GIANT_LILYPAD = AutoRegisterBlock.of(() -> new GiantLilyPadBlock(
-                    BlockBehaviour.Properties
-                            .of(Material.PLANT)
-                            .instabreak()
-                            .sound(SoundType.LILY_PAD)
-                            .noOcclusion()));
+    public static final AutoRegisterBlock GIANT_LILYPAD = AutoRegisterBlock.of(Services.PLATFORM.getGiantLilyPadBlock());
 
     @AutoRegister("swamp_daisy")
     public static final AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampDaisyBlock(

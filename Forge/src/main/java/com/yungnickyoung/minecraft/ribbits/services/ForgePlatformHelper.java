@@ -1,16 +1,19 @@
 package com.yungnickyoung.minecraft.ribbits.services;
 
+import com.yungnickyoung.minecraft.ribbits.block.GiantLilyPadBlockForge;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import com.yungnickyoung.minecraft.ribbits.module.NetworkModuleForge;
 import com.yungnickyoung.minecraft.ribbits.network.RibbitMusicS2CPacket;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
+
+import java.util.function.Supplier;
 
 public class ForgePlatformHelper implements IPlatformHelper {
     @Override
@@ -48,5 +51,15 @@ public class ForgePlatformHelper implements IPlatformHelper {
         for (RibbitEntity ribbit : masterRibbit.getRibbitsPlayingMusic()) {
             NetworkModuleForge.sendToClient(new RibbitMusicS2CPacket(ribbit.getId(), -1), player);
         }
+    }
+
+    @Override
+    public Supplier<Block> getGiantLilyPadBlock() {
+        return () -> new GiantLilyPadBlockForge(
+                BlockBehaviour.Properties
+                        .of(Material.PLANT)
+                        .instabreak()
+                        .sound(SoundType.LILY_PAD)
+                        .noOcclusion());
     }
 }

@@ -4,6 +4,9 @@ import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
+
+import java.util.function.Supplier;
 
 public interface IPlatformHelper {
     /**
@@ -31,4 +34,6 @@ public interface IPlatformHelper {
     void sendRibbitMusicS2CPacketToAll(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit);
 
     void sendRibbitMusicS2CPacketToPlayer(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit);
+
+    Supplier<Block> getGiantLilyPadBlock();
 }
