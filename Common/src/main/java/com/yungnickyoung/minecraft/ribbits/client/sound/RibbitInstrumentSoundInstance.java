@@ -25,6 +25,8 @@ public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance
         this.looping = true;
         this.delay = 0;
         this.volume = 1.0F;
+
+        this.ribbit.setPlayingInstrument(true);
     }
 
     @Override
@@ -33,7 +35,7 @@ public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance
         this.y = this.ribbit.getY();
         this.z = this.ribbit.getZ();
 
-        if (this.ribbit.isRemoved()) {
+        if (this.ribbit.isRemoved() || !this.ribbit.getPlayingInstrument()) {
             this.stop();
         }
     }

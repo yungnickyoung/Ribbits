@@ -29,6 +29,7 @@ public class RibbitPlayMusicGoal extends Goal {
     public void start() {
         this.ribbit.getNavigation().stop();
         this.ribbit.setPlayingInstrument(true);
+        this.ribbit.setTicksPlayingMusic(0);
 
         // Scan for other ribbits playing music and sync master ribbit with them
         this.ribbit.level.getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(20.0d, 5.0d, 20.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
@@ -60,6 +61,11 @@ public class RibbitPlayMusicGoal extends Goal {
     }
 
     @Override
+    public boolean isInterruptable() {
+        return this.ribbit.getTicksPlayingMusic() > 200;
+    }
+
+    @Override
     public void tick() {
         // While playing music, only the master ribbit will send music packets to players
         if (this.ribbit.equals(this.ribbit.getMasterRibbit())) {
@@ -81,5 +87,7 @@ public class RibbitPlayMusicGoal extends Goal {
 
             this.ribbit.setPlayersHearingMusic(playersCurrentlyHearingMusic);
         }
+
+        this.ribbit.setTicksPlayingMusic(this.ribbit.getTicksPlayingMusic() + 1);
     }
 }
