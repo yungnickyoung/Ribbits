@@ -1,5 +1,8 @@
 package com.yungnickyoung.minecraft.ribbits.entity;
 
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.Dynamic;
+import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitApplyBuffGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitFishGoal;
@@ -12,6 +15,7 @@ import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -33,6 +37,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -113,15 +118,22 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        if (tag.contains("RibbitData", 10)) {
+            DataResult<RibbitData> dataResult = RibbitData.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("RibbitData")));
+            dataResult.resultOrPartial(RibbitsCommon.LOGGER::error).ifPresent(this::setRibbitData);
+        }
+
         this.reassessGoals();
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-
+        RibbitData.CODEC.encodeStart(NbtOps.INSTANCE, this.getRibbitData())
+                .resultOrPartial(RibbitsCommon.LOGGER::error)
+                .ifPresent(t -> tag.put("RibbitData", t));
     }
 
     @Override
