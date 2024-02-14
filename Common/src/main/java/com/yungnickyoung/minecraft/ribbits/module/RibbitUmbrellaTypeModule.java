@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
-import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitUmbrellaType;
+import com.yungnickyoung.minecraft.ribbits.data.RibbitUmbrellaType;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.resources.ResourceLocation;
 

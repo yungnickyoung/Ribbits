@@ -8,8 +8,8 @@ import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitApplyBuffGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitFishGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitPlayMusicGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitWaterCropsGoal;
-import com.yungnickyoung.minecraft.ribbits.entity.npc.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.module.EntityDataSerializerModule;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
@@ -67,6 +67,12 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
     // NOTE: Fields below here are used only on Server
     private int ticksPlayingMusic;
+
+    /**
+     * Set of Ribbits playing music with this Ribbit as the master.
+     * Only used if this Ribbit is the master.
+     * Does not include the master Ribbit itself.
+     */
     private final Set<RibbitEntity> ribbitsPlayingMusic = new HashSet<>();
     private Set<Player> playersHearingMusic = new HashSet<>();
     private RibbitEntity masterRibbit;
@@ -110,7 +116,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.getRandomProfession(), RibbitUmbrellaTypeModule.getRandomUmbrellaType()));
+        this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.getRandomProfession(), RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
         this.entityData.define(PLAYING_INSTRUMENT, false);
         this.entityData.define(UMBRELLA_FALLING, false);
         this.entityData.define(WATERING, false);
@@ -151,7 +157,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         this.goalSelector.removeGoal(this.musicGoal);
         this.goalSelector.removeGoal(this.waterCropsGoal);
 
-        if (RibbitProfessionModule.isNitwit(this.getRibbitData().getProfession())) {
+        if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.NITWIT)) {
             this.goalSelector.addGoal(3, this.musicGoal);
         } else if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.GARDENER)) {
             this.goalSelector.addGoal(3, this.waterCropsGoal);
@@ -310,8 +316,8 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     private PlayState predicate(AnimationEvent<RibbitEntity> event) {
         if (this.getUmbrellaFalling()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN) ? "idle_holding_2" : "idle_holding_1"));
-        } else if (getPlayingInstrument()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(getInstrumentAnimName()));
+        } else if (getPlayingInstrument() && this.getRibbitData().getInstrument() != RibbitInstrumentModule.NONE) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getRibbitData().getInstrument().getAnimationName()));
         } else if (event.getLimbSwingAmount() > 0.15D || event.getLimbSwingAmount() < -0.15D) {
             if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN)) {
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("walk_holding_2"));
@@ -326,22 +332,6 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
             }
         }
         return PlayState.CONTINUE;
-    }
-
-    private String getInstrumentAnimName() {
-        String instrumentAnimName;
-        RibbitProfession profession = this.getRibbitData().getProfession();
-
-        if (profession.equals(RibbitProfessionModule.BASSIST)) {
-            instrumentAnimName = "play_bass";
-        } else if (profession.equals(RibbitProfessionModule.BONGOIST)) {
-            instrumentAnimName = "play_bongo";
-        } else if (profession.equals(RibbitProfessionModule.FLAUTIST)) {
-            instrumentAnimName = "play_flute";
-        } else {
-            instrumentAnimName = "play_guitar";
-        }
-        return instrumentAnimName;
     }
 
     @Override

@@ -1,16 +1,8 @@
-package com.yungnickyoung.minecraft.ribbits.entity.npc;
+package com.yungnickyoung.minecraft.ribbits.data;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 public class RibbitUmbrellaType {
-    public static final Codec<RibbitUmbrellaType> CODEC = RecordCodecBuilder.create(instance -> instance
-            .group(
-                    ResourceLocation.CODEC.fieldOf("id").forGetter(umbrellaType -> umbrellaType.id),
-                    ResourceLocation.CODEC.fieldOf("model_location").forGetter(umbrellaType -> umbrellaType.modelLocation))
-            .apply(instance, instance.stable(RibbitUmbrellaType::new)));
-
     private final ResourceLocation id;
     private final ResourceLocation modelLocation;
 

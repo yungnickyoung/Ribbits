@@ -39,7 +39,7 @@ public class EntityDataSerializerModule {
      */
     @AutoRegister("_ignored")
     public static void register() {
-        RibbitsCommon.LOGGER.info("Registering serializers...");
+        RibbitsCommon.LOGGER.info("Registering Ribbit data serializers...");
         EntityDataSerializers.registerSerializer(RIBBIT_DATA_SERIALIZER);
     }
 }

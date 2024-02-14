@@ -1,6 +1,8 @@
 package com.yungnickyoung.minecraft.ribbits.entity.goal;
 
+import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,7 +45,15 @@ public class RibbitPlayMusicGoal extends Goal {
             this.ribbit.setMasterRibbit(this.ribbit);
         }
 
-        Services.PLATFORM.sendRibbitMusicS2CPacketToAll((ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
+        // Set the instrument.
+        // TODO - don't just randomize instruments, have a way to determine which instruments are available to the ribbit
+        if (ribbit.getRibbitData().getInstrument() == RibbitInstrumentModule.NONE) {
+            RibbitData ribbitData = this.ribbit.getRibbitData();
+            ribbitData.setInstrument(RibbitInstrumentModule.getRandomInstrument());
+            this.ribbit.setRibbitData(ribbitData);
+        }
+
+        Services.PLATFORM.onRibbitStartMusicGoal((ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
 
         // If this ribbit is not the master ribbit, add it to the master ribbit's list of ribbits playing music
         if (!this.ribbit.isMasterRibbit()) {
@@ -56,8 +66,11 @@ public class RibbitPlayMusicGoal extends Goal {
         if (this.ribbit.isMasterRibbit()) {
             this.ribbit.findNewMasterRibbit();
         }
-
         this.ribbit.setPlayingInstrument(false);
+
+        RibbitData ribbitData = this.ribbit.getRibbitData();
+        ribbitData.setInstrument(RibbitInstrumentModule.NONE);
+        this.ribbit.setRibbitData(ribbitData);
     }
 
     @Override
@@ -78,12 +91,12 @@ public class RibbitPlayMusicGoal extends Goal {
 
                 // If the player was not already hearing music, send them a packet to start hearing music
                 if (!playersPreviouslyHearingMusic.contains(player)) {
-                    Services.PLATFORM.sendRibbitMusicS2CPacketToPlayer((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
+                    Services.PLATFORM.onPlayerEnterBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
                 }
             }
 
             // If the player was previously hearing music but is no longer in range, send them a packet to stop hearing music?
-            // TODO
+            // TODO if necessary
 
             this.ribbit.setPlayersHearingMusic(playersCurrentlyHearingMusic);
         }

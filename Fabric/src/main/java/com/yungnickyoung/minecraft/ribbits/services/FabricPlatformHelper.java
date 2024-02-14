@@ -34,37 +34,31 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void sendRibbitMusicS2CPacketToAll(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
+    public void onRibbitStartMusicGoal(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
         FriendlyByteBuf buf = PacketByteBufs.create();
 
-        if (newRibbit.equals(masterRibbit)) {
-            buf.writeInt(newRibbit.getId());
-            buf.writeInt(masterRibbit.getTicksPlayingMusic());
+        // If this ribbit is the master ribbit, use its stored tick value, since there is no existing ticking sound to grab the byte offset from.
+        // Otherwise, use -1 to indicate that the client should use a byte offset instead, which will be fetched from the existing ticking sound.
+        int tickOffset = newRibbit.equals(masterRibbit) ? masterRibbit.getTicksPlayingMusic() : -1;
 
-            for (ServerPlayer player : PlayerLookup.all(serverLevel.getServer())) {
-                ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
-            }
-        } else {
-            buf.writeInt(newRibbit.getId());
-            buf.writeInt(-1);
-
-            for (ServerPlayer player : PlayerLookup.all(serverLevel.getServer())) {
-                ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
-            }
-        }
+        buf.writeInt(newRibbit.getId());
+        buf.writeInt(tickOffset);
+        PlayerLookup.all(serverLevel.getServer()).forEach(player -> ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf));
     }
 
     @Override
-    public void sendRibbitMusicS2CPacketToPlayer(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
+    public void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
         FriendlyByteBuf buf = PacketByteBufs.create();
 
         buf.writeInt(newRibbit.getId());
         buf.writeInt(masterRibbit.getTicksPlayingMusic());
+
+        // Send packet for the master ribbit
         ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
 
+        // Send packets for all other ribbits playing music in the band
         for (RibbitEntity ribbit : masterRibbit.getRibbitsPlayingMusic()) {
             buf = PacketByteBufs.create();
-
             buf.writeInt(ribbit.getId());
             buf.writeInt(-1);
             ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);

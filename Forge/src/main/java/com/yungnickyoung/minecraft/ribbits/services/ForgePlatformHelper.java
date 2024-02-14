@@ -32,22 +32,19 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void sendRibbitMusicS2CPacketToAll(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
-        if (newRibbit.equals(masterRibbit)) {
-            NetworkModuleForge.sendToAllClients(new RibbitMusicS2CPacket(newRibbit.getId(), masterRibbit.getTicksPlayingMusic()));
-
-            for (RibbitEntity ribbit : masterRibbit.getRibbitsPlayingMusic()) {
-                NetworkModuleForge.sendToAllClients(new RibbitMusicS2CPacket(ribbit.getId(), -1));
-            }
-        } else {
-            NetworkModuleForge.sendToAllClients(new RibbitMusicS2CPacket(newRibbit.getId(), -1));
-        }
+    public void onRibbitStartMusicGoal(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
+        // If this ribbit is the master ribbit, use its stored tick value, since there is no existing ticking sound to grab the byte offset from.
+        // Otherwise, use -1 to indicate that the client should use a byte offset instead, which will be fetched from the existing ticking sound.
+        int tickOffset = newRibbit.equals(masterRibbit) ? masterRibbit.getTicksPlayingMusic() : -1;
+        NetworkModuleForge.sendToAllClients(new RibbitMusicS2CPacket(newRibbit.getId(), tickOffset));
     }
 
     @Override
-    public void sendRibbitMusicS2CPacketToPlayer(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
+    public void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
+        // Send packet for the master ribbit
         NetworkModuleForge.sendToClient(new RibbitMusicS2CPacket(newRibbit.getId(), masterRibbit.getTicksPlayingMusic()), player);
 
+        // Send packets for all other ribbits playing music in the band
         for (RibbitEntity ribbit : masterRibbit.getRibbitsPlayingMusic()) {
             NetworkModuleForge.sendToClient(new RibbitMusicS2CPacket(ribbit.getId(), -1), player);
         }
