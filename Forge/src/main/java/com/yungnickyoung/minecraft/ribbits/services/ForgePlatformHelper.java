@@ -42,7 +42,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
+    public void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit) {
         NetworkModuleForge.sendToClient(new RibbitMusicStartAllS2CPacket(masterRibbit, masterRibbit.getTicksPlayingMusic()), player);
     }
 

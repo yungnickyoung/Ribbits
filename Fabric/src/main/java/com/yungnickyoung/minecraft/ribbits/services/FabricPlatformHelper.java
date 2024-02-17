@@ -50,7 +50,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
+    public void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit) {
         FriendlyByteBuf buf = PacketByteBufs.create();
 
         List<Integer> ribbitIds = new ArrayList<>();

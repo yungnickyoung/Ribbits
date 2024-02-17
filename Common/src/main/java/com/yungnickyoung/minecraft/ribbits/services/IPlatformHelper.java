@@ -37,9 +37,8 @@ public interface IPlatformHelper {
 
     /**
      * Called when a player enters the band range of a ribbit. This method should send a packet to the player to play the music.
-     * TODO - consolidate newRibbit and masterRibbit into a single param, since currently this is only invoked when newRibbit is the masterRibbit
      */
-    void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit);
+    void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit);
 
     void onPlayerExitBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit);
 
