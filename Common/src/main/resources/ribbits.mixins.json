@@ -1,18 +1,19 @@
 {
-  "required": true,
-  "package": "com.yungnickyoung.minecraft.ribbits.mixin.mixins",
-  "compatibilityLevel": "JAVA_17",
-  "refmap": "ribbits.refmap.json",
-  "mixins": [
-    "accessor.DoorBlockAccessor"
-  ],
-  "client": [
-    "client.ChannelMixin",
-    "client.SoundEngineMixin",
-    "client.accessor.SoundBufferAccessor"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  },
-  "minVersion": "0.8"
+    "required": true,
+    "package": "com.yungnickyoung.minecraft.ribbits.mixin.mixins",
+    "compatibilityLevel": "JAVA_17",
+    "refmap": "ribbits.refmap.json",
+    "mixins": [
+        "accessor.DoorBlockAccessor"
+    ],
+    "client": [
+        "client.ChannelMixin",
+        "client.SoundEngineMixin",
+        "client.SoundManagerMixin",
+        "client.accessor.SoundBufferAccessor"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    },
+    "minVersion": "0.8"
 }

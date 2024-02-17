@@ -1,7 +1,9 @@
 package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
-import com.yungnickyoung.minecraft.ribbits.network.RibbitMusicS2CPacket;
+import com.yungnickyoung.minecraft.ribbits.network.RibbitMusicStartAllS2CPacket;
+import com.yungnickyoung.minecraft.ribbits.network.RibbitMusicStartSingleS2CPacket;
+import com.yungnickyoung.minecraft.ribbits.network.RibbitMusicStopSingleS2CPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,10 +38,22 @@ public class NetworkModuleForge {
                     .serverAcceptedVersions(PROTOCOL_VERSION::equals)
                     .simpleChannel();
 
-            INSTANCE.messageBuilder(RibbitMusicS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                    .decoder(RibbitMusicS2CPacket::new)
-                    .encoder(RibbitMusicS2CPacket::toBytes)
-                    .consumer(RibbitMusicS2CPacket::handle)
+            INSTANCE.messageBuilder(RibbitMusicStartSingleS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                    .decoder(RibbitMusicStartSingleS2CPacket::new)
+                    .encoder(RibbitMusicStartSingleS2CPacket::toBytes)
+                    .consumer(RibbitMusicStartSingleS2CPacket::handle)
+                    .add();
+
+            INSTANCE.messageBuilder(RibbitMusicStartAllS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                    .decoder(RibbitMusicStartAllS2CPacket::new)
+                    .encoder(RibbitMusicStartAllS2CPacket::toBytes)
+                    .consumer(RibbitMusicStartAllS2CPacket::handle)
+                    .add();
+
+            INSTANCE.messageBuilder(RibbitMusicStopSingleS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                    .decoder(RibbitMusicStopSingleS2CPacket::new)
+                    .encoder(RibbitMusicStopSingleS2CPacket::toBytes)
+                    .consumer(RibbitMusicStopSingleS2CPacket::handle)
                     .add();
         });
     }

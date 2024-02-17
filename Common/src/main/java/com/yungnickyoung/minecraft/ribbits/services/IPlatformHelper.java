@@ -41,5 +41,7 @@ public interface IPlatformHelper {
      */
     void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit);
 
+    void onPlayerExitBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit);
+
     Supplier<Block> getGiantLilyPadBlock();
 }

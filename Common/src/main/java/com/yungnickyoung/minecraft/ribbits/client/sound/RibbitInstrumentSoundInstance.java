@@ -2,7 +2,6 @@ package com.yungnickyoung.minecraft.ribbits.client.sound;
 
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 
@@ -16,15 +15,14 @@ public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance
      */
     private final int ticksOffset;
 
-
     public RibbitInstrumentSoundInstance(RibbitEntity ribbit, int ticksOffset, SoundEvent soundEvent) {
         super(soundEvent, SoundSource.NEUTRAL);
         this.ribbit = ribbit;
         this.ticksOffset = ticksOffset;
-        this.attenuation = SoundInstance.Attenuation.NONE;
+        this.attenuation = Attenuation.LINEAR;
         this.looping = true;
         this.delay = 0;
-        this.volume = 1.0F;
+        this.volume = 2.0f;
 
         this.ribbit.setPlayingInstrument(true);
     }
@@ -40,6 +38,10 @@ public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance
         }
     }
 
+    public void stopSound() {
+        super.stop();
+    }
+
     @Override
     public boolean canStartSilent() {
         return true;
@@ -48,6 +50,10 @@ public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance
     @Override
     public boolean canPlaySound() {
         return super.canPlaySound();
+    }
+
+    public RibbitEntity getRibbit() {
+        return this.ribbit;
     }
 
     public int getTicksOffset() {

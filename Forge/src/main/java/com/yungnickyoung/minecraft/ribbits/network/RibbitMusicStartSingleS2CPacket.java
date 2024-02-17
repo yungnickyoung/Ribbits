@@ -7,11 +7,11 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class RibbitMusicS2CPacket {
+public class RibbitMusicStartSingleS2CPacket {
     private final int ribbitId;
     private final int tickOffset;
 
-    public RibbitMusicS2CPacket(int ribbitId, int tickOffset) {
+    public RibbitMusicStartSingleS2CPacket(int ribbitId, int tickOffset) {
         this.ribbitId = ribbitId;
         this.tickOffset = tickOffset;
     }
@@ -19,7 +19,7 @@ public class RibbitMusicS2CPacket {
     /**
      * Decoder
      */
-    public RibbitMusicS2CPacket(FriendlyByteBuf buf) {
+    public RibbitMusicStartSingleS2CPacket(FriendlyByteBuf buf) {
         this.ribbitId = buf.readInt();
         this.tickOffset = buf.readInt();
     }
@@ -38,7 +38,7 @@ public class RibbitMusicS2CPacket {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() ->
                 // Make sure this is only executed on the physical client
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handleRibbitMusic(this, ctx))
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandlerForge.handleStartSinglePacket(this, ctx))
         );
         ctx.get().setPacketHandled(true);
         return true;

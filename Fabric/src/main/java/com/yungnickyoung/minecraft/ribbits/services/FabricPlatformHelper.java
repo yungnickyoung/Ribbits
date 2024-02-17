@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.ribbits.services;
 import com.yungnickyoung.minecraft.ribbits.block.GiantLilyPadBlock;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import com.yungnickyoung.minecraft.ribbits.module.NetworkModuleFabric;
+import com.yungnickyoung.minecraft.ribbits.util.BufferUtils;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -15,6 +16,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class FabricPlatformHelper implements IPlatformHelper {
@@ -43,25 +46,32 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
         buf.writeInt(newRibbit.getId());
         buf.writeInt(tickOffset);
-        PlayerLookup.all(serverLevel.getServer()).forEach(player -> ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf));
+        PlayerLookup.all(serverLevel.getServer()).forEach(player -> ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_START_MUSIC_SINGLE, buf));
     }
 
     @Override
     public void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
         FriendlyByteBuf buf = PacketByteBufs.create();
 
-        buf.writeInt(newRibbit.getId());
+        List<Integer> ribbitIds = new ArrayList<>();
+        ribbitIds.add(masterRibbit.getId());
+        ribbitIds.addAll(masterRibbit.getRibbitsPlayingMusic().stream().map(RibbitEntity::getId).toList());
+
+        BufferUtils.writeIntList(ribbitIds, buf);
         buf.writeInt(masterRibbit.getTicksPlayingMusic());
+        ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_START_MUSIC_ALL, buf);
+    }
 
-        // Send packet for the master ribbit
-        ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
+    @Override
+    public void onPlayerExitBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit) {
+        FriendlyByteBuf buf = PacketByteBufs.create();
+        buf.writeInt(masterRibbit.getId());
+        ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_STOP_MUSIC, buf);
 
-        // Send packets for all other ribbits playing music in the band
         for (RibbitEntity ribbit : masterRibbit.getRibbitsPlayingMusic()) {
             buf = PacketByteBufs.create();
             buf.writeInt(ribbit.getId());
-            buf.writeInt(-1);
-            ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_MUSIC_ID, buf);
+            ServerPlayNetworking.send(player, NetworkModuleFabric.RIBBIT_STOP_MUSIC, buf);
         }
     }
 

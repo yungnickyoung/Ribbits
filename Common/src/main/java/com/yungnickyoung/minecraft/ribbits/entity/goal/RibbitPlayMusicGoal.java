@@ -74,31 +74,43 @@ public class RibbitPlayMusicGoal extends Goal {
     }
 
     @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
+    }
+
+    @Override
     public boolean isInterruptable() {
-        return this.ribbit.getTicksPlayingMusic() > 200;
+        return this.ribbit.getTicksPlayingMusic() > 200; // TODO - randomize goal duration?
+//        return false;
     }
 
     @Override
     public void tick() {
         // While playing music, only the master ribbit will send music packets to players
         if (this.ribbit.equals(this.ribbit.getMasterRibbit())) {
-            Set<Player> playersPreviouslyHearingMusic = this.ribbit.getPlayersHearingMusic();
-            Set<Player> playersCurrentlyHearingMusic = new HashSet<>();
+            Set<Player> playersHearingMusic = new HashSet<>(this.ribbit.getPlayersHearingMusic());
 
-            List<Player> playersInRange = this.ribbit.level.getEntitiesOfClass(Player.class, this.ribbit.getBoundingBox().inflate(20.0d, 10.0d, 20.0d));
+            // Add any new players in range
+            List<Player> playersInRange = this.ribbit.level.getEntitiesOfClass(Player.class, this.ribbit.getBoundingBox().inflate(32.0, 32.0, 32.0));
             for (Player player : playersInRange) {
-                playersCurrentlyHearingMusic.add(player);
-
-                // If the player was not already hearing music, send them a packet to start hearing music
-                if (!playersPreviouslyHearingMusic.contains(player)) {
+                if (!playersHearingMusic.contains(player)) {
+//                    RibbitsCommon.LOGGER.info("Starting music for " + player.getName().getString());
+                    playersHearingMusic.add(player);
                     Services.PLATFORM.onPlayerEnterBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
                 }
             }
 
-            // If the player was previously hearing music but is no longer in range, send them a packet to stop hearing music?
-            // TODO if necessary
+            // Remove any players no longer in the world or out of range
+            playersHearingMusic.removeIf(player -> {
+                if (player.isRemoved() || !playersInRange.contains(player)) {
+//                    RibbitsCommon.LOGGER.info("Stopping music for " + player.getName().getString());
+                    Services.PLATFORM.onPlayerExitBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit);
+                    return true;
+                }
+                return false;
+            });
 
-            this.ribbit.setPlayersHearingMusic(playersCurrentlyHearingMusic);
+            this.ribbit.setPlayersHearingMusic(playersHearingMusic);
         }
 
         this.ribbit.setTicksPlayingMusic(this.ribbit.getTicksPlayingMusic() + 1);
