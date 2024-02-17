@@ -80,8 +80,8 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public boolean isInterruptable() {
-        return this.ribbit.getTicksPlayingMusic() > 200; // TODO - randomize goal duration?
-//        return false;
+//        return this.ribbit.getTicksPlayingMusic() > 200; // TODO - randomize goal duration?
+        return false;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class RibbitPlayMusicGoal extends Goal {
                 if (!playersHearingMusic.contains(player)) {
 //                    RibbitsCommon.LOGGER.info("Starting music for " + player.getName().getString());
                     playersHearingMusic.add(player);
-                    Services.PLATFORM.onPlayerEnterBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
+                    Services.PLATFORM.onPlayerEnterBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit);
                 }
             }
 
