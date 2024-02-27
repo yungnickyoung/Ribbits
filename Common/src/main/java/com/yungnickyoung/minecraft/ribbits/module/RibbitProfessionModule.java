@@ -21,6 +21,7 @@ public class RibbitProfessionModule {
     public static final RibbitProfession GARDENER = register("gardener", "geo/gardener_ribbit.geo.json");
     public static final RibbitProfession SORCERER = register("sorcerer", "geo/sorcerer_ribbit.geo.json");
     public static final RibbitProfession FISHERMAN = register("fisherman", "geo/fisherman_ribbit.geo.json");
+    public static final RibbitProfession MERCHANT = register("merchant", "geo/merchant_ribbit.geo.json");
 
     /**
      * Registers a RibbitProfession with the given name and model path.
