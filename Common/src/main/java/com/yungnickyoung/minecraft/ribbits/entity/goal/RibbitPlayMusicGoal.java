@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.ribbits.entity.goal;
 
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
+import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
@@ -39,11 +40,6 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return !this.ribbit.getUmbrellaFalling() && !this.ribbit.isDeadOrDying();
-    }
-
-    @Override
-    public void start() {
         // Scan for other ribbits playing music and sync master ribbit with them
         this.ribbit.level.getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(64.0d, 16.0d, 64.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
             if (ribbit.getMasterRibbit() != null) {
@@ -51,6 +47,21 @@ public class RibbitPlayMusicGoal extends Goal {
             }
         });
 
+        if (this.ribbit.getMasterRibbit() != null && this.ribbit.getMasterRibbit().isBandFull()) {
+            this.ribbit.setMasterRibbit(null);
+            return false;
+        }
+
+        return !this.ribbit.getUmbrellaFalling() && !this.ribbit.isDeadOrDying();
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+        return !this.ribbit.getUmbrellaFalling() && !this.ribbit.isDeadOrDying() && (this.ribbit.getPlayingInstrument() || !this.ribbit.getMasterRibbit().isBandFull());
+    }
+
+    @Override
+    public void start() {
         if (this.ribbit.getMasterRibbit() != null) {
             this.path = this.ribbit.getNavigation().createPath(this.ribbit.getMasterRibbit(), 0);
             this.ribbit.getNavigation().moveTo(this.path, this.speedModifier);
@@ -65,11 +76,16 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public void stop() {
+        this.ribbit.getMasterRibbit().removeRibbitFromPlayingMusic(this.ribbit);
+        this.ribbit.getMasterRibbit().removeBandMember(this.ribbit.getRibbitData().getInstrument());
+
         if (this.ribbit.isMasterRibbit()) {
             this.ribbit.findNewMasterRibbit();
         }
+
         this.ribbit.setPlayingInstrument(false);
         this.ribbit.setTicksPlayingMusic(0);
+        this.ribbit.clearBandMembers();
 
         RibbitData ribbitData = this.ribbit.getRibbitData();
         ribbitData.setInstrument(RibbitInstrumentModule.NONE);
@@ -88,7 +104,26 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public void tick() {
+        if (this.ribbit.getMasterRibbit().isDeadOrDying() || !this.ribbit.getMasterRibbit().getPlayingInstrument()) {
+            // Scan for other ribbits playing music and sync master ribbit with them
+            this.ribbit.level.getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(64.0d, 16.0d, 64.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
+                if (ribbit.getMasterRibbit() != null) {
+                    this.ribbit.setMasterRibbit(ribbit.getMasterRibbit());
+                }
+            });
+
+            if (this.ribbit.getMasterRibbit() != null && this.ribbit.getMasterRibbit().isBandFull()) {
+                this.ribbit.setMasterRibbit(null);
+                return;
+            }
+
+            if (this.ribbit.getMasterRibbit() == null) {
+                this.ribbit.setMasterRibbit(this.ribbit);
+            }
+        }
+
         RibbitEntity masterRibbit = this.ribbit.getMasterRibbit();
+
         this.ribbit.getLookControl().setLookAt(masterRibbit, 30.0f, 30.0f);
         double d = this.ribbit.distanceToSqr(masterRibbit.getX(), masterRibbit.getY(), masterRibbit.getZ());
         this.ticksUntilNextPathRecalculation = Math.max(this.ticksUntilNextPathRecalculation - 1, 0);
@@ -110,23 +145,30 @@ public class RibbitPlayMusicGoal extends Goal {
         }
 
         if (!this.ribbit.getPlayingInstrument() && d <= 9.0f) {
+            // Set the instrument.
+            if (ribbit.getRibbitData().getInstrument() == RibbitInstrumentModule.NONE) {
+                RibbitData ribbitData = this.ribbit.getRibbitData();
+                RibbitInstrument instrument = RibbitInstrumentModule.getRandomInstrument(masterRibbit.getBandMembers());
+
+                if (instrument == null) {
+                    return;
+                }
+
+                ribbitData.setInstrument(instrument);
+                this.ribbit.setRibbitData(ribbitData);
+
+                this.ribbit.getMasterRibbit().addBandMember(this.ribbit.getRibbitData().getInstrument());
+            }
+
             this.ribbit.getNavigation().stop();
             this.ribbit.setPlayingInstrument(true);
             this.ribbit.setTicksPlayingMusic(0);
 
-            // Set the instrument.
-            // TODO - don't just randomize instruments, have a way to determine which instruments are available to the ribbit
-            if (ribbit.getRibbitData().getInstrument() == RibbitInstrumentModule.NONE) {
-                RibbitData ribbitData = this.ribbit.getRibbitData();
-                ribbitData.setInstrument(RibbitInstrumentModule.getRandomInstrument());
-                this.ribbit.setRibbitData(ribbitData);
-            }
-
-            Services.PLATFORM.onRibbitStartMusicGoal((ServerLevel) this.ribbit.level, this.ribbit, this.ribbit.getMasterRibbit());
+            Services.PLATFORM.onRibbitStartMusicGoal((ServerLevel) this.ribbit.level, this.ribbit, masterRibbit);
 
             // If this ribbit is not the master ribbit, add it to the master ribbit's list of ribbits playing music
             if (!this.ribbit.isMasterRibbit()) {
-                this.ribbit.getMasterRibbit().addRibbitToPlayingMusic(this.ribbit);
+                masterRibbit.addRibbitToPlayingMusic(this.ribbit);
             }
         }
 
@@ -140,7 +182,7 @@ public class RibbitPlayMusicGoal extends Goal {
             }
 
             // While playing music, only the master ribbit will send music packets to players
-            if (this.ribbit.equals(this.ribbit.getMasterRibbit())) {
+            if (this.ribbit.equals(masterRibbit)) {
                 Set<Player> playersHearingMusic = new HashSet<>(this.ribbit.getPlayersHearingMusic());
 
                 // Add any new players in range

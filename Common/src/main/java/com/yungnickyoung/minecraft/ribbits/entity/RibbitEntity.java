@@ -4,6 +4,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.Dynamic;
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
+import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitApplyBuffGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitFishGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitPlayMusicGoal;
@@ -75,6 +76,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
      */
     private final Set<RibbitEntity> ribbitsPlayingMusic = new HashSet<>();
     private Set<Player> playersHearingMusic = new HashSet<>();
+    private Set<RibbitInstrument> bandMembers = new HashSet<>();
     private RibbitEntity masterRibbit;
 
     private int buffCooldown = 0;
@@ -238,6 +240,10 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         this.ribbitsPlayingMusic.add(ribbit);
     }
 
+    public void removeRibbitFromPlayingMusic(RibbitEntity ribbit) {
+        this.ribbitsPlayingMusic.remove(ribbit);
+    }
+
     public Set<Player> getPlayersHearingMusic() {
         return this.playersHearingMusic;
     }
@@ -270,7 +276,32 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
             newMaster.getRibbitsPlayingMusic().addAll(this.getRibbitsPlayingMusic());
             newMaster.getPlayersHearingMusic().addAll(this.getPlayersHearingMusic());
             newMaster.setTicksPlayingMusic(this.getTicksPlayingMusic());
+            newMaster.setBandMembers(this.getBandMembers());
         }
+    }
+
+    public boolean isBandFull() {
+        return this.bandMembers.size() == RibbitInstrumentModule.getNumInstruments();
+    }
+
+    public void addBandMember(RibbitInstrument instrument) {
+        this.bandMembers.add(instrument);
+    }
+
+    public void removeBandMember(RibbitInstrument instrument) {
+        this.bandMembers.remove(instrument);
+    }
+
+    public void clearBandMembers() {
+        this.bandMembers.clear();
+    }
+
+    public Set<RibbitInstrument> getBandMembers() {
+        return this.bandMembers;
+    }
+
+    public void setBandMembers(Set<RibbitInstrument> bandMembers) {
+        this.bandMembers = new HashSet<>(bandMembers);
     }
 
     @Override

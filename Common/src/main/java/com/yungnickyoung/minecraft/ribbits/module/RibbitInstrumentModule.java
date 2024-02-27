@@ -60,6 +60,27 @@ public class RibbitInstrumentModule {
     }
 
     /**
+     * Gets a random RibbitInstrument excluding current band member instruments.
+     * @return Random RibbitInstrument.
+     */
+    public static RibbitInstrument getRandomInstrument(Set<RibbitInstrument> currBandMembers) {
+        Random random = new Random();
+        List<RibbitInstrument> instrumentList = VALID_INSTRUMENTS.stream().filter(instrument -> !currBandMembers.contains(instrument)).toList();
+
+        if (instrumentList.isEmpty()) return null;
+
+        return instrumentList.get(random.nextInt(instrumentList.size()));
+    }
+
+    /**
+     * Gets the number of RibbitInstruments.
+     * @return number of Valid RibbitInstruments.
+     */
+    public static int getNumInstruments() {
+        return VALID_INSTRUMENTS.size();
+    }
+
+    /**
      * The AutoRegister system will call this method after mod initialization is complete.
      * The method itself is a NO-OP, but calling it will trigger the static initialization above.
      */
