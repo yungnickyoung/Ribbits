@@ -41,7 +41,7 @@ public class RibbitPlayMusicGoal extends Goal {
     @Override
     public boolean canUse() {
         // Scan for other ribbits playing music and sync master ribbit with them
-        this.ribbit.level.getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(64.0d, 16.0d, 64.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
+        this.ribbit.level().getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(64.0d, 16.0d, 64.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
             if (ribbit.getMasterRibbit() != null) {
                 this.ribbit.setMasterRibbit(ribbit.getMasterRibbit());
             }
@@ -107,7 +107,7 @@ public class RibbitPlayMusicGoal extends Goal {
     public void tick() {
         if (this.ribbit.getMasterRibbit() == null || this.ribbit.getMasterRibbit().isDeadOrDying() || !this.ribbit.getMasterRibbit().getPlayingInstrument()) {
             // Scan for other ribbits playing music and sync master ribbit with them
-            this.ribbit.level.getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(64.0d, 16.0d, 64.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
+            this.ribbit.level().getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(64.0d, 16.0d, 64.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
                 if (ribbit.getMasterRibbit() != null) {
                     this.ribbit.setMasterRibbit(ribbit.getMasterRibbit());
                 }
@@ -165,7 +165,7 @@ public class RibbitPlayMusicGoal extends Goal {
             this.ribbit.setPlayingInstrument(true);
             this.ribbit.setTicksPlayingMusic(0);
 
-            Services.PLATFORM.onRibbitStartMusicGoal((ServerLevel) this.ribbit.level, this.ribbit, masterRibbit);
+            Services.PLATFORM.onRibbitStartMusicGoal((ServerLevel) this.ribbit.level(), this.ribbit, masterRibbit);
 
             // If this ribbit is not the master ribbit, add it to the master ribbit's list of ribbits playing music
             masterRibbit.addRibbitToPlayingMusic(this.ribbit);
@@ -187,12 +187,12 @@ public class RibbitPlayMusicGoal extends Goal {
                 Set<Player> playersHearingMusic = new HashSet<>(this.ribbit.getPlayersHearingMusic());
 
                 // Add any new players in range
-                List<Player> playersInRange = this.ribbit.level.getEntitiesOfClass(Player.class, this.ribbit.getBoundingBox().inflate(32.0, 32.0, 32.0));
+                List<Player> playersInRange = this.ribbit.level().getEntitiesOfClass(Player.class, this.ribbit.getBoundingBox().inflate(32.0, 32.0, 32.0));
                 for (Player player : playersInRange) {
                     if (!playersHearingMusic.contains(player)) {
 //                    RibbitsCommon.LOGGER.info("Starting music for " + player.getName().getString());
                         playersHearingMusic.add(player);
-                        Services.PLATFORM.onPlayerEnterBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit);
+                        Services.PLATFORM.onPlayerEnterBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level(), this.ribbit);
                     }
                 }
 
@@ -200,7 +200,7 @@ public class RibbitPlayMusicGoal extends Goal {
                 playersHearingMusic.removeIf(player -> {
                     if (player.isRemoved() || !playersInRange.contains(player)) {
 //                    RibbitsCommon.LOGGER.info("Stopping music for " + player.getName().getString());
-                        Services.PLATFORM.onPlayerExitBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level, this.ribbit);
+                        Services.PLATFORM.onPlayerExitBandRange((ServerPlayer) player, (ServerLevel) this.ribbit.level(), this.ribbit);
                         return true;
                     }
                     return false;

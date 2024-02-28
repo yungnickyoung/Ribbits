@@ -26,7 +26,7 @@ public class RibbitApplyBuffGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return this.ribbit.getBuffCooldown() == 0 && !this.ribbit.level.getNearbyPlayers(TargetingConditions.forCombat().range(this.range), this.ribbit, this.ribbit.getBoundingBox().inflate(this.range, 5.0d, this.range)).isEmpty();
+        return this.ribbit.getBuffCooldown() == 0 && !this.ribbit.level().getNearbyPlayers(TargetingConditions.forCombat().range(this.range), this.ribbit, this.ribbit.getBoundingBox().inflate(this.range, 5.0d, this.range)).isEmpty();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class RibbitApplyBuffGoal extends Goal {
 
     @Override
     public void start() {
-        List<Player> nearbyPlayers = this.ribbit.level.getNearbyPlayers(TargetingConditions.forCombat().range(this.range), this.ribbit, this.ribbit.getBoundingBox().inflate(this.range, 5.0d, this.range));
+        List<Player> nearbyPlayers = this.ribbit.level().getNearbyPlayers(TargetingConditions.forCombat().range(this.range), this.ribbit, this.ribbit.getBoundingBox().inflate(this.range, 5.0d, this.range));
 
         MobEffect randomEffect = this.effects.get(this.ribbit.getRandom().nextInt(this.effects.size()));
         for (Player player : nearbyPlayers) {

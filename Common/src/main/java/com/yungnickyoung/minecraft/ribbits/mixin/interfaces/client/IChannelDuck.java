@@ -10,7 +10,7 @@ import net.minecraft.client.resources.sounds.SoundInstance;
  * @see ChannelMixin
  */
 public interface IChannelDuck {
-    void attachStaticBufferWithByteOffset(SoundInstance instance, SoundBuffer soundBuffer, int sourceId);
+    void ribbits$attachStaticBufferWithByteOffset(SoundInstance instance, SoundBuffer soundBuffer, int sourceId);
 
-    void attachStaticBufferWithTickOffset(SoundInstance instance, SoundBuffer soundBuffer, int ticksToOffset);
+    void ribbits$attachStaticBufferWithTickOffset(SoundInstance instance, SoundBuffer soundBuffer, int ticksToOffset);
 }

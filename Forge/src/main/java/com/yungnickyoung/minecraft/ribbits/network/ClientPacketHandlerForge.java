@@ -76,7 +76,7 @@ public class ClientPacketHandlerForge {
                 return;
             }
 
-            ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).stopRibbitsMusic(entityId);
+            ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopRibbitsMusic(entityId);
         }
     }
 }
