@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.11-SNAPSHOT'
+    id 'fabric-loom' version '1.3-SNAPSHOT'
     id 'idea'
 }
 
@@ -13,7 +13,14 @@ repositories {
     maven { url "https://maven.fabricmc.net" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases/" }
-    maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {
+            includeGroupByRegex("software\\.bernie.*")
+            includeGroup("com.eliotlash.mclib")
+        }
+    }
 }
 
 dependencies {
@@ -21,15 +28,16 @@ dependencies {
     mappings loom.officialMojangMappings()
     // YUNG's API
     if (useLocalYungsApi) {
-        modImplementation files("libs/YungsApi-${mc_version}-Fabric-${yungsapi_version}.jar")
+        modImplementation files("libs/YungsApi-${yungsapi_mc_version}-Fabric-${yungsapi_version}.jar")
     } else {
-        modImplementation "com.yungnickyoung.minecraft.yungsapi:YungsApi:${mc_version}-Fabric-${yungsapi_version}"
+        modImplementation "com.yungnickyoung.minecraft.yungsapi:YungsApi:${yungsapi_mc_version}-Fabric-${yungsapi_version}"
     }
     implementation("org.reflections:reflections:0.10.2")
     include("org.reflections:reflections:0.10.2")
 
     // GeckoLib
-    modImplementation files("libs/geckolib-fabric-1.18-${fabric_geckolib_version}.jar")
+//    modImplementation files("libs/geckolib-fabric-1.20.1-${fabric_geckolib_version}.jar")
+    modImplementation "software.bernie.geckolib:geckolib-fabric-1.20.1:${fabric_geckolib_version}"
 
     // Fabric API + Loader
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
@@ -41,7 +49,6 @@ dependencies {
     // ModMenu
     modImplementation ("com.terraformersmc:modmenu:${project.modmenu_version_fabric}") { transitive = false }
 
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     compileOnly project(":Common")
 }
 

@@ -1,14 +1,17 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
+
+plugins {
+    id 'eclipse'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 apply from: "https://moddingtutorials.org/applesilicon.gradle"
@@ -86,10 +89,10 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
     // YUNG's API
-    implementation fg.deobf("com.yungnickyoung.minecraft.yungsapi:YungsApi:${mc_version}-Forge-${yungsapi_version}")
+    implementation fg.deobf("com.yungnickyoung.minecraft.yungsapi:YungsApi:${yungsapi_mc_version}-Forge-${yungsapi_version}")
 
     // GeckoLib
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.18:${forge_geckolib_version}")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1:${forge_geckolib_version}")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     compileOnly project(":Common")
@@ -103,20 +106,24 @@ processResources {
     from project(":Common").sourceSets.main.resources
     inputs.property "version", project.version
     inputs.property "yungsapi_version", project.yungsapi_version
+    inputs.property "yungsapi_mc_version", project.yungsapi_mc_version
     inputs.property "mc_version", project.mc_version
     inputs.property "mod_description", project.mod_description
     inputs.property "mod_full_name", project.mod_full_name
     inputs.property "mod_id", project.mod_id
+    inputs.property "forge_version", project.forge_version
     inputs.property "forge_geckolib_version", project.forge_geckolib_version
 
     filesMatching("META-INF/mods.toml") {
         expand "version": project.version,
                 "yungsapi_version": project.yungsapi_version,
+                "yungsapi_mc_version": project.yungsapi_mc_version,
                 "mc_version": project.mc_version,
                 "mod_description": project.mod_description,
                 "mod_full_name": project.mod_full_name,
+                "mod_id": project.mod_id,
                 "forge_geckolib_version": project.forge_geckolib_version,
-                "mod_id": project.mod_id
+                "forge_version": project.forge_version
     }
 }
 

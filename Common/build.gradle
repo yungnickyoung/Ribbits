@@ -29,13 +29,11 @@ repositories {
 
 dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
-    compileOnly("com.yungnickyoung.minecraft.yungsapi:YungsApi:${mc_version}-Common-${yungsapi_version}")
     if (useLocalYungsApi) {
-        compileOnly files("libs/YungsApi-${mc_version}-Common-${yungsapi_version}.jar")
+        compileOnly files("libs/YungsApi-${yungsapi_mc_version}-Common-${yungsapi_version}.jar")
     } else {
-        compileOnly("com.yungnickyoung.minecraft.yungsapi:YungsApi:${mc_version}-Common-${yungsapi_version}")
+        compileOnly("com.yungnickyoung.minecraft.yungsapi:YungsApi:${yungsapi_mc_version}-Common-${yungsapi_version}")
     }
 
-    compileOnly("software.bernie.geckolib:geckolib-forge-1.18:${forge_geckolib_version}")
+    compileOnly("software.bernie.geckolib:geckolib-forge-1.20.1:${forge_geckolib_version}")
 }

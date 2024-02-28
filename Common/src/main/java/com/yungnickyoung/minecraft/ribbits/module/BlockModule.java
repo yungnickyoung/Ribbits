@@ -11,9 +11,12 @@ import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterBlock;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HugeMushroomBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 
@@ -79,10 +82,13 @@ public class BlockModule {
     @AutoRegister("mossy_oak_planks")
     public static final AutoRegisterBlock MOSSY_OAK_PLANKS = AutoRegisterBlock.of(() -> new Block(
                     BlockBehaviour.Properties
-                            .of(Material.WOOD, MaterialColor.WOOD)
+                            .of()
+                            .mapColor(Blocks.OAK_PLANKS.defaultMapColor())
+                            .instrument(NoteBlockInstrument.BASS)
                             .strength(2.0f, 3.0f)
-                            .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()))
+                            .sound(SoundType.WOOD)
+                            .ignitedByLava()))
+            .withItem(() -> new Item.Properties())
             .withSlab()
             .withStairs()
             .withFence()
@@ -94,7 +100,8 @@ public class BlockModule {
                     .of(Material.WOOD, MaterialColor.WOOD)
                     .strength(3.0f)
                     .sound(SoundType.WOOD)
-                    .noOcclusion()))
+                    .noOcclusion(),
+                    BlockSetType.OAK))
             .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
 
     @AutoRegister("umbrella_leaf")

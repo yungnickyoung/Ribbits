@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[40,)"
+loaderVersion="[47,)"
 license="LGPLv3"
 issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
 
@@ -16,16 +16,16 @@ issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
 [[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.2,1.19)"
+    versionRange="[${mc_version},1.21)"
 
 [[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true
-    versionRange="[40.1.0,)"
+    versionRange="[${forge_version},)"
 
 [[dependencies.${mod_id}]]
     modId="yungsapi"
-    versionRange="[${mc_version}-Forge-${yungsapi_version},)"
+    versionRange="[${yungsapi_mc_version}-Forge-${yungsapi_version},)"
     mandatory=true
     ordering="NONE"
     side="BOTH"
