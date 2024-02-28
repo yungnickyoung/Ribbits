@@ -57,11 +57,13 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return !this.ribbit.getUmbrellaFalling() && !this.ribbit.isDeadOrDying() && (this.ribbit.getPlayingInstrument() || !this.ribbit.getMasterRibbit().isBandFull());
+        return !this.ribbit.getUmbrellaFalling() && !this.ribbit.isDeadOrDying() && (this.ribbit.getPlayingInstrument() || this.ribbit.getMasterRibbit() == null || !this.ribbit.getMasterRibbit().isBandFull());
     }
 
     @Override
     public void start() {
+        this.ribbit.getRibbitData().setInstrument(RibbitInstrumentModule.NONE);
+
         if (this.ribbit.getMasterRibbit() != null) {
             this.path = this.ribbit.getNavigation().createPath(this.ribbit.getMasterRibbit(), 0);
             this.ribbit.getNavigation().moveTo(this.path, this.speedModifier);
@@ -85,7 +87,6 @@ public class RibbitPlayMusicGoal extends Goal {
 
         this.ribbit.setPlayingInstrument(false);
         this.ribbit.setTicksPlayingMusic(0);
-        this.ribbit.clearBandMembers();
 
         RibbitData ribbitData = this.ribbit.getRibbitData();
         ribbitData.setInstrument(RibbitInstrumentModule.NONE);
@@ -104,7 +105,7 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public void tick() {
-        if (this.ribbit.getMasterRibbit().isDeadOrDying() || !this.ribbit.getMasterRibbit().getPlayingInstrument()) {
+        if (this.ribbit.getMasterRibbit() == null || this.ribbit.getMasterRibbit().isDeadOrDying() || !this.ribbit.getMasterRibbit().getPlayingInstrument()) {
             // Scan for other ribbits playing music and sync master ribbit with them
             this.ribbit.level.getEntitiesOfClass(RibbitEntity.class, this.ribbit.getBoundingBox().inflate(64.0d, 16.0d, 64.0d)).stream().filter(RibbitEntity::getPlayingInstrument).forEach((ribbit) -> {
                 if (ribbit.getMasterRibbit() != null) {
@@ -167,9 +168,7 @@ public class RibbitPlayMusicGoal extends Goal {
             Services.PLATFORM.onRibbitStartMusicGoal((ServerLevel) this.ribbit.level, this.ribbit, masterRibbit);
 
             // If this ribbit is not the master ribbit, add it to the master ribbit's list of ribbits playing music
-            if (!this.ribbit.isMasterRibbit()) {
-                masterRibbit.addRibbitToPlayingMusic(this.ribbit);
-            }
+            masterRibbit.addRibbitToPlayingMusic(this.ribbit);
         }
 
         if (this.ribbit.getPlayingInstrument()) {
@@ -177,6 +176,8 @@ public class RibbitPlayMusicGoal extends Goal {
 
             if (d > 9.0f) {
                 this.ribbit.setPlayingInstrument(false);
+                this.ribbit.getRibbitData().setInstrument(RibbitInstrumentModule.NONE);
+                masterRibbit.removeRibbitFromPlayingMusic(this.ribbit);
                 this.ribbit.setTicksPlayingMusic(0);
                 return;
             }

@@ -74,7 +74,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
      * Only used if this Ribbit is the master.
      * Does not include the master Ribbit itself.
      */
-    private final Set<RibbitEntity> ribbitsPlayingMusic = new HashSet<>();
+    private Set<RibbitEntity> ribbitsPlayingMusic = new HashSet<>();
     private Set<Player> playersHearingMusic = new HashSet<>();
     private Set<RibbitInstrument> bandMembers = new HashSet<>();
     private RibbitEntity masterRibbit;
@@ -236,6 +236,11 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         return ribbitsPlayingMusic;
     }
 
+    public void setRibbitsPlayingMusic(Set<RibbitEntity> ribbitsPlayingMusic) {
+        this.ribbitsPlayingMusic = new HashSet<>(ribbitsPlayingMusic);
+    }
+
+
     public void addRibbitToPlayingMusic(RibbitEntity ribbit) {
         this.ribbitsPlayingMusic.add(ribbit);
     }
@@ -249,7 +254,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     }
 
     public void setPlayersHearingMusic(Set<Player> playersHearingMusic) {
-        this.playersHearingMusic = playersHearingMusic;
+        this.playersHearingMusic = new HashSet<>(playersHearingMusic);
     }
 
     public RibbitEntity getMasterRibbit() {
@@ -272,12 +277,19 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
                 ribbit.setMasterRibbit(newMaster);
             }
 
-            this.getRibbitsPlayingMusic().remove(newMaster);
-            newMaster.getRibbitsPlayingMusic().addAll(this.getRibbitsPlayingMusic());
-            newMaster.getPlayersHearingMusic().addAll(this.getPlayersHearingMusic());
+            this.getRibbitsPlayingMusic().remove(this);
+            this.removeBandMember(this.getRibbitData().getInstrument());
+
+            newMaster.setRibbitsPlayingMusic(this.getRibbitsPlayingMusic());
+            newMaster.setPlayersHearingMusic(this.getPlayersHearingMusic());
             newMaster.setTicksPlayingMusic(this.getTicksPlayingMusic());
             newMaster.setBandMembers(this.getBandMembers());
         }
+
+        this.getRibbitsPlayingMusic().clear();
+        this.getPlayersHearingMusic().clear();;
+        this.setTicksPlayingMusic(0);
+        this.clearBandMembers();
     }
 
     public boolean isBandFull() {
