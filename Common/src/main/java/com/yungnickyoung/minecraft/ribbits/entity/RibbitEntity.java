@@ -157,13 +157,17 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
         if (spawnType == MobSpawnType.SPAWN_EGG) {
             if (tag.contains("Profession")) {
                 String[] professionId = tag.getString("Profession").split(":");
-
                 RibbitProfession profession = RibbitProfessionModule.getProfession(new ResourceLocation(professionId[0], professionId[1]));
-
                 this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
             }
         } else {
-            this.setRibbitData(new RibbitData(RibbitProfessionModule.getRandomProfession(), RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
+            CompoundTag ribbitDataTag = tag != null ? tag.getCompound("RibbitData") : new CompoundTag();
+            RibbitProfession profession = RibbitProfessionModule.NITWIT;
+
+            if (ribbitDataTag.contains("profession", CompoundTag.TAG_STRING)) {
+                profession = RibbitProfessionModule.getProfession(new ResourceLocation(ribbitDataTag.getString("profession")));
+            }
+            this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
         }
 
         this.reassessGoals();

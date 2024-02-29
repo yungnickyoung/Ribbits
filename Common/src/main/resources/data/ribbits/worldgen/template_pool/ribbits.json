@@ -1,0 +1,51 @@
+{
+  "name": "ribbits:ribbits",
+  "fallback": "ribbits:ribbits",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:ribbits/ribbit_nitwit",
+        "processors": "ribbits:main",
+        "projection": "rigid",
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:ribbits/ribbit_sorcerer",
+        "processors": "ribbits:main",
+        "projection": "rigid",
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:ribbits/ribbit_merchant",
+        "processors": "ribbits:main",
+        "projection": "rigid",
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:ribbits/ribbit_gardener",
+        "processors": "ribbits:main",
+        "projection": "rigid",
+        "element_type": "yungsapi:yung_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:ribbits/ribbit_fisherman",
+        "processors": "ribbits:main",
+        "projection": "rigid",
+        "element_type": "yungsapi:yung_single_element"
+      }
+    }
+  ]
+}
