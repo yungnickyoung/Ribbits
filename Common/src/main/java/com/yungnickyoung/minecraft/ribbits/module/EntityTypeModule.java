@@ -12,7 +12,7 @@ public class EntityTypeModule {
     public static final AutoRegisterEntityType<RibbitEntity> RIBBIT = AutoRegisterEntityType.of(() ->
             AutoRegisterEntityType.Builder
                     .of(RibbitEntity::new, MobCategory.CREATURE)
-                    .sized(0.75f, 0.9f)
+                    .sized(0.5f, 0.75f)
                     .build())
             .attributes(RibbitEntity::createRibbitAttributes);
 }
