@@ -6,9 +6,13 @@
     }
   ],
   "placement": {
+    "type": "yungsapi:enhanced_random_spread",
     "salt": 2937541,
     "spacing": 25,
     "separation": 8,
-    "type": "minecraft:random_spread"
+    "enhanced_exclusion_zone": {
+      "other_set": "#ribbits:village_avoid",
+      "chunk_count": 6
+    }
   }
 }

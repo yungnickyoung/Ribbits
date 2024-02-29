@@ -34,20 +34,20 @@ public class WarpedNyliumProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
-        if (blockInfoGlobal.state.is(Blocks.WARPED_NYLIUM)) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos))) {
+        if (blockInfoGlobal.state().is(Blocks.WARPED_NYLIUM)) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
 
-            BlockState currState = levelReader.getBlockState(blockInfoGlobal.pos);
+            BlockState currState = levelReader.getBlockState(blockInfoGlobal.pos());
 
             if (currState.getFluidState().is(Fluids.WATER)) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.WATER.defaultBlockState(), null);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.WATER.defaultBlockState(), null);
                 if (levelReader instanceof WorldGenRegion worldGenRegion) {
-                    worldGenRegion.scheduleTick(blockInfoGlobal.pos, Fluids.WATER, 0);
+                    worldGenRegion.scheduleTick(blockInfoGlobal.pos(), Fluids.WATER, 0);
                 }
             } else {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, Blocks.GRASS_BLOCK.defaultBlockState(), null);
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), Blocks.GRASS_BLOCK.defaultBlockState(), null);
             }
 
             // Generate pillar of dirt to fill any air/water below

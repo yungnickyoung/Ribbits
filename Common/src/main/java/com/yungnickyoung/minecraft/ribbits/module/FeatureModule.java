@@ -5,6 +5,7 @@ import com.yungnickyoung.minecraft.ribbits.world.feature.RibbitsVegetationFeatur
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 
 @AutoRegister(RibbitsCommon.MOD_ID)
 public class FeatureModule {

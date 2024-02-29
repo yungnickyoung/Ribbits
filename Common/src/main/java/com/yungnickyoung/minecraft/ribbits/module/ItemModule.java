@@ -5,12 +5,12 @@ import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterItem;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterUtils;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.WaterLilyBlockItem;
+import net.minecraft.world.item.PlaceOnWaterBlockItem;
 
 @AutoRegister(RibbitsCommon.MOD_ID)
 public class ItemModule {
     @AutoRegister("giant_lilypad")
-    public static final AutoRegisterItem GIANT_LILYPAD = AutoRegisterItem.of(() -> new WaterLilyBlockItem(BlockModule.GIANT_LILYPAD.get(), new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get())));
+    public static final AutoRegisterItem GIANT_LILYPAD = AutoRegisterItem.of(() -> new PlaceOnWaterBlockItem(BlockModule.GIANT_LILYPAD.get(), new Item.Properties()));
 
     @AutoRegister("_ignored")
     public static void registerCompostables() {

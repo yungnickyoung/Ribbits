@@ -17,45 +17,54 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 @AutoRegister(RibbitsCommon.MOD_ID)
 public class BlockModule {
     @AutoRegister("brown_toadstool")
     public static final AutoRegisterBlock BROWN_TOADSTOOL = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
                     BlockBehaviour.Properties
-                            .of(Material.WOOD, MaterialColor.DIRT)
+                            .of()
+                            .mapColor(MapColor.DIRT)
                             .strength(0.2f)
+                            .instrument(NoteBlockInstrument.BASS)
                             .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+            .withItem(Item.Properties::new);
 
     @AutoRegister("red_toadstool")
     public static final AutoRegisterBlock RED_TOADSTOOL = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
                     BlockBehaviour.Properties
-                            .of(Material.WOOD, MaterialColor.COLOR_RED)
+                            .of()
+                            .mapColor(MapColor.COLOR_RED)
                             .strength(0.2f)
+                            .instrument(NoteBlockInstrument.BASS)
                             .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+            .withItem(Item.Properties::new);
 
     @AutoRegister("toadstool_stem")
     public static final AutoRegisterBlock TOADSTOOL_STEM = AutoRegisterBlock.of(() -> new HugeMushroomBlock(
                     BlockBehaviour.Properties
-                            .of(Material.WOOD, MaterialColor.WOOL)
+                            .of()
+                            .mapColor(MapColor.WOOL)
                             .strength(0.2f)
+                            .instrument(NoteBlockInstrument.BASS)
                             .sound(SoundType.WOOD)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+            .withItem(Item.Properties::new);
 
     @AutoRegister("swamp_lantern")
     public static final AutoRegisterBlock SWAMP_LANTERN = AutoRegisterBlock.of(() -> new SwampLanternBlock(
                     BlockBehaviour.Properties
-                            .of(Material.METAL)
+                            .of()
+                            .mapColor(MapColor.METAL)
                             .requiresCorrectToolForDrops()
                             .strength(2.0f)
                             .sound(SoundType.LANTERN)
-                            .lightLevel(ignored -> 15)
-                            .noOcclusion()))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+                            .lightLevel(_ignored -> 15)
+                            .noOcclusion()
+                            .pushReaction(PushReaction.DESTROY)))
+            .withItem(Item.Properties::new);
 
     @AutoRegister("giant_lilypad")
     public static final AutoRegisterBlock GIANT_LILYPAD = AutoRegisterBlock.of(Services.PLATFORM.getGiantLilyPadBlock());
@@ -63,21 +72,25 @@ public class BlockModule {
     @AutoRegister("swamp_daisy")
     public static final AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampDaisyBlock(
                     BlockBehaviour.Properties
-                            .of(Material.PLANT)
-                            .strength(0.1f)
+                            .of()
+                            .mapColor(MapColor.PLANT)
+                            .instabreak()
                             .noCollission()
                             .noOcclusion()
-                            .sound(SoundType.BIG_DRIPLEAF)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+                            .sound(SoundType.BIG_DRIPLEAF)
+                            .ignitedByLava()))
+            .withItem(Item.Properties::new);
 
     @AutoRegister("toadstool")
     public static final AutoRegisterBlock TOADSTOOL = AutoRegisterBlock.of(() -> new ToadstoolBlock(
                     BlockBehaviour.Properties
-                            .of(Material.PLANT, MaterialColor.COLOR_RED)
+                            .of()
+                            .mapColor(MapColor.PLANT)
                             .instabreak()
                             .noCollission()
-                            .sound(SoundType.SMALL_DRIPLEAF)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+                            .sound(SoundType.SMALL_DRIPLEAF)
+                            .ignitedByLava()))
+            .withItem(Item.Properties::new);
 
     @AutoRegister("mossy_oak_planks")
     public static final AutoRegisterBlock MOSSY_OAK_PLANKS = AutoRegisterBlock.of(() -> new Block(
@@ -88,28 +101,34 @@ public class BlockModule {
                             .strength(2.0f, 3.0f)
                             .sound(SoundType.WOOD)
                             .ignitedByLava()))
-            .withItem(() -> new Item.Properties())
+            .withItem(Item.Properties::new)
             .withSlab()
             .withStairs()
             .withFence()
-            .withFenceGate();
+            .withFenceGate(WoodType.OAK);
 
     @AutoRegister("mossy_oak_door")
     public static final AutoRegisterBlock MOSSY_OAK_DOOR = AutoRegisterBlock.of(() ->
-            DoorBlockAccessor.createDoorBlock(BlockBehaviour.Properties
-                    .of(Material.WOOD, MaterialColor.WOOD)
-                    .strength(3.0f)
-                    .sound(SoundType.WOOD)
-                    .noOcclusion(),
-                    BlockSetType.OAK))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+                    DoorBlockAccessor.createDoorBlock(BlockBehaviour.Properties
+                                    .of()
+                                    .mapColor(Blocks.OAK_PLANKS.defaultMapColor())
+                                    .instrument(NoteBlockInstrument.BASS)
+                                    .strength(3.0f)
+                                    .noOcclusion()
+                                    .ignitedByLava()
+                                    .pushReaction(PushReaction.DESTROY)
+                                    .sound(SoundType.WOOD),
+                            BlockSetType.OAK))
+            .withItem(Item.Properties::new);
 
     @AutoRegister("umbrella_leaf")
     public static final AutoRegisterBlock UMBRELLA_LEAF = AutoRegisterBlock.of(() -> new UmbrellaLeafBlock(
                     BlockBehaviour.Properties
-                            .of(Material.PLANT)
+                            .of()
+                            .mapColor(MapColor.PLANT)
                             .instabreak()
                             .noCollission()
+                            .ignitedByLava()
                             .sound(SoundType.SMALL_DRIPLEAF)))
-            .withItem(() -> new Item.Properties().tab(RibbitsCommon.TAB_RIBBITS.get()));
+            .withItem(Item.Properties::new);
 }
