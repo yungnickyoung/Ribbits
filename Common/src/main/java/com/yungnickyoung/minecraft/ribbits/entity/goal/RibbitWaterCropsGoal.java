@@ -44,8 +44,8 @@ public class RibbitWaterCropsGoal extends Goal {
     @Override
     public boolean canUse() {
         Optional<BlockPos> cropPos = BlockPos.findClosestMatch(this.ribbit.getOnPos(), (int) range, 5, blockpos -> {
-            if (this.ribbit.level.getBlockState(blockpos).getBlock() instanceof CropBlock cropBlock) {
-                return !cropBlock.isMaxAge(this.ribbit.level.getBlockState(blockpos));
+            if (this.ribbit.level().getBlockState(blockpos).getBlock() instanceof CropBlock cropBlock) {
+                return !cropBlock.isMaxAge(this.ribbit.level().getBlockState(blockpos));
             } else {
                 return false;
             }
@@ -62,7 +62,7 @@ public class RibbitWaterCropsGoal extends Goal {
 
         boolean cropNearby = false;
         for (BlockPos nearbyPos : nearbyPositions) {
-            if (this.ribbit.level.getBlockState(nearbyPos).getBlock() instanceof CropBlock cropBlock && !cropBlock.isMaxAge(this.ribbit.level.getBlockState(nearbyPos))) {
+            if (this.ribbit.level().getBlockState(nearbyPos).getBlock() instanceof CropBlock cropBlock && !cropBlock.isMaxAge(this.ribbit.level().getBlockState(nearbyPos))) {
                 cropNearby = true;
                 break;
             }
@@ -86,8 +86,8 @@ public class RibbitWaterCropsGoal extends Goal {
                 Iterable<BlockPos> nearbyPositions = BlockPos.betweenClosed(Mth.floor(this.ribbit.getX() - 2.0), Mth.floor(this.ribbit.getY() - 2.0), Mth.floor(this.ribbit.getZ() - 2.0), Mth.floor(this.ribbit.getX() + 2.0), this.ribbit.getBlockY(), Mth.floor(this.ribbit.getZ() + 2.0));
 
                 for (BlockPos pos : nearbyPositions) {
-                    growCrop(this.ribbit.level, pos);
-                    ((ServerLevel) this.ribbit.level).sendParticles(ParticleTypes.FALLING_WATER, pos.getX(), pos.getY() + 0.6d, pos.getZ(), 8, 0.0d, 0.0d, 0.0d, 0.0d);
+                    growCrop(this.ribbit.level(), pos);
+                    ((ServerLevel) this.ribbit.level()).sendParticles(ParticleTypes.FALLING_WATER, pos.getX(), pos.getY() + 0.6d, pos.getZ(), 8, 0.0d, 0.0d, 0.0d, 0.0d);
                 }
             }
         } else {

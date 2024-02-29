@@ -31,20 +31,20 @@ public class RibbitFishGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        Optional<BlockPos> waterPos = BlockPos.findClosestMatch(this.ribbit.getOnPos(), (int) range, 5, blockpos -> this.ribbit.level.getFluidState(blockpos).is(FluidTags.WATER));
+        Optional<BlockPos> waterPos = BlockPos.findClosestMatch(this.ribbit.getOnPos(), (int) range, 5, blockpos -> this.ribbit.level().getFluidState(blockpos).is(FluidTags.WATER));
         
         Optional<BlockPos> nearestDryPos;
                 
         if (waterPos.isPresent()) {
             this.waterPos = waterPos.get();
-            nearestDryPos = BlockPos.findClosestMatch(waterPos.get(), 2, 2, blockPos1 -> !this.ribbit.level.getFluidState(blockPos1).is(FluidTags.WATER) && !this.ribbit.level.getFluidState(blockPos1.above()).is(FluidTags.WATER));
+            nearestDryPos = BlockPos.findClosestMatch(waterPos.get(), 2, 2, blockPos1 -> !this.ribbit.level().getFluidState(blockPos1).is(FluidTags.WATER) && !this.ribbit.level().getFluidState(blockPos1.above()).is(FluidTags.WATER));
         } else {
             return false;
         }
 
         nearestDryPos.ifPresent(dryPos -> this.dryPos = dryPos);
 
-        return nearestDryPos.isPresent() && this.ribbit.level.getDayTime() <= 18000 && this.ribbit.level.getDayTime() >= 1000;
+        return nearestDryPos.isPresent() && this.ribbit.level().getDayTime() <= 18000 && this.ribbit.level().getDayTime() >= 1000;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class RibbitFishGoal extends Goal {
 
         boolean waterNearby = false;
         for (BlockPos nearbyPos : nearbyPositions) {
-            if (this.ribbit.level.getFluidState(nearbyPos).is(FluidTags.WATER)) {
+            if (this.ribbit.level().getFluidState(nearbyPos).is(FluidTags.WATER)) {
                 waterNearby = true;
                 break;
             }

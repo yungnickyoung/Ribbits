@@ -13,7 +13,7 @@ public class SoundManagerMixin implements ISoundManagerDuck {
     @Shadow @Final private SoundEngine soundEngine;
 
     @Override
-    public void stopRibbitsMusic(int ribbitEntityId) {
-        ((ISoundEngineDuck) this.soundEngine).stopRibbitsMusic(ribbitEntityId);
+    public void ribbits$stopRibbitsMusic(int ribbitEntityId) {
+        ((ISoundEngineDuck) this.soundEngine).ribbits$stopRibbitsMusic(ribbitEntityId);
     }
 }

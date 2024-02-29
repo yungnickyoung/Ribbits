@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.ribbits.client.sound;
 
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 
@@ -16,7 +17,7 @@ public class RibbitInstrumentSoundInstance extends AbstractTickableSoundInstance
     private final int ticksOffset;
 
     public RibbitInstrumentSoundInstance(RibbitEntity ribbit, int ticksOffset, SoundEvent soundEvent) {
-        super(soundEvent, SoundSource.NEUTRAL);
+        super(soundEvent, SoundSource.NEUTRAL, SoundInstance.createUnseededRandom());
         this.ribbit = ribbit;
         this.ticksOffset = ticksOffset;
         this.attenuation = Attenuation.LINEAR;

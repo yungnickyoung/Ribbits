@@ -81,7 +81,7 @@ public class ClientPacketHandlerFabric {
         }
 
         client.execute(() -> {
-            ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).stopRibbitsMusic(entityId);
+            ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopRibbitsMusic(entityId);
         });
     }
 }
