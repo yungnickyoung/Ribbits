@@ -36,6 +36,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -93,6 +94,9 @@ public class RibbitEntity extends AgeableMob implements GeoEntity {
 
     public RibbitEntity(EntityType<RibbitEntity> entityType, Level level) {
         super(entityType, level);
+
+        ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
+
         this.reassessGoals();
     }
 
