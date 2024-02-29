@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_left_open",
+  "textures": {
+    "bottom": "ribbits:block/mossy_oak_door_bottom",
+    "top": "ribbits:block/mossy_oak_door_top"
+  }
+}
