@@ -4,6 +4,7 @@ import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -68,12 +69,13 @@ public class RibbitSpawnEggItem extends SpawnEggItem {
             }
 
             EntityType<?> entityType2 = this.getType(itemStack.getTag());
+
+            CompoundTag itemTag = itemStack.getOrCreateTag();
+            itemTag.putString("Profession", this.profession.toString());
+
             RibbitEntity ribbit = (RibbitEntity) entityType2.spawn((ServerLevel)level, itemStack, useOnContext.getPlayer(), blockPos2, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos2) && direction == Direction.UP);
 
             if (ribbit != null) {
-                ribbit.getRibbitData().setProfession(this.profession);
-                ribbit.reassessGoals();
-
                 itemStack.shrink(1);
                 level.gameEvent(useOnContext.getPlayer(), GameEvent.ENTITY_PLACE, blockPos);
             }
@@ -97,6 +99,10 @@ public class RibbitSpawnEggItem extends SpawnEggItem {
                 return InteractionResultHolder.pass(itemStack);
             } else if (level.mayInteract(player, blockPos) && player.mayUseItemAt(blockPos, blockHitResult.getDirection(), itemStack)) {
                 EntityType<?> entityType = this.getType(itemStack.getTag());
+
+                CompoundTag itemTag = itemStack.getOrCreateTag();
+                itemTag.putString("Profession", this.profession.toString());
+
                 RibbitEntity ribbit = (RibbitEntity) entityType.spawn((ServerLevel)level, itemStack, player, blockPos, MobSpawnType.SPAWN_EGG, false, false);
 
                 if (ribbit == null) {
@@ -105,10 +111,6 @@ public class RibbitSpawnEggItem extends SpawnEggItem {
                     if (!player.getAbilities().instabuild) {
                         itemStack.shrink(1);
                     }
-
-                    ribbit.getRibbitData().setProfession(this.profession);
-                    ribbit.reassessGoals();
-
                     player.awardStat(Stats.ITEM_USED.get(this));
                     level.gameEvent(GameEvent.ENTITY_PLACE, player);
                     return InteractionResultHolder.consume(itemStack);

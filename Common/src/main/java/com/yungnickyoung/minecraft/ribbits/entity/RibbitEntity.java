@@ -5,6 +5,7 @@ import com.mojang.serialization.Dynamic;
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
+import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitApplyBuffGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitFishGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitPlayMusicGoal;
@@ -20,6 +21,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
@@ -118,7 +120,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.getRandomProfession(), RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
+        this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.NITWIT, RibbitUmbrellaTypeModule.UMBRELLA_1, RibbitInstrumentModule.NONE));
         this.entityData.define(PLAYING_INSTRUMENT, false);
         this.entityData.define(UMBRELLA_FALLING, false);
         this.entityData.define(WATERING, false);
@@ -147,6 +149,19 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
         SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
+
+        if (spawnType == MobSpawnType.SPAWN_EGG) {
+            if (tag.contains("Profession")) {
+                String[] professionId = tag.getString("Profession").split(":");
+
+                RibbitProfession profession = RibbitProfessionModule.getProfession(new ResourceLocation(professionId[0], professionId[1]));
+
+                this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
+            }
+        } else {
+            this.setRibbitData(new RibbitData(RibbitProfessionModule.getRandomProfession(), RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
+        }
+
         this.reassessGoals();
         return data;
     }
@@ -361,7 +376,7 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
             event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN) ? "idle_holding_2" : "idle_holding_1"));
         } else if (getPlayingInstrument() && this.getRibbitData().getInstrument() != RibbitInstrumentModule.NONE) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation(this.getRibbitData().getInstrument().getAnimationName()));
-        } else if (event.getLimbSwingAmount() > 0.15D || event.getLimbSwingAmount() < -0.15D) {
+        } else if (event.getLimbSwingAmount() > 0.05D || event.getLimbSwingAmount() < -0.05D) {
             if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN)) {
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("walk_holding_2"));
             } else {
