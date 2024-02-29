@@ -37,4 +37,9 @@ public class RibbitRenderer extends GeoEntityRenderer<RibbitEntity> {
     public @NotNull ResourceLocation getTextureLocation(@NotNull RibbitEntity entity) {
         return super.getTextureLocation(entity);
     }
+
+    @Override
+    public float getMotionAnimThreshold(RibbitEntity animatable) {
+        return 0.005f;
+    }
 }
