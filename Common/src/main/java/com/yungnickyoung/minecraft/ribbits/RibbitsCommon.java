@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.ribbits;
 
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.ConfigModule;
+import com.yungnickyoung.minecraft.ribbits.module.ItemModule;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
 import com.yungnickyoung.minecraft.yungsapi.api.YungAutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
@@ -28,7 +29,7 @@ public class RibbitsCommon {
                 output.accept(BlockModule.BROWN_TOADSTOOL.get());
                 output.accept(BlockModule.TOADSTOOL_STEM.get());
                 output.accept(BlockModule.SWAMP_LANTERN.get());
-                output.accept(BlockModule.GIANT_LILYPAD.get());
+                output.accept(ItemModule.GIANT_LILYPAD.get());
                 output.accept(BlockModule.SWAMP_DAISY.get());
                 output.accept(BlockModule.TOADSTOOL.get());
                 output.accept(BlockModule.UMBRELLA_LEAF.get());
@@ -38,6 +39,12 @@ public class RibbitsCommon {
                 output.accept(BlockModule.MOSSY_OAK_PLANKS.getFence());
                 output.accept(BlockModule.MOSSY_OAK_PLANKS.getFenceGate());
                 output.accept(BlockModule.MOSSY_OAK_DOOR.get());
+
+                output.accept(ItemModule.RIBBIT_NITWIT_SPAWN_EGG.get());
+                output.accept(ItemModule.RIBBIT_FISHERMAN_SPAWN_EGG.get());
+                output.accept(ItemModule.RIBBIT_GARDENER_SPAWN_EGG.get());
+                output.accept(ItemModule.RIBBIT_MERCHANT_SPAWN_EGG.get());
+                output.accept(ItemModule.RIBBIT_SORCERER_SPAWN_EGG.get());
             })
             .build();
 
