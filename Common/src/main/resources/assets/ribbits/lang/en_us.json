@@ -16,6 +16,12 @@
   "block.ribbits.mossy_oak_door": "Mossy Oak Door",
   "block.ribbits.umbrella_leaf": "Umbrella Leaf",
 
+  "item.ribbits.ribbit_nitwit_spawn_egg": "Nitwit Ribbit Spawn Egg",
+  "item.ribbits.ribbit_fisherman_spawn_egg": "Fisherman Ribbit Spawn Egg",
+  "item.ribbits.ribbit_gardener_spawn_egg": "Gardener Ribbit Spawn Egg",
+  "item.ribbits.ribbit_merchant_spawn_egg": "Merchant Ribbit Spawn Egg",
+  "item.ribbits.ribbit_sorcerer_spawn_egg": "Sorcerer Ribbit Spawn Egg",
+
   "entity.ribbits.ribbit": "Ribbit",
 
   "subtitles.entity.ribbit.ambient": "Ribbit croaks",

@@ -20,7 +20,7 @@ public class RibbitData {
                     ResourceLocation.CODEC.fieldOf("instrument").forGetter(data -> data.instrument.getId()))
             .apply(instance, instance.stable(RibbitData::new)));
 
-    private final RibbitProfession profession;
+    private RibbitProfession profession;
     private final RibbitUmbrellaType umbrellaType;
     private RibbitInstrument instrument;
 
@@ -50,6 +50,10 @@ public class RibbitData {
 
     public RibbitProfession getProfession() {
         return this.profession;
+    }
+
+    public void setProfession(RibbitProfession profession) {
+        this.profession = profession;
     }
 
     public RibbitUmbrellaType getUmbrellaType() {
