@@ -14,7 +14,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,9 +80,11 @@ public class FabricPlatformHelper implements IPlatformHelper {
     public Supplier<Block> getGiantLilyPadBlock() {
         return () -> new GiantLilyPadBlock(
                 BlockBehaviour.Properties
-                        .of(Material.PLANT)
+                        .of()
+                        .mapColor(MapColor.PLANT)
                         .instabreak()
                         .sound(SoundType.LILY_PAD)
-                        .noOcclusion());
+                        .noOcclusion()
+                        .pushReaction(PushReaction.DESTROY));
     }
 }

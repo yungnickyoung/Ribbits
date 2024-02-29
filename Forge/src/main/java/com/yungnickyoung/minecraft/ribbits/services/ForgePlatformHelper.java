@@ -11,7 +11,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLLoader;
 
@@ -59,9 +60,11 @@ public class ForgePlatformHelper implements IPlatformHelper {
     public Supplier<Block> getGiantLilyPadBlock() {
         return () -> new GiantLilyPadBlockForge(
                 BlockBehaviour.Properties
-                        .of(Material.PLANT)
+                        .of()
+                        .mapColor(MapColor.PLANT)
                         .instabreak()
                         .sound(SoundType.LILY_PAD)
-                        .noOcclusion());
+                        .noOcclusion()
+                        .pushReaction(PushReaction.DESTROY));
     }
 }

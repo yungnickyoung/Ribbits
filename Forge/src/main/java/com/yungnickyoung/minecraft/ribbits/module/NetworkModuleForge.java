@@ -41,19 +41,19 @@ public class NetworkModuleForge {
             INSTANCE.messageBuilder(RibbitMusicStartSingleS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                     .decoder(RibbitMusicStartSingleS2CPacket::new)
                     .encoder(RibbitMusicStartSingleS2CPacket::toBytes)
-                    .consumer(RibbitMusicStartSingleS2CPacket::handle)
+                    .consumerMainThread(RibbitMusicStartSingleS2CPacket::handle)
                     .add();
 
             INSTANCE.messageBuilder(RibbitMusicStartAllS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                     .decoder(RibbitMusicStartAllS2CPacket::new)
                     .encoder(RibbitMusicStartAllS2CPacket::toBytes)
-                    .consumer(RibbitMusicStartAllS2CPacket::handle)
+                    .consumerMainThread(RibbitMusicStartAllS2CPacket::handle)
                     .add();
 
             INSTANCE.messageBuilder(RibbitMusicStopSingleS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
                     .decoder(RibbitMusicStopSingleS2CPacket::new)
                     .encoder(RibbitMusicStopSingleS2CPacket::toBytes)
-                    .consumer(RibbitMusicStopSingleS2CPacket::handle)
+                    .consumerMainThread(RibbitMusicStopSingleS2CPacket::handle)
                     .add();
         });
     }

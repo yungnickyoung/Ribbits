@@ -18,10 +18,10 @@ public class RibbitsCommon {
 
     public static final ConfigModule CONFIG = new ConfigModule();
 
-    @AutoRegister("general")
-    public static AutoRegisterCreativeTab TAB_RIBBITS = new AutoRegisterCreativeTab.Builder()
-            .iconItem(() -> new ItemStack(BlockModule.RED_TOADSTOOL.get()))
-            .build();
+//    @AutoRegister("general")
+//    public static AutoRegisterCreativeTab TAB_RIBBITS = new AutoRegisterCreativeTab.Builder()
+//            .iconItem(() -> new ItemStack(BlockModule.RED_TOADSTOOL.get()))
+//            .build();
 
     public static void init() {
         YungAutoRegister.scanPackageForAnnotations("com.yungnickyoung.minecraft.ribbits");
