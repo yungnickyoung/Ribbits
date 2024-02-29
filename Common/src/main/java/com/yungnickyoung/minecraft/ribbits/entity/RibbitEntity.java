@@ -173,6 +173,8 @@ public class RibbitEntity extends AgeableMob implements IAnimatable {
 
         this.goalSelector.removeGoal(this.musicGoal);
         this.goalSelector.removeGoal(this.waterCropsGoal);
+        this.goalSelector.removeGoal(this.fishGoal);
+        this.goalSelector.removeGoal(this.applyBuffGoal);
 
         if (this.getRibbitData().getProfession().equals(RibbitProfessionModule.NITWIT)) {
             this.goalSelector.addGoal(3, this.musicGoal);
