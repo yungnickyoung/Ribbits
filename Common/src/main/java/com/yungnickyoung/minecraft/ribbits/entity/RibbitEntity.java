@@ -78,6 +78,13 @@ public class RibbitEntity extends AgeableMob implements GeoEntity {
     private static final EntityDataAccessor<Boolean> WATERING = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FISHING = SynchedEntityData.defineId(RibbitEntity.class, EntityDataSerializers.BOOLEAN);
 
+    // These fields are used to prevent threadlocking by accessing entityData on rendering thread
+    private RibbitData sidedRibbitData = new RibbitData(RibbitProfessionModule.NITWIT, RibbitUmbrellaTypeModule.UMBRELLA_1, RibbitInstrumentModule.NONE);
+    private boolean isPlayingInstrument = false;
+    private boolean isUmbrellaFalling = false;
+    private boolean isWatering = false;
+    private boolean isFishing = false;
+
     // NOTE: Fields below here are used only on Server
     private int ticksPlayingMusic;
 
@@ -161,6 +168,23 @@ public class RibbitEntity extends AgeableMob implements GeoEntity {
     }
 
     @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
+        super.onSyncedDataUpdated(dataAccessor);
+
+        if (RIBBIT_DATA.equals(dataAccessor)) {
+            this.sidedRibbitData = this.entityData.get(RIBBIT_DATA);
+        } else if (UMBRELLA_FALLING.equals(dataAccessor)) {
+            this.isUmbrellaFalling = this.entityData.get(UMBRELLA_FALLING);
+        } else if (PLAYING_INSTRUMENT.equals(dataAccessor)) {
+            this.isPlayingInstrument = this.entityData.get(PLAYING_INSTRUMENT);
+        } else if (FISHING.equals(dataAccessor)) {
+            this.isFishing = this.entityData.get(FISHING);
+        } else if (WATERING.equals(dataAccessor)) {
+            this.isWatering = this.entityData.get(WATERING);
+        }
+    }
+
+    @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
         SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
 
@@ -220,7 +244,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity {
     }
 
     public RibbitData getRibbitData() {
-        return this.entityData.get(RIBBIT_DATA);
+        return this.sidedRibbitData;
     }
 
     public void setRibbitData(RibbitData data) {
@@ -228,7 +252,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity {
     }
 
     public boolean getPlayingInstrument() {
-        return this.entityData.get(PLAYING_INSTRUMENT);
+        return this.isPlayingInstrument;
     }
 
     public void setPlayingInstrument(boolean playingInstrument) {
@@ -236,7 +260,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity {
     }
 
     public boolean getUmbrellaFalling() {
-        return this.entityData.get(UMBRELLA_FALLING);
+        return this.isUmbrellaFalling;
     }
 
     public void setUmbrellaFalling(boolean umbrellaFalling) {
@@ -244,7 +268,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity {
     }
 
     public boolean getWatering() {
-        return this.entityData.get(WATERING);
+        return this.isWatering;
     }
 
     public void setWatering(boolean isWatering) {
@@ -252,7 +276,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity {
     }
 
     public boolean getFishing() {
-        return this.entityData.get(FISHING);
+        return this.isFishing;
     }
 
     public void setFishing(boolean isFishing) {
