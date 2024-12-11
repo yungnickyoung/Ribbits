@@ -15,12 +15,12 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
-public class SupporterHatRenderer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+public class SupporterHatRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     private static final ResourceLocation TEXTURE = RibbitsCommon.id("textures/entity/player/supporter_hat.png");
 
     private final SupporterHatModel hatModel;
 
-    public SupporterHatRenderer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent, Context context) {
+    public SupporterHatRenderLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent, Context context) {
         super(renderLayerParent);
         this.hatModel = new SupporterHatModel(context.bakeLayer(SupporterHatModel.LAYER_LOCATION));
     }
@@ -28,10 +28,16 @@ public class SupporterHatRenderer extends RenderLayer<AbstractClientPlayer, Play
     @Override
     public void render(PoseStack stack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float f, float g, float tickDelta, float j, float k, float l) {
         if (SupportersListClient.isPlayerSupporterHatEnabled(player.getUUID())) {
+            stack.pushPose();
             VertexConsumer consumer = bufferSource.getBuffer(RenderType.armorCutoutNoCull(TEXTURE));
-            hatModel.head.y = this.getParentModel().head.y - 0.6f;
+            hatModel.head.y = this.getParentModel().head.y - 0.6f + getRenderYOffset(player);
             this.getParentModel().getHead().translateAndRotate(stack);
             hatModel.renderToBuffer(stack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            stack.popPose();
         }
+    }
+
+    public float getRenderYOffset(AbstractClientPlayer player) {
+        return player.isCrouching() ? -4.25F : 0;
     }
 }

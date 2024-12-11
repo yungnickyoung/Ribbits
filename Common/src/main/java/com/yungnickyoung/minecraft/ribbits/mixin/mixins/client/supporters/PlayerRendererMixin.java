@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.mixin.mixins.client.supporters;
 
-import com.yungnickyoung.minecraft.ribbits.client.render.SupporterHatRenderer;
+import com.yungnickyoung.minecraft.ribbits.client.render.SupporterHatRenderLayer;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -23,6 +23,6 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
      */
     @Inject(method = "<init>", at = @At("RETURN"))
     private void ribbits$addSupporterHatArmorLayer(EntityRendererProvider.Context context, boolean bl, CallbackInfo ci) {
-        this.addLayer(new SupporterHatRenderer(this, context));
+        this.addLayer(new SupporterHatRenderLayer(this, context));
     }
 }

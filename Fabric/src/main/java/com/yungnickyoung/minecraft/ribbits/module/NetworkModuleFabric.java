@@ -17,6 +17,7 @@ public class NetworkModuleFabric {
     public static final ResourceLocation STOP_HEARING_MARACA_S2C = new ResourceLocation(RibbitsCommon.MOD_ID, "stop_hearing_maraca");
 
     public static void registerC2SPackets() {
+        ServerPlayNetworking.registerGlobalReceiver(ToggleSupporterPacket.TYPE, ServerPacketHandlerFabric::receiveToggleSupporterHat);
     }
 
     public static void registerS2CPackets() {
@@ -31,6 +32,5 @@ public class NetworkModuleFabric {
         // When received on the server, it will update the server's SupportersListServer and forward the packet to all clients.
         // When received on the client, it will update the player's local SupportersListClient.
         ClientPlayNetworking.registerGlobalReceiver(ToggleSupporterPacket.TYPE, ClientPacketHandlerFabric::receiveToggleSupporterHat);
-        ServerPlayNetworking.registerGlobalReceiver(ToggleSupporterPacket.TYPE, ServerPacketHandlerFabric::receiveToggleSupporterHat);
     }
 }
