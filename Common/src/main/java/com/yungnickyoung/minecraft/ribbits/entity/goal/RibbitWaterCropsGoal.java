@@ -135,7 +135,7 @@ public class RibbitWaterCropsGoal extends Goal {
     private static void tryGrowCropAtPos(Level level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos);
         if (blockState.getBlock() instanceof CropBlock cropBlock) {
-            if (cropBlock.isValidBonemealTarget(level, pos, blockState, level.isClientSide)) {
+            if (cropBlock.isValidBonemealTarget(level, pos, blockState)) {
                 if (level instanceof ServerLevel serverLevel) {
                     if (cropBlock.isBonemealSuccess(level, level.random, pos, blockState)) {
                         cropBlock.performBonemeal(serverLevel, level.random, pos, blockState);

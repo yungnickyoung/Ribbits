@@ -19,9 +19,21 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Optional;
 
+import com.mojang.serialization.MapCodec;
+
 public class SwampPlantBlock extends BushBlock implements BonemealableBlock {
+    public static final MapCodec<SwampPlantBlock> CODEC = simpleCodec(SwampPlantBlock::new);
     private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 16.0, 16.0);
     private final ResourceKey<PlacedFeature> bonemealPatch;
+
+    public MapCodec<SwampPlantBlock> codec() {
+        return CODEC;
+    }
+
+    public SwampPlantBlock(Properties properties) {
+        super(properties);
+        this.bonemealPatch = null;
+    }
 
     public SwampPlantBlock(Properties properties, ResourceKey<PlacedFeature> bonemealPatch) {
         super(properties);
@@ -34,7 +46,7 @@ public class SwampPlantBlock extends BushBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean isClientside) {
+    public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
         return true;
     }
 

@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[47,)"
+loaderVersion="[49,)"
 license="LGPLv3"
 issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
 
@@ -25,7 +25,7 @@ issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
 
 [[dependencies.${mod_id}]]
     modId="yungsapi"
-    versionRange="[${yungsapi_mc_version}-Forge-${yungsapi_version},)"
+    versionRange="[${mc_version}-Forge-${yungsapi_version},)"
     mandatory=true
     ordering="NONE"
     side="BOTH"

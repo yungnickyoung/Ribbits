@@ -112,7 +112,9 @@ public class BlockModule {
 
     @AutoRegister("mossy_oak_door")
     public static final AutoRegisterBlock MOSSY_OAK_DOOR = AutoRegisterBlock.of(() ->
-                    DoorBlockAccessor.createDoorBlock(BlockBehaviour.Properties
+                    DoorBlockAccessor.createDoorBlock(
+                            BlockSetType.OAK,
+                            BlockBehaviour.Properties
                                     .of()
                                     .mapColor(Blocks.OAK_PLANKS.defaultMapColor())
                                     .instrument(NoteBlockInstrument.BASS)
@@ -120,8 +122,8 @@ public class BlockModule {
                                     .noOcclusion()
                                     .ignitedByLava()
                                     .pushReaction(PushReaction.DESTROY)
-                                    .sound(SoundType.WOOD),
-                            BlockSetType.OAK))
+                                    .sound(SoundType.WOOD)
+                            ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("umbrella_leaf")

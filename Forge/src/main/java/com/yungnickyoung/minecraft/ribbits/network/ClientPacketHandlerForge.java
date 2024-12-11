@@ -18,14 +18,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class ClientPacketHandlerForge {
-    public static void handleStartSingleRibbitInstrument(RibbitMusicStartSingleS2CPacket packet, Supplier<NetworkEvent.Context> ctx) {
+    public static void handleStartSingleRibbitInstrument(RibbitMusicStartSingleS2CPacket packet, CustomPayloadEvent.Context ctx) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         UUID entityId = packet.getRibbitId();
         RibbitInstrument instrument = RibbitInstrumentModule.getInstrument(packet.getInstrumentId());
@@ -54,7 +53,7 @@ public class ClientPacketHandlerForge {
         }
     }
 
-    public static void handleStartAllRibbitInstruments(RibbitMusicStartAllS2CPacket packet, Supplier<NetworkEvent.Context> ctx) {
+    public static void handleStartAllRibbitInstruments(RibbitMusicStartAllS2CPacket packet, CustomPayloadEvent.Context ctx) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         List<UUID> entityIds = packet.getRibbitIds();
         List<ResourceLocation> instrumentIds = packet.getInstrumentIds();
@@ -90,7 +89,7 @@ public class ClientPacketHandlerForge {
         }
     }
 
-    public static void handleStopSingleRibbitInstrument(RibbitMusicStopSingleS2CPacket packet, Supplier<NetworkEvent.Context> ctx) {
+    public static void handleStopSingleRibbitInstrument(RibbitMusicStopSingleS2CPacket packet, CustomPayloadEvent.Context ctx) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         UUID entityId = packet.getRibbitId();
 
@@ -106,7 +105,7 @@ public class ClientPacketHandlerForge {
         }
     }
 
-    public static void handleStartPlayerInstrument(PlayerMusicStartS2CPacket packet, Supplier<NetworkEvent.Context> ctx) {
+    public static void handleStartPlayerInstrument(PlayerMusicStartS2CPacket packet, CustomPayloadEvent.Context ctx) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         UUID performerId = packet.getPerformerId();
 
@@ -125,7 +124,7 @@ public class ClientPacketHandlerForge {
         }
     }
 
-    public static void handleStopPlayerInstrument(PlayerMusicStopS2CPacket packet, Supplier<NetworkEvent.Context> ctx) {
+    public static void handleStopPlayerInstrument(PlayerMusicStopS2CPacket packet, CustomPayloadEvent.Context ctx) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         UUID performerId = packet.getPerformerId();
 
@@ -144,12 +143,12 @@ public class ClientPacketHandlerForge {
         }
     }
 
-    public static void handleToggleSupporterHat(ToggleSupporterHatS2CPacket packet, Supplier<NetworkEvent.Context> ctx) {
+    public static void handleToggleSupporterHat(ToggleSupporterHatS2CPacket packet, CustomPayloadEvent.Context ctx) {
         // Update the player's supporter hat status on the client
         SupportersListClient.toggleSupporterHat(packet.getPlayerUuid(), packet.getEnabled());
     }
 
-    public static void handleSupporterHatStateRequest(RequestSupporterHatStateS2CPacket packet, Supplier<NetworkEvent.Context> ctx) {
+    public static void handleSupporterHatStateRequest(RequestSupporterHatStateS2CPacket packet, CustomPayloadEvent.Context ctx) {
         // Populate local supporter hat list with the list from the server
         SupportersListClient.clear();
         packet.getEnabledSupporterHatPlayers().forEach(playerUUID -> SupportersListClient.toggleSupporterHat(playerUUID, true));

@@ -6,12 +6,11 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class RibbitMusicStartAllS2CPacket {
     private final List<UUID> ribbitIds;
@@ -55,12 +54,12 @@ public class RibbitMusicStartAllS2CPacket {
     /**
      * Handler
      */
-    public boolean handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() ->
+    public boolean handle(CustomPayloadEvent.Context ctx) {
+        ctx.enqueueWork(() ->
                 // Make sure this is only executed on the physical client
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandlerForge.handleStartAllRibbitInstruments(this, ctx))
         );
-        ctx.get().setPacketHandled(true);
+        ctx.setPacketHandled(true);
         return true;
     }
 

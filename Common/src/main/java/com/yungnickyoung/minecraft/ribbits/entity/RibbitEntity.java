@@ -377,11 +377,6 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     }
 
     @Override
-    public double getMyRidingOffset() {
-        return 0.3d;
-    }
-
-    @Override
     public int getMaxHeadXRot() {
         return 0;
     }
@@ -603,11 +598,6 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     protected void playStepSound(BlockPos pos, BlockState blockstate) {
         super.playStepSound(pos, blockstate);
         this.playSound(SoundModule.ENTITY_RIBBIT_STEP.get(), 1.0F, 1.0F);
-    }
-
-    @Override
-    public boolean canBreatheUnderwater() {
-        return true;
     }
 
     public boolean isPrideRibbit() {

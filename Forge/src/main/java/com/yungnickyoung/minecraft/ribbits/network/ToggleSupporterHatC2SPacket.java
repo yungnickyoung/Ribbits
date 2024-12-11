@@ -1,10 +1,9 @@
 package com.yungnickyoung.minecraft.ribbits.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class ToggleSupporterHatC2SPacket {
     private final UUID playerUuid;
@@ -34,9 +33,9 @@ public class ToggleSupporterHatC2SPacket {
     /**
      * Handler
      */
-    public boolean handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> ServerPacketHandlerForge.handleToggleSupporterHat(this, ctx));
-        ctx.get().setPacketHandled(true);
+    public boolean handle(CustomPayloadEvent.Context ctx) {
+        ctx.enqueueWork(() -> ServerPacketHandlerForge.handleToggleSupporterHat(this, ctx));
+        ctx.setPacketHandled(true);
         return true;
     }
 

@@ -41,7 +41,7 @@
     "minecraft": ">=${mc_version}",
     "cloth-config2": ">=${clothconfig_version_fabric}",
     "java": ">=17",
-    "yungsapi": ">=${yungsapi_mc_version}-Fabric-${yungsapi_version}",
+    "yungsapi": ">=${mc_version}-Fabric-${yungsapi_version}",
     "geckolib": ">=${fabric_geckolib_version}"
   }
 }
