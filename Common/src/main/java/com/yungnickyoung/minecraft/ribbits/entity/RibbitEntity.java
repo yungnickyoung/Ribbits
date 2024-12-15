@@ -14,6 +14,7 @@ import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitStopAndStareAtFrogG
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitStrollGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitWaterCropsGoal;
 import com.yungnickyoung.minecraft.ribbits.module.EntityDataSerializerModule;
+import com.yungnickyoung.minecraft.ribbits.module.ParticleTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitTradeModule;
@@ -30,6 +31,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -194,6 +196,17 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
 
             if (this.shouldRestock()) {
                 this.restock();
+            }
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (this.getBuffing()) {
+            for (float i = 0; i < Mth.TWO_PI; i += this.random.nextFloat() * 0.8F + 0.5F) {
+                this.level().addParticle((ParticleOptions) ParticleTypeModule.SPELL.get(), this.getX() + Mth.cos(i) * 1.25D, this.getY(), this.getZ() + Mth.sin(i) * 1.25D, 0.0D, 0.0D, 0.0D);
             }
         }
     }

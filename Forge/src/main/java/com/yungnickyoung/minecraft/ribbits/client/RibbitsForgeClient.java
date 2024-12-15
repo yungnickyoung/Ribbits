@@ -1,12 +1,16 @@
 package com.yungnickyoung.minecraft.ribbits.client;
 
 import com.yungnickyoung.minecraft.ribbits.client.model.SupporterHatModel;
+import com.yungnickyoung.minecraft.ribbits.client.particle.RibbitSpellParticle;
 import com.yungnickyoung.minecraft.ribbits.client.render.RibbitRenderer;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
+import com.yungnickyoung.minecraft.ribbits.module.ParticleTypeModule;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -33,5 +37,9 @@ public class RibbitsForgeClient {
 
     private static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(SupporterHatModel.LAYER_LOCATION, SupporterHatModel::getTexturedModelData);
+    }
+
+    private static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+        Minecraft.getInstance().particleEngine.register(ParticleTypeModule.SPELL.get(), RibbitSpellParticle.Factory::new);
     }
 }
