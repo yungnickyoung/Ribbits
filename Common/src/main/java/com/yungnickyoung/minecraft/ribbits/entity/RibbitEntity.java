@@ -93,6 +93,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     private static final RawAnimation FISH_HOLDING = RawAnimation.begin().thenPlay("fishing_holding");
     private static final RawAnimation WATER_CROPS = RawAnimation.begin().thenPlay("water_crops");
     private static final RawAnimation WATER_CROPS_HOLDING = RawAnimation.begin().thenPlay("water_crops_holding");
+    private static final RawAnimation FALLING = RawAnimation.begin().thenPlay("ribbit_fall");
 
     @Nullable
     private Player tradingPlayer;
@@ -631,7 +632,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
 
     private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
         if (this.getUmbrellaFalling()) {
-            state.getController().setAnimation(this.getRibbitData().getProfession().equals(RibbitProfessionModule.FISHERMAN) || this.isPrideRibbit() ? IDLE_HOLDING_2 : IDLE_HOLDING_1);
+            state.getController().setAnimation(FALLING);
         } else if (getPlayingInstrument() && this.getRibbitData().getInstrument() != RibbitInstrumentModule.NONE) {
             state.getController().setAnimation(RawAnimation.begin().thenPlay(this.getRibbitData().getInstrument().getAnimationName()));
         } else if (getBuffing()) {
