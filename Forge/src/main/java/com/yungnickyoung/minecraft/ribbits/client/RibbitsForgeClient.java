@@ -20,6 +20,7 @@ public class RibbitsForgeClient {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(RibbitsForgeClient::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(RibbitsForgeClient::registerRenderers);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(RibbitsForgeClient::registerLayers);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(RibbitsForgeClient::registerParticleFactories);
     }
 
     private static void clientSetup(final FMLClientSetupEvent event) {
