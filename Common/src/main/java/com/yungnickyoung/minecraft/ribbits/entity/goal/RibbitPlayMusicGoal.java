@@ -1,6 +1,5 @@
 package com.yungnickyoung.minecraft.ribbits.entity.goal;
 
-import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
@@ -57,12 +56,12 @@ public class RibbitPlayMusicGoal extends Goal {
             return false;
         }
 
-        return !this.ribbit.getUmbrellaFalling() && !this.ribbit.isDeadOrDying();
+        return !this.ribbit.isUmbrellaFalling() && !this.ribbit.isDeadOrDying();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return !this.ribbit.getUmbrellaFalling() && !this.ribbit.isDeadOrDying() && (this.ribbit.getPlayingInstrument() || this.ribbit.getMasterRibbit() == null || !this.ribbit.getMasterRibbit().isBandFull());
+        return !this.ribbit.isUmbrellaFalling() && !this.ribbit.isDeadOrDying() && (this.ribbit.getPlayingInstrument() || this.ribbit.getMasterRibbit() == null || !this.ribbit.getMasterRibbit().isBandFull());
     }
 
     @Override

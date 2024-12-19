@@ -96,6 +96,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     private static final RawAnimation WATER_CROPS = RawAnimation.begin().thenPlay("water_crops");
     private static final RawAnimation WATER_CROPS_HOLDING = RawAnimation.begin().thenPlay("water_crops_holding");
     private static final RawAnimation FALLING = RawAnimation.begin().thenPlay("ribbit_fall");
+    private static final RawAnimation FALLING_FISHERMAN = RawAnimation.begin().thenPlay("fisherman_ribbit_fall");
 
     @Nullable
     private Player tradingPlayer;
@@ -175,11 +176,11 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
                 this.setHealth(Math.min(this.getHealth() + 1, this.getMaxHealth()));
             }
 
-            if (this.onGround() && this.getUmbrellaFalling()) {
+            if (this.onGround() && this.isUmbrellaFalling()) {
                 this.setUmbrellaFalling(false);
             }
 
-            if (this.fallDistance >= 2 || this.getUmbrellaFalling()) {
+            if (this.fallDistance >= 2 || this.isUmbrellaFalling()) {
                 Vec3 velocity = this.getDeltaMovement();
                 this.resetFallDistance();
                 this.setDeltaMovement(velocity.x, -0.1d, velocity.z);
@@ -452,7 +453,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
         this.entityData.set(PLAYING_INSTRUMENT, playingInstrument);
     }
 
-    public boolean getUmbrellaFalling() {
+    public boolean isUmbrellaFalling() {
         return this.isUmbrellaFalling;
     }
 
@@ -644,8 +645,8 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     }
 
     private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
-        if (this.getUmbrellaFalling()) {
-            state.getController().setAnimation(FALLING);
+        if (this.isUmbrellaFalling()) {
+            state.getController().setAnimation(this.getRibbitData().getProfession() == RibbitProfessionModule.FISHERMAN? FALLING_FISHERMAN : FALLING);
         } else if (getPlayingInstrument() && this.getRibbitData().getInstrument() != RibbitInstrumentModule.NONE) {
             state.getController().setAnimation(RawAnimation.begin().thenPlay(this.getRibbitData().getInstrument().getAnimationName()));
         } else if (getBuffing()) {

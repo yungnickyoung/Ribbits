@@ -17,7 +17,7 @@ public class RibbitModel extends GeoModel<RibbitEntity> {
     public ResourceLocation getModelResource(RibbitEntity ribbitEntity) {
         if (ribbitEntity.getPlayingInstrument() && ribbitEntity.getRibbitData().getInstrument() != RibbitInstrumentModule.NONE) {
             return ribbitEntity.getRibbitData().getInstrument().getModelId();
-        } else if (ribbitEntity.getUmbrellaFalling() || ribbitEntity.isInRain()) {
+        } else if (ribbitEntity.isUmbrellaFalling() || ribbitEntity.isInRain()) {
             return RibbitsCommon.id("geo/umbrella/" + ribbitEntity.getRibbitData().getProfession().getId().getPath() + "/" + ribbitEntity.getRibbitData().getUmbrellaType().getModelLocationSuffix());
         } else {
             if (ribbitEntity.isPrideRibbit()) {
