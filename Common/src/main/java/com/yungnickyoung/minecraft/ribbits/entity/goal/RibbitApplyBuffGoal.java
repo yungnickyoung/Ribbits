@@ -78,6 +78,11 @@ public class RibbitApplyBuffGoal extends Goal {
         this.ticksSinceStart = 0;
     }
 
+    @Override
+    public boolean isInterruptable() {
+        return false;
+    }
+
     private void applyBuffs() {
         this.ticksSinceStart = -1;
 
