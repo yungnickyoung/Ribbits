@@ -4,10 +4,12 @@ import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.EnumSet;
@@ -58,13 +60,8 @@ public class RibbitWaterCropsGoal extends Goal {
         if (this.ribbit.level().isNight()) return false;
 
         // Find the closest crop block that isn't fully grown
-        Optional<BlockPos> cropPos = BlockPos.findClosestMatch(this.ribbit.getOnPos(), (int) range, 5, blockpos -> {
-            if (this.ribbit.level().getBlockState(blockpos).getBlock() instanceof CropBlock cropBlock) {
-                return this.ribbit.getBuffCooldown() == 0 && !cropBlock.isMaxAge(this.ribbit.level().getBlockState(blockpos));
-            } else {
-                return false;
-            }
-        });
+        Optional<BlockPos> cropPos = BlockPos.findClosestMatch(this.ribbit.getOnPos(), (int) range, 5, blockPos ->
+                isValidCropBlock(this.ribbit.level(), blockPos, this.ribbit.level().getBlockState(blockPos)) && this.ribbit.getBuffCooldown() == 0);
 
         cropPos.ifPresent(blockPos -> this.targetCropPos = blockPos);
         return this.ribbit.getBuffCooldown() == 0 && cropPos.isPresent();
@@ -77,13 +74,14 @@ public class RibbitWaterCropsGoal extends Goal {
 
         boolean cropNearby = false;
         for (BlockPos nearbyPos : getNearbyPositions()) {
-            if (this.ribbit.level().getBlockState(nearbyPos).getBlock() instanceof CropBlock cropBlock && !cropBlock.isMaxAge(this.ribbit.level().getBlockState(nearbyPos))) {
+            if (isValidCropBlock(this.ribbit.level(), nearbyPos, this.ribbit.level().getBlockState(nearbyPos))) {
                 cropNearby = true;
                 break;
             }
         }
 
-        return this.ribbit.distanceToSqr(this.targetCropPos.getX() + 0.5f, this.targetCropPos.getY(), this.targetCropPos.getZ() + 0.5f) > 1.0 || cropNearby || wateringTicks > 0;
+        return this.ribbit.distanceToSqr(this.targetCropPos.getX() + 0.5f, this.targetCropPos.getY(), this.targetCropPos.getZ() + 0.5f) > 1.0
+                || cropNearby || wateringTicks > 0;
     }
 
     @Override
@@ -134,16 +132,22 @@ public class RibbitWaterCropsGoal extends Goal {
 
     private static void tryGrowCropAtPos(Level level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos);
-        if (blockState.getBlock() instanceof CropBlock cropBlock) {
-            if (cropBlock.isValidBonemealTarget(level, pos, blockState, level.isClientSide)) {
+        if (blockState.is(BlockTags.CROPS) && blockState.getBlock() instanceof BonemealableBlock bonemealableBlock) {
+            if (bonemealableBlock.isValidBonemealTarget(level, pos, blockState, level.isClientSide)) {
                 if (level instanceof ServerLevel serverLevel) {
-                    if (cropBlock.isBonemealSuccess(level, level.random, pos, blockState)) {
-                        cropBlock.performBonemeal(serverLevel, level.random, pos, blockState);
+                    if (bonemealableBlock.isBonemealSuccess(level, level.random, pos, blockState)) {
+                        bonemealableBlock.performBonemeal(serverLevel, level.random, pos, blockState);
                         serverLevel.sendParticles(ParticleTypes.FALLING_WATER, pos.getX() + 0.5, pos.getY() + 0.6d, pos.getZ() + 0.5, 8, 0.0d, 0.0d, 0.0d, 0.0d);
                     }
                 }
             }
         }
+    }
+
+    private static boolean isValidCropBlock(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
+        return blockState.is(BlockTags.CROPS)
+                && blockState.getBlock() instanceof BonemealableBlock bonemealableBlock
+                && bonemealableBlock.isValidBonemealTarget(levelReader, blockPos, blockState, levelReader.isClientSide());
     }
 
     private Iterable<BlockPos> getNearbyPositions() {
