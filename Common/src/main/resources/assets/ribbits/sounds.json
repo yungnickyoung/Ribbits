@@ -31,6 +31,12 @@
       "ribbits:entity/ribbit_step2"
     ]
   },
+  "entity.ribbit.magic": {
+    "subtitle": "subtitles.entity.ribbit.magic",
+    "sounds": [
+      "ribbits:entity/ribbit_magic"
+    ]
+  },
   "music.ribbit.bass": {
     "subtitle": "subtitles.music.ribbit.bass",
     "sounds": [

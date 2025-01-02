@@ -19,6 +19,9 @@ public class SoundModule {
     @AutoRegister("entity.ribbit.step")
     public static final AutoRegisterSoundEvent ENTITY_RIBBIT_STEP = AutoRegisterSoundEvent.create();
 
+    @AutoRegister("entity.ribbit.magic")
+    public static final AutoRegisterSoundEvent ENTITY_RIBBIT_MAGIC = AutoRegisterSoundEvent.create();
+
     @AutoRegister("music.ribbit.bass")
     public static final AutoRegisterSoundEvent MUSIC_RIBBIT_BASS = AutoRegisterSoundEvent.create();
 

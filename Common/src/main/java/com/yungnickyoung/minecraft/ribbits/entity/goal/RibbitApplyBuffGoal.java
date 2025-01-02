@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.ribbits.entity.goal;
 
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
+import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -70,6 +71,7 @@ public class RibbitApplyBuffGoal extends Goal {
     public void start() {
         this.ticksSinceStart = 0;
         this.ribbit.setBuffing(true);
+        this.ribbit.playSound(SoundModule.ENTITY_RIBBIT_MAGIC.get());
     }
 
     @Override

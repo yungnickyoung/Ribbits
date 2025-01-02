@@ -142,7 +142,8 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     private Set<RibbitEntity> ribbitsPlayingMusic = new HashSet<>();
     private Set<Player> playersHearingMusic = new HashSet<>();
     private Set<RibbitInstrument> bandMembers = new HashSet<>();
-    @Nullable private RibbitEntity masterRibbit;
+    @Nullable
+    private RibbitEntity masterRibbit;
 
     private int buffCooldown = 0;
     private int waterCropsCooldown = 0;
@@ -150,7 +151,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     public RibbitEntity(EntityType<RibbitEntity> entityType, Level level) {
         super(entityType, level);
 
-        ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
+        ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
 
         this.reassessGoals();
     }
@@ -205,9 +206,12 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     public void tick() {
         super.tick();
 
-        if (this.getBuffing()) {
-            for (float i = 0; i < Mth.TWO_PI; i += this.random.nextFloat() * 0.8F + 0.5F) {
-                this.level().addParticle((ParticleOptions) ParticleTypeModule.SPELL.get(), this.getX() + Mth.cos(i) * 1.25D, this.getY(), this.getZ() + Mth.sin(i) * 1.25D, 0.0D, 0.0D, 0.0D);
+        if (this.getBuffing() && this.level().isClientSide()) {
+            double radius = 1.25;
+            for (float theta = 0; theta < Mth.TWO_PI; theta += this.random.nextFloat() * 0.8F + 0.5F) {
+                this.level().addParticle((ParticleOptions) ParticleTypeModule.SPELL.get(),
+                        this.getX() + Mth.cos(theta) * radius, this.getY(), this.getZ() + Mth.sin(theta) * radius,
+                        0.0D, 0.0D, 0.0D);
             }
         }
     }
@@ -581,7 +585,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     public void remove(RemovalReason reason) {
         if (this.isMasterRibbit()) {
             findNewMasterRibbit();
-        } else if (this.isPlayingInstrument && this.getMasterRibbit() != null){
+        } else if (this.isPlayingInstrument && this.getMasterRibbit() != null) {
             this.getMasterRibbit().getRibbitsPlayingMusic().remove(this);
             this.getMasterRibbit().removeBandMember(this.getRibbitData().getInstrument());
         }
@@ -646,7 +650,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
 
     private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> state) {
         if (this.isUmbrellaFalling()) {
-            state.getController().setAnimation(this.getRibbitData().getProfession() == RibbitProfessionModule.FISHERMAN? FALLING_FISHERMAN : FALLING);
+            state.getController().setAnimation(this.getRibbitData().getProfession() == RibbitProfessionModule.FISHERMAN ? FALLING_FISHERMAN : FALLING);
         } else if (getPlayingInstrument() && this.getRibbitData().getInstrument() != RibbitInstrumentModule.NONE) {
             state.getController().setAnimation(RawAnimation.begin().thenPlay(this.getRibbitData().getInstrument().getAnimationName()));
         } else if (getBuffing()) {
@@ -654,10 +658,10 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
         } else if (getFishing()) {
             state.getController().setAnimation(this.isInRain() ? FISH_HOLDING : FISH);
         } else if (getWatering()) {
-            state.getController().setAnimation(this.isInRain() ? WATER_CROPS_HOLDING: WATER_CROPS);
+            state.getController().setAnimation(this.isInRain() ? WATER_CROPS_HOLDING : WATER_CROPS);
         } else if (state.isMoving() && !this.isInWater()) {
             state.getController().setAnimation(this.getWalkAnimation());
-          } else {
+        } else {
             state.getController().setAnimation(this.getIdleAnimation());
         }
         return PlayState.CONTINUE;

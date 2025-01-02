@@ -16,7 +16,7 @@ public class RibbitSpellParticle extends TextureSheetParticle {
         this.xd = motionX;
         this.yd = motionY;
         this.zd = motionZ;
-        this.quadSize *= level.getRandom().nextFloat() * 0.6F + 0.4F;
+        this.quadSize *= level.getRandom().nextFloat() * 0.4F + 1.0F;
         this.lifetime = level.getRandom().nextInt(15) + 20;
         this.sprites = sprites;
         this.setSpriteFromAge(this.sprites);
