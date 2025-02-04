@@ -1,0 +1,43 @@
+{
+  "itemGroup.ribbits.general": "リビット",
+
+  "block.ribbits.brown_toadstool": "茶色の毒キノコブロック",
+  "block.ribbits.red_toadstool": "赤い毒キノコブロック",
+  "block.ribbits.toadstool_stem": "毒キノコの茎",
+  "block.ribbits.swamp_lantern": "沼のランタン",
+  "block.ribbits.giant_lilypad": "豊かな睡蓮の葉",
+  "block.ribbits.swamp_daisy": "スワンプデイジー",
+  "block.ribbits.toadstool": "毒キノコ",
+  "block.ribbits.mossy_oak_planks": "苔むしたオークの板",
+  "block.ribbits.mossy_oak_planks_stairs": "苔むしたオークの階段",
+  "block.ribbits.mossy_oak_planks_slab": "苔むしたオークの板",
+  "block.ribbits.mossy_oak_planks_fence": "苔むしたオークのフェンス",
+  "block.ribbits.mossy_oak_planks_fence_gate": "苔むしたオークのフェンスゲート",
+  "block.ribbits.mossy_oak_door": "苔むしたオークのドア",
+  "block.ribbits.umbrella_leaf": "傘の葉",
+
+  "item.ribbits.ribbit_nitwit_spawn_egg": "ニトウィットリビットのスポーンエッグ",
+  "item.ribbits.ribbit_fisherman_spawn_egg": "フィッシャーマンリビットの産卵卵",
+  "item.ribbits.ribbit_gardener_spawn_egg": "ガーデナーリビットのスポーンエッグ",
+  "item.ribbits.ribbit_merchant_spawn_egg": "商人のリビットのスポーンエッグ",
+  "item.ribbits.ribbit_sorcerer_spawn_egg": "ソーサラーリビットのスポーンエッグ",
+  "item.ribbits.maraca": "マラカス",
+
+  "entity.ribbits.ribbit": "リビット",
+
+  "subtitles.entity.ribbit.ambient": "キバタンが鳴く",
+  "subtitles.entity.ribbit.death": "リビットが死ぬ",
+  "subtitles.entity.ribbit.hurt": "キバガエルは痛い",
+  "subtitles.entity.ribbit.step": "リビットホップ",
+  "subtitles.music.ribbit.bass": "リビットはベースを弾く",
+  "subtitles.music.ribbit.bongo": "リビットはボンゴを演奏します",
+  "subtitles.music.ribbit.flute": "リビットはフルートを演奏します",
+  "subtitles.music.ribbit.guitar": "リビットはギターを弾く",
+  "subtitles.music.ribbit.maraca": "プレーヤーはマラカスを演奏する",
+
+  "text.autoconfig.ribbits-fabric-1_20_1.title": "リビット",
+  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear": "一年中プライドフラッグを掲げる",
+  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear.@Tooltip": "有効にすると、プライドリビットは6月だけでなく一年中存在するようになります。",
+
+  "ribbits.options.supporter_hat_button": "リビッツサポーターハット"
+}
