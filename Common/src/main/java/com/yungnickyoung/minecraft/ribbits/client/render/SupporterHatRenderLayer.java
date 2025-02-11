@@ -18,15 +18,24 @@ import net.minecraft.resources.ResourceLocation;
 public class SupporterHatRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     private static final ResourceLocation TEXTURE = RibbitsCommon.id("textures/entity/player/supporter_hat.png");
 
-    private final SupporterHatModel hatModel;
+    private SupporterHatModel hatModel;
 
     public SupporterHatRenderLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderLayerParent, Context context) {
         super(renderLayerParent);
-        this.hatModel = new SupporterHatModel(context.bakeLayer(SupporterHatModel.LAYER_LOCATION));
+
+        // For some reason, when other mods crash on startup on Forge due to missing dependencies,
+        // Ribbits gets erroneously blamed, so we're just gonna silently catch that error.
+        try {
+            this.hatModel = new SupporterHatModel(context.bakeLayer(SupporterHatModel.LAYER_LOCATION));
+        } catch (IllegalArgumentException e) {
+            // No-op
+        }
     }
 
     @Override
     public void render(PoseStack stack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float f, float g, float tickDelta, float j, float k, float l) {
+        if (this.hatModel == null) return;
+
         if (SupportersListClient.isPlayerSupporterHatEnabled(player.getUUID())) {
             stack.pushPose();
             VertexConsumer consumer = bufferSource.getBuffer(RenderType.armorCutoutNoCull(TEXTURE));
