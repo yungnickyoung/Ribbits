@@ -6,7 +6,6 @@ import java.util.ServiceLoader;
 
 public class Services {
     public static final IPlatformHelper PLATFORM = load(IPlatformHelper.class);
-    public static final IModulesLoader MODULES = load(IModulesLoader.class);
     public static final ISupporterHelper SUPPORTER_HELPER = load(ISupporterHelper.class);
 
     public static <T> T load(Class<T> clazz) {

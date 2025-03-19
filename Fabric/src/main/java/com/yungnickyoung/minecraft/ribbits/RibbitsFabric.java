@@ -1,7 +1,9 @@
 package com.yungnickyoung.minecraft.ribbits;
 
 import com.yungnickyoung.minecraft.ribbits.item.RibbitSpawnEggDispenseItemBehaviorFabric;
+import com.yungnickyoung.minecraft.ribbits.module.ConfigModuleFabric;
 import com.yungnickyoung.minecraft.ribbits.module.ItemModule;
+import com.yungnickyoung.minecraft.ribbits.module.NetworkModuleFabric;
 import com.yungnickyoung.minecraft.ribbits.player.PlayerInstrumentTracker;
 import com.yungnickyoung.minecraft.ribbits.supporters.SupporterEventsFabric;
 import net.fabricmc.api.ModInitializer;
@@ -16,6 +18,9 @@ public class RibbitsFabric implements ModInitializer {
     public void onInitialize() {
         GeckoLib.initialize();
         RibbitsCommon.init();
+
+        ConfigModuleFabric.init();
+        NetworkModuleFabric.registerC2SPackets();
 
         // Custom dispenser behavior for Ribbit spawn eggs
         DispenseItemBehavior ribbitSpawnEggDispenseItemBehavior = new RibbitSpawnEggDispenseItemBehaviorFabric();

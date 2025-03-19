@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.world.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -26,7 +26,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class LapisBlockProcessor extends StructureProcessor {
     public static final LapisBlockProcessor INSTANCE = new LapisBlockProcessor();
-    public static final Codec<LapisBlockProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<LapisBlockProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,

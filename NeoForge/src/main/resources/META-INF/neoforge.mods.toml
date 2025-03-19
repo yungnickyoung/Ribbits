@@ -1,0 +1,44 @@
+modLoader="javafml"
+loaderVersion="${neoforge_loader_version_range}"
+license="${license}"
+issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
+
+[[mods]]
+    modId="${mod_id}"
+    version="${version}"
+    displayName="${mod_full_name}"
+    credits="${mod_credits}"
+    authors="Joosh, YUNGNICKYOUNG, HellionGames, Refresh Studios"
+    description="${mod_description}"
+    logoFile="logo.png"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/ribbits"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${mc_version_range}"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neoforge_version_range}"
+
+[[dependencies.${mod_id}]]
+    modId="yungsapi"
+    versionRange="[${mc_version}-NeoForge-${yungsapi_version},)"
+    type="required"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="geckolib"
+    versionRange="[${geckolib_version_neoforge},)"
+    type="required"
+    ordering="NONE"
+    side="BOTH"
+
+[[mixins]]
+    config = "${mod_id}.mixins.json"
+
+[[mixins]]
+    config = "${mod_id}_neoforge.mixins.json"

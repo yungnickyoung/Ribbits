@@ -26,3 +26,7 @@ run
 forge*changelog.txt
 
 logs/
+runs/
+libs
+
+CHANGELOG.md

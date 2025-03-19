@@ -3,7 +3,6 @@ package com.yungnickyoung.minecraft.ribbits;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.ConfigModule;
 import com.yungnickyoung.minecraft.ribbits.module.ItemModule;
-import com.yungnickyoung.minecraft.ribbits.services.Services;
 import com.yungnickyoung.minecraft.yungsapi.api.YungAutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterCreativeTab;
@@ -21,7 +20,7 @@ public class RibbitsCommon {
     public static final ConfigModule CONFIG = new ConfigModule();
 
     // TODO - change this whenever updating to a new Minecraft version
-    public static final String MC_VERSION_STRING = "1_20_1";
+    public static final String MC_VERSION_STRING = "1_21_1";
 
     @AutoRegister("general")
     public static AutoRegisterCreativeTab TAB = AutoRegisterCreativeTab.builder()
@@ -55,10 +54,9 @@ public class RibbitsCommon {
 
     public static void init() {
         YungAutoRegister.scanPackageForAnnotations("com.yungnickyoung.minecraft.ribbits");
-        Services.MODULES.loadCommonModules();
     }
 
     public static ResourceLocation id(String path) {
-        return new ResourceLocation(MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 }

@@ -1,6 +1,5 @@
 package com.yungnickyoung.minecraft.ribbits.item;
 
-import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.player.PlayerInstrumentTracker;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -34,7 +33,7 @@ public class MaracaItem extends Item {
     }
 
     @Override
-    public int getUseDuration(ItemStack $$0) {
+    public int getUseDuration(ItemStack $$0, LivingEntity $$1) {
         return 72000;
     }
 

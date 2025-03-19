@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.world.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class BrewingStandProcessor extends StructureProcessor {
     public static final BrewingStandProcessor INSTANCE = new BrewingStandProcessor();
-    public static final Codec<BrewingStandProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<BrewingStandProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,

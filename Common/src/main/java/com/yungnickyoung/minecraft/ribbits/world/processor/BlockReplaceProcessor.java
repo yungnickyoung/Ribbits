@@ -1,6 +1,7 @@
 package com.yungnickyoung.minecraft.ribbits.world.processor;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
@@ -32,7 +33,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class BlockReplaceProcessor extends StructureProcessor {
-    public static final Codec<BlockReplaceProcessor> CODEC = RecordCodecBuilder.create(instance -> instance
+    public static final MapCodec<BlockReplaceProcessor> CODEC = RecordCodecBuilder.mapCodec(instance -> instance
             .group(
                     BlockState.CODEC.fieldOf("target_block").forGetter(config -> config.targetBlock),
                     BlockStateRandomizer.CODEC.fieldOf("output").forGetter(config -> config.output),

@@ -41,7 +41,7 @@ public class SupporterHatRenderLayer extends RenderLayer<AbstractClientPlayer, P
             VertexConsumer consumer = bufferSource.getBuffer(RenderType.armorCutoutNoCull(TEXTURE));
             hatModel.head.y = this.getParentModel().head.y - 0.6f + getRenderYOffset(player);
             this.getParentModel().getHead().translateAndRotate(stack);
-            hatModel.renderToBuffer(stack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+            hatModel.renderToBuffer(stack, consumer, packedLight, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
             stack.popPose();
         }
     }

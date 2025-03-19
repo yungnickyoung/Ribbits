@@ -16,7 +16,7 @@
     "issues": "https://github.com/yungnickyoung/Ribbits/issues",
     "discord": "discord.gg/sGwxnFV"
   },
-  "license": "LGPLv3",
+  "license": "${license}",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
@@ -40,8 +40,8 @@
     "fabric": ">=${fabric_version}",
     "minecraft": ">=${mc_version}",
     "cloth-config2": ">=${clothconfig_version_fabric}",
-    "java": ">=17",
-    "yungsapi": ">=${yungsapi_mc_version}-Fabric-${yungsapi_version}",
-    "geckolib": ">=${fabric_geckolib_version}"
+    "java": ">=${java_version}",
+    "yungsapi": ">=${mc_version}-Fabric-${yungsapi_version}",
+    "geckolib": ">=${geckolib_version_fabric}"
   }
 }

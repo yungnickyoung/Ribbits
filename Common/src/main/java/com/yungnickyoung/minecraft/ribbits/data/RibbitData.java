@@ -6,6 +6,7 @@ import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +20,13 @@ public class RibbitData {
                     ResourceLocation.CODEC.fieldOf("umbrella").forGetter(data -> data.umbrellaType.getId()),
                     ResourceLocation.CODEC.fieldOf("instrument").forGetter(data -> data.instrument.getId()))
             .apply(instance, instance.stable(RibbitData::new)));
+
+    public static final StreamCodec<FriendlyByteBuf, RibbitData> STREAM_CODEC = StreamCodec.composite(
+            ResourceLocation.STREAM_CODEC, data -> data.profession.getId(),
+            ResourceLocation.STREAM_CODEC, data -> data.umbrellaType.getId(),
+            ResourceLocation.STREAM_CODEC, data -> data.instrument.getId(),
+            RibbitData::new
+    );
 
     private RibbitProfession profession;
     private final RibbitUmbrellaType umbrellaType;

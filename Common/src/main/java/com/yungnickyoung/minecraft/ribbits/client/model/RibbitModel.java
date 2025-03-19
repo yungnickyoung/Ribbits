@@ -8,10 +8,10 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class RibbitModel extends GeoModel<RibbitEntity> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(RibbitsCommon.MOD_ID, "textures/entity/ribbit.png");
-    private static final ResourceLocation ANIMATIONS = new ResourceLocation(RibbitsCommon.MOD_ID, "animations/ribbit.animation.json");
+    private static final ResourceLocation TEXTURE = RibbitsCommon.id("textures/entity/ribbit.png");
+    private static final ResourceLocation ANIMATIONS = RibbitsCommon.id("animations/ribbit.animation.json");
 
-    private static final ResourceLocation PRIDE_MODEL = new ResourceLocation(RibbitsCommon.MOD_ID, "geo/pride_ribbit.geo.json");
+    private static final ResourceLocation PRIDE_MODEL = RibbitsCommon.id("geo/pride_ribbit.geo.json");
 
     @Override
     public ResourceLocation getModelResource(RibbitEntity ribbitEntity) {

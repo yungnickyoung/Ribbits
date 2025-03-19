@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.world.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class WarpedNyliumProcessor extends StructureProcessor {
     public static final WarpedNyliumProcessor INSTANCE = new WarpedNyliumProcessor();
-    public static final Codec<WarpedNyliumProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<WarpedNyliumProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
     public StructureTemplate.StructureBlockInfo processBlock(LevelReader levelReader,

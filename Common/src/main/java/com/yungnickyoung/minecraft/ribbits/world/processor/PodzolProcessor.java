@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.world.processor;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -28,7 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class PodzolProcessor extends StructureProcessor {
     public static final PodzolProcessor INSTANCE = new PodzolProcessor();
-    public static final Codec<PodzolProcessor> CODEC = Codec.unit(() -> INSTANCE);
+    public static final MapCodec<PodzolProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
 
     private final BlockStateRandomizer OUTPUT = new BlockStateRandomizer(Blocks.PODZOL.defaultBlockState())
             .addBlock(Blocks.COARSE_DIRT.defaultBlockState(), .3f);
