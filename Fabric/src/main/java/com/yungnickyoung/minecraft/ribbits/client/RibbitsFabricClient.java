@@ -19,7 +19,7 @@ public class RibbitsFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         RibbitsCommonClient.init();
 
-        NetworkModuleFabric.registerS2CPackets();
+        NetworkModuleFabric.registerS2CHandlers();
         BlockRenderLayerMap.INSTANCE.putBlock(BlockModule.SWAMP_LANTERN.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockModule.GIANT_LILYPAD.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockModule.SWAMP_DAISY.get(), RenderType.cutout());

@@ -11,16 +11,15 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.world.level.block.DispenserBlock;
-import software.bernie.geckolib.GeckoLib;
 
 public class RibbitsFabric implements ModInitializer {
     @Override
     public void onInitialize() {
-        GeckoLib.initialize();
         RibbitsCommon.init();
 
         ConfigModuleFabric.init();
-        NetworkModuleFabric.registerC2SPackets();
+        NetworkModuleFabric.init();
+        NetworkModuleFabric.registerC2SHandlers();
 
         // Custom dispenser behavior for Ribbit spawn eggs
         DispenseItemBehavior ribbitSpawnEggDispenseItemBehavior = new RibbitSpawnEggDispenseItemBehaviorFabric();

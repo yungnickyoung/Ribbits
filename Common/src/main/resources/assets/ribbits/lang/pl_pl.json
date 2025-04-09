@@ -35,7 +35,7 @@
   "subtitles.music.ribbit.guitar": "Żabiątko gra na gitarze",
   "subtitles.music.ribbit.maraca": "Gracz potrząsa marakasem",
 
-  "text.autoconfig.ribbits-fabric-1_20_1.title": "Żabiątka",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear": "Pokazuj tęczowe flagi przez cały rok",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear.@Tooltip": "Jeśli ta opcja jest włączona, żabiątka z tęczowymi flagami będą dostępne przez cały rok, a nie tylko w czerwcu"
+  "text.autoconfig.ribbits-fabric-1_21_1.title": "Żabiątka",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear": "Pokazuj tęczowe flagi przez cały rok",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear.@Tooltip": "Jeśli ta opcja jest włączona, żabiątka z tęczowymi flagami będą dostępne przez cały rok, a nie tylko w czerwcu"
 }

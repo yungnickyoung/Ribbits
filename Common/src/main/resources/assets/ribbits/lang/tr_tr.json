@@ -35,7 +35,7 @@
   "subtitles.music.ribbit.guitar": "Ribbit gitar çaldı",
   "subtitles.music.ribbit.maraca": "Oyuncu marakas çaldı",
 
-  "text.autoconfig.ribbits-fabric-1_20_1.title": "Ribbits",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear": "Tüm Yıl Boyunca Pride Bayraklarını Göster",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear.@Tooltip": "Açılırsa Pride Ribbitleri Haziran yerine tüm yıl var olur"
+  "text.autoconfig.ribbits-fabric-1_21_1.title": "Ribbits",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear": "Tüm Yıl Boyunca Pride Bayraklarını Göster",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear.@Tooltip": "Açılırsa Pride Ribbitleri Haziran yerine tüm yıl var olur"
 }

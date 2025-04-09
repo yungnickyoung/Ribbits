@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.ribbits.entity.goal;
 
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -24,7 +25,7 @@ public class RibbitApplyBuffGoal extends Goal {
     /**
      * Map of effects to duration, in ticks.
      */
-    private final Map<MobEffect, Integer> effects;
+    private final Map<Holder<MobEffect>, Integer> effects;
 
     private int ticksSinceStart;
 
@@ -90,7 +91,7 @@ public class RibbitApplyBuffGoal extends Goal {
 
         List<Player> nearbyPlayers = this.ribbit.level().getNearbyPlayers(TargetingConditions.forCombat().range(this.range), this.ribbit, this.ribbit.getBoundingBox().inflate(this.range, 5.0d, this.range));
 
-        MobEffect randomEffect = this.effects.keySet().stream().toList().get(this.ribbit.getRandom().nextInt(this.effects.size()));
+        Holder<MobEffect> randomEffect = this.effects.keySet().stream().toList().get(this.ribbit.getRandom().nextInt(this.effects.size()));
         int effectDuration = this.effects.get(randomEffect);
         for (Player player : nearbyPlayers) {
             player.addEffect(new MobEffectInstance(randomEffect, effectDuration, 0));

@@ -35,7 +35,7 @@
   "subtitles.music.ribbit.guitar": "呱呱：弹奏吉他",
   "subtitles.music.ribbit.maraca": "呱呱：摇响沙锤",
 
-  "text.autoconfig.ribbits-fabric-1_20_1.title": "呱呱",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear": "全年展示骄傲旗帜",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear.@Tooltip": "如果启用，骄傲呱呱将全年出现，而不是仅在六月出现"
+  "text.autoconfig.ribbits-fabric-1_21_1.title": "呱呱",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear": "全年展示骄傲旗帜",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear.@Tooltip": "如果启用，骄傲呱呱将全年出现，而不是仅在六月出现"
 }

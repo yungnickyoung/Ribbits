@@ -133,7 +133,7 @@ public class RibbitWaterCropsGoal extends Goal {
     private static void tryGrowCropAtPos(Level level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos);
         if (blockState.is(BlockTags.CROPS) && blockState.getBlock() instanceof BonemealableBlock bonemealableBlock) {
-            if (bonemealableBlock.isValidBonemealTarget(level, pos, blockState, level.isClientSide)) {
+            if (bonemealableBlock.isValidBonemealTarget(level, pos, blockState)) {
                 if (level instanceof ServerLevel serverLevel) {
                     if (bonemealableBlock.isBonemealSuccess(level, level.random, pos, blockState)) {
                         bonemealableBlock.performBonemeal(serverLevel, level.random, pos, blockState);
@@ -147,7 +147,7 @@ public class RibbitWaterCropsGoal extends Goal {
     private static boolean isValidCropBlock(LevelReader levelReader, BlockPos blockPos, BlockState blockState) {
         return blockState.is(BlockTags.CROPS)
                 && blockState.getBlock() instanceof BonemealableBlock bonemealableBlock
-                && bonemealableBlock.isValidBonemealTarget(levelReader, blockPos, blockState, levelReader.isClientSide());
+                && bonemealableBlock.isValidBonemealTarget(levelReader, blockPos, blockState);
     }
 
     private Iterable<BlockPos> getNearbyPositions() {

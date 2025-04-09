@@ -19,15 +19,15 @@ import com.yungnickyoung.minecraft.ribbits.network.payload.StartHearingMaracaPay
 import com.yungnickyoung.minecraft.ribbits.network.payload.StopHearingMaracaPayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayload;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ClientPacketHandlerFabric {
-    public static void handleStartMusicSinglePayload(RibbitStartMusicSinglePayload payload, ClientPlayNetworking.Context context) {
-        RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) context.player().clientLevel)
+public class ClientPacketHandlerNeoForge {
+    public static void handleStartMusicSinglePayload(RibbitStartMusicSinglePayload payload, IPayloadContext context) {
+        RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) context.player().level())
                 .callGetEntities()
                 .get(payload.ribbitUUID());
 
@@ -49,13 +49,10 @@ public class ClientPacketHandlerFabric {
         }
 
         SoundEvent instrumentSoundEvent = instrument.getSoundEvent();
-
-        context.client().execute(() -> {
-            Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, payload.tickOffset(), instrumentSoundEvent));
-        });
+        Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, payload.tickOffset(), instrumentSoundEvent));
     }
 
-    public static void handleStartMusicAllPayload(RibbitStartMusicAllPayload payload, ClientPlayNetworking.Context context) {
+    public static void handleStartMusicAllPayload(RibbitStartMusicAllPayload payload, IPayloadContext context) {
         if (payload.ribbitUUIDs().size() != payload.instrumentIds().size()) {
             RibbitsCommon.LOGGER.error("Received Start Music All payload with {} ribbits and {} instruments!",
                     payload.ribbitUUIDs().size(), payload.instrumentIds().size());
@@ -63,7 +60,7 @@ public class ClientPacketHandlerFabric {
         }
 
         for (int i = 0; i < payload.ribbitUUIDs().size(); i++) {
-            RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) context.player().clientLevel)
+            RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) context.player().level())
                     .callGetEntities()
                     .get(payload.ribbitUUIDs().get(i));
             if (ribbit == null) {
@@ -74,39 +71,35 @@ public class ClientPacketHandlerFabric {
 
             RibbitInstrument instrument = RibbitInstrumentModule.getInstrument(payload.instrumentIds().get(i));
             if (instrument == null) {
-                RibbitsCommon.LOGGER.error("Tried to play music in receiveStartAll for a ribbit with null instrument!");
+                RibbitsCommon.LOGGER.error("Tried to play music in handleStartAllPacket for a ribbit with null instrument!");
                 return;
             }
 
             if (instrument == RibbitInstrumentModule.NONE) {
-                RibbitsCommon.LOGGER.error("Tried to play music in receiveStartAll for a ribbit with NONE instrument!");
+                RibbitsCommon.LOGGER.error("Tried to play music in handleStartAllPacket for a ribbit with NONE instrument!");
                 return;
             }
 
             SoundEvent instrumentSoundEvent = instrument.getSoundEvent();
-
-            context.client().execute(() -> {
-                Minecraft.getInstance().getSoundManager().play(
-                        new RibbitInstrumentSoundInstance(ribbit, payload.tickOffset(), instrumentSoundEvent));
-            });
+            Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, payload.tickOffset(), instrumentSoundEvent));
         }
     }
 
-    public static void handleStopMusicSinglePayload(RibbitStopMusicSinglePayload payload, ClientPlayNetworking.Context context) {
-        RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) context.player().clientLevel).callGetEntities().get(payload.ribbitUUID());
+    public static void handleStopMusicSinglePayload(RibbitStopMusicSinglePayload payload, IPayloadContext context) {
+        RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) context.player().level())
+                .callGetEntities()
+                .get(payload.ribbitUUID());
 
         if (ribbit == null) {
             RibbitsCommon.LOGGER.error("Received Stop Music payload for a ribbit with UUID {} that doesn't exist!", payload.ribbitUUID());
             return;
         }
 
-        context.client().execute(() -> {
-            ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopRibbitsMusic(payload.ribbitUUID());
-        });
+        ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopRibbitsMusic(payload.ribbitUUID());
     }
 
-    public static void handleStartHearingMaracaPayload(StartHearingMaracaPayload payload, ClientPlayNetworking.Context context) {
-        Entity performer = ((ClientLevelAccessor) context.player().clientLevel).callGetEntities().get(payload.performerUUID());
+    public static void handleStartHearingMaracaPayload(StartHearingMaracaPayload payload, IPayloadContext context) {
+        Entity performer = ((ClientLevelAccessor) context.player().level()).callGetEntities().get(payload.performerUUID());
 
         if (performer == null) {
             RibbitsCommon.LOGGER.error("Received Start Maraca payload for Player performer with UUID {} that doesn't exist!",
@@ -118,34 +111,32 @@ public class ClientPacketHandlerFabric {
             return;
         }
 
-        context.client().execute(() -> {
-            Minecraft.getInstance().getSoundManager().play(
-                    new PlayerInstrumentSoundInstance((Player) performer, -1, SoundModule.MUSIC_MARACA.get()));
-        });
+        Minecraft.getInstance().getSoundManager().play(
+                new PlayerInstrumentSoundInstance((Player) performer, -1, SoundModule.MUSIC_MARACA.get()));
     }
 
-    public static void handleStopHearingMaracaPayload(StopHearingMaracaPayload payload, ClientPlayNetworking.Context context) {
-        Entity performer = ((ClientLevelAccessor) context.player().clientLevel).callGetEntities().get(payload.performerUUID());
+    public static void handleStopHearingMaracaPayload(StopHearingMaracaPayload payload, IPayloadContext context) {
+        Entity performer = ((ClientLevelAccessor) context.player().level()).callGetEntities().get(payload.performerUUID());
 
         if (performer == null) {
-            RibbitsCommon.LOGGER.error("Received Stop Maraca payload for Player performer with UUID {} that doesn't exist!", payload.performerUUID());
+            RibbitsCommon.LOGGER.error("Received Stop Maraca payload for Player performer with UUID {} that doesn't exist!",
+                    payload.performerUUID());
             return;
         } else if (!(performer instanceof Player)) {
-            RibbitsCommon.LOGGER.error("Received Stop Maraca payload for non-Player performer with UUID {}!", payload.performerUUID());
+            RibbitsCommon.LOGGER.error("Received Stop Maraca payload for non-Player performer with UUID {}!",
+                    payload.performerUUID());
             return;
         }
 
-        context.client().execute(() -> {
-            ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopMaraca(payload.performerUUID());
-        });
+        ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopMaraca(payload.performerUUID());
     }
 
-    public static void handleToggleSupporterHatPayload(ToggleSupporterHatPayload packet, ClientPlayNetworking.Context context) {
+    public static void handleToggleSupporterHatPayload(ToggleSupporterHatPayload payload, IPayloadContext context) {
         // Update the player's supporter hat status on the client
-        SupportersListClient.toggleSupporterHat(packet.playerUUID(), packet.enabled());
+        SupportersListClient.toggleSupporterHat(payload.playerUUID(), payload.enabled());
     }
 
-    public static void handleRequestSupporterHatStatePayload(RequestSupporterHatStatePayload payload, ClientPlayNetworking.Context context) {
+    public static void handleRequestSupporterHatStatePayload(RequestSupporterHatStatePayload payload, IPayloadContext context) {
         // Populate local supporter hat list with the list from the server
         SupportersListClient.clear();
         payload.enabledSupporterHatPlayers().forEach(playerUUID ->

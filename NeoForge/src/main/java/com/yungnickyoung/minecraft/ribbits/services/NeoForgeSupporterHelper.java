@@ -1,21 +1,22 @@
 package com.yungnickyoung.minecraft.ribbits.services;
 
-import com.yungnickyoung.minecraft.ribbits.module.NetworkModuleNeoForge;
-import com.yungnickyoung.minecraft.ribbits.network.ToggleSupporterHatC2SPacket;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayload;
 import net.minecraft.client.Minecraft;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.UUID;
 
-public class ForgeSupporterHelper implements ISupporterHelper {
+public class NeoForgeSupporterHelper implements ISupporterHelper {
     @Override
     public void notifyServerOfSupporterHatState(boolean enabled) {
         // Ensure the player UUID is valid
         UUID playerUUID = Minecraft.getInstance().getUser().getProfileId();
         if (playerUUID == null) return;
 
-        // Only send packet if the player is connected to a server
+        // Only send payload if the player is connected to a server
         if (Minecraft.getInstance().getConnection() == null) return;
 
-        NetworkModuleNeoForge.sendToServer(new ToggleSupporterHatC2SPacket(playerUUID, enabled));
+        ToggleSupporterHatPayload payload = new ToggleSupporterHatPayload(playerUUID, enabled);
+        PacketDistributor.sendToServer(payload);
     }
 }

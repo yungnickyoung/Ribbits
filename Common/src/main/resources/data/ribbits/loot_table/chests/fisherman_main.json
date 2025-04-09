@@ -90,8 +90,8 @@
                     "functions": [
                         {
                             "function": "minecraft:enchant_with_levels",
-                            "levels": 10,
-                            "treasure": true
+                            "levels": 10.0,
+                            "options": "#minecraft:on_random_loot"
                         }
                     ],
                     "name": "minecraft:fishing_rod"
@@ -102,8 +102,8 @@
                     "functions": [
                         {
                             "function": "minecraft:enchant_with_levels",
-                            "levels": 20,
-                            "treasure": true
+                            "levels": 20.0,
+                            "options": "#minecraft:on_random_loot"
                         }
                     ],
                     "name": "minecraft:fishing_rod"
@@ -114,8 +114,8 @@
                     "functions": [
                         {
                             "function": "minecraft:enchant_with_levels",
-                            "levels": 30,
-                            "treasure": true
+                            "levels": 30.0,
+                            "options": "#minecraft:on_random_loot"
                         }
                     ],
                     "name": "minecraft:fishing_rod"

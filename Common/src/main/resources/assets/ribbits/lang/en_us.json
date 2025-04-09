@@ -36,9 +36,9 @@
   "subtitles.music.ribbit.guitar": "Ribbit plays guitar",
   "subtitles.music.ribbit.maraca": "Player plays maraca",
 
-  "text.autoconfig.ribbits-fabric-1_20_1.title": "Ribbits",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear": "Show Pride Flags All Year",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear.@Tooltip": "If enabled, Pride Ribbits will exist all year instead of only in June",
+  "text.autoconfig.ribbits-fabric-1_21_1.title": "Ribbits",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear": "Show Pride Flags All Year",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear.@Tooltip": "If enabled, Pride Ribbits will exist all year instead of only in June",
 
   "ribbits.options.supporter_hat_button": "Ribbits Supporter Hat"
 }

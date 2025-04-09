@@ -7,26 +7,24 @@ import com.yungnickyoung.minecraft.ribbits.client.render.RibbitRenderer;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.ParticleTypeModule;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 @Mod(value = RibbitsCommon.MOD_ID, dist = Dist.CLIENT)
 public class RibbitsNeoForgeClient {
-    public static void init(IEventBus eventBus, ModContainer container) {
+    public RibbitsNeoForgeClient(IEventBus eventBus, ModContainer container) {
         RibbitsCommonClient.init();
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(RibbitsNeoForgeClient::clientSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(RibbitsNeoForgeClient::registerRenderers);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(RibbitsNeoForgeClient::registerLayers);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(RibbitsNeoForgeClient::registerParticleFactories);
+        eventBus.addListener(RibbitsNeoForgeClient::clientSetup);
+        eventBus.addListener(RibbitsNeoForgeClient::registerRenderers);
+        eventBus.addListener(RibbitsNeoForgeClient::registerLayers);
+        eventBus.addListener(RibbitsNeoForgeClient::registerParticleFactories);
     }
 
     private static void clientSetup(final FMLClientSetupEvent event) {
@@ -47,6 +45,6 @@ public class RibbitsNeoForgeClient {
     }
 
     private static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-        Minecraft.getInstance().particleEngine.register(ParticleTypeModule.SPELL.get(), RibbitSpellParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypeModule.SPELL.get(), RibbitSpellParticle.Factory::new);
     }
 }

@@ -1,20 +1,18 @@
 package com.yungnickyoung.minecraft.ribbits.network;
 
-import com.yungnickyoung.minecraft.ribbits.network.packet.ToggleSupporterPacket;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayload;
 import com.yungnickyoung.minecraft.ribbits.supporters.SupportersListServer;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.server.level.ServerPlayer;
 
 public class ServerPacketHandlerFabric {
-    public static void receiveToggleSupporterHat(ToggleSupporterPacket packet, ServerPlayer player, PacketSender responseSender) {
+    public static void receiveToggleSupporterHat(ToggleSupporterHatPayload packet, ServerPlayNetworking.Context context) {
         // Update the player's supporter hat status on the server
         SupportersListServer.toggleSupporterHat(packet.playerUUID(), packet.enabled());
 
-        // Forward the packet to all clients
-        if (player.getServer() != null) {
-            PlayerLookup.all(player.getServer()).forEach(p -> ServerPlayNetworking.send(p, packet));
+        // Forward the payload to all clients
+        if (context.player().getServer() != null) {
+            PlayerLookup.all(context.server()).forEach(p -> ServerPlayNetworking.send(p, packet));
         }
     }
 }

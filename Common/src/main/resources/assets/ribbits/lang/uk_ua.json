@@ -35,7 +35,7 @@
   "subtitles.music.ribbit.guitar": "Жабенятко грає на гітарі",
   "subtitles.music.ribbit.maraca": "Гравець грає на маракасах",
 
-  "text.autoconfig.ribbits-fabric-1_20_1.title": "Жабенятка",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear": "Показувати прапори гордості цілий рік",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear.@Tooltip": "Якщо увімкнено, жабенятка з прапорами гордості існуватимуть цілий рік, а не тільки в червні"
+  "text.autoconfig.ribbits-fabric-1_21_1.title": "Жабенятка",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear": "Показувати прапори гордості цілий рік",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear.@Tooltip": "Якщо увімкнено, жабенятка з прапорами гордості існуватимуть цілий рік, а не тільки в червні"
 }

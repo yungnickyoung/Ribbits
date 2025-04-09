@@ -35,9 +35,9 @@
   "subtitles.music.ribbit.guitar": "リビットはギターを弾く",
   "subtitles.music.ribbit.maraca": "プレーヤーはマラカスを演奏する",
 
-  "text.autoconfig.ribbits-fabric-1_20_1.title": "リビット",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear": "一年中プライドフラッグを掲げる",
-  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear.@Tooltip": "有効にすると、プライドリビットは6月だけでなく一年中存在するようになります。",
+  "text.autoconfig.ribbits-fabric-1_21_1.title": "リビット",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear": "一年中プライドフラッグを掲げる",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear.@Tooltip": "有効にすると、プライドリビットは6月だけでなく一年中存在するようになります。",
 
   "ribbits.options.supporter_hat_button": "リビッツサポーターハット"
 }

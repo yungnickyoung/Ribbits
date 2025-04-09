@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -41,7 +42,7 @@ public class BrewingStandProcessor extends StructureProcessor {
         return blockInfoGlobal;
     }
 
-    protected StructureProcessorType<?> getType() {
+    protected @NotNull StructureProcessorType<?> getType() {
         return StructureProcessorTypeModule.BREWING_STAND_PROCESSOR;
     }
 
@@ -75,15 +76,17 @@ public class BrewingStandProcessor extends StructureProcessor {
     private void putInputItem(CompoundTag itemTag, String itemId, byte count) {
         itemTag.putByte("Slot", (byte) 3);
         itemTag.putString("id", itemId);
-        itemTag.putByte("Count", count);
+        itemTag.putByte("count", count);
     }
 
     private void putPotionInSlot(CompoundTag itemTag, byte slot, String potionId) {
         itemTag.putByte("Slot", slot);
         itemTag.putString("id", "minecraft:potion");
-        itemTag.putByte("Count", (byte) 1);
-        itemTag.put("tag", Util.make(new CompoundTag(), potionTag -> {
-            potionTag.putString("Potion", potionId);
+        itemTag.putByte("count", (byte) 1);
+        itemTag.put("components", Util.make(new CompoundTag(), componentsTag -> {
+            componentsTag.put("minecraft:potion_contents", Util.make(new CompoundTag(), potionContentsTag -> {
+                potionContentsTag.putString("potion", potionId);
+            }));
         }));
     }
 }

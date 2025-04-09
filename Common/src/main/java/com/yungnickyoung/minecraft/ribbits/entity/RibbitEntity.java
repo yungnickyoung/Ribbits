@@ -1,11 +1,8 @@
 package com.yungnickyoung.minecraft.ribbits.entity;
 
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.Dynamic;
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
-import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitApplyBuffGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitFishGoal;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.RibbitGoHomeGoal;
@@ -20,6 +17,7 @@ import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitTradeModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,7 +26,6 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -59,24 +56,28 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
+public class RibbitEntity extends AgeableMob implements
+        GeoEntity,
+        Merchant
+{
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenPlay("idle");
@@ -217,26 +218,32 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.NITWIT, RibbitUmbrellaTypeModule.UMBRELLA_1, RibbitInstrumentModule.NONE));
-        this.entityData.define(PLAYING_INSTRUMENT, false);
-        this.entityData.define(UMBRELLA_FALLING, false);
-        this.entityData.define(WATERING, false);
-        this.entityData.define(FISHING, false);
-        this.entityData.define(BUFFING, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(RIBBIT_DATA, new RibbitData(RibbitProfessionModule.NITWIT, RibbitUmbrellaTypeModule.UMBRELLA_1, RibbitInstrumentModule.NONE));
+        builder.define(PLAYING_INSTRUMENT, false);
+        builder.define(UMBRELLA_FALLING, false);
+        builder.define(WATERING, false);
+        builder.define(FISHING, false);
+        builder.define(BUFFING, false);
     }
 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("RibbitData", 10)) {
-            DataResult<RibbitData> dataResult = RibbitData.CODEC.parse(new Dynamic<>(NbtOps.INSTANCE, tag.get("RibbitData")));
-            dataResult.resultOrPartial(RibbitsCommon.LOGGER::error).ifPresent(this::setRibbitData);
+
+        if (tag.contains("RibbitData", CompoundTag.TAG_COMPOUND)) {
+            RibbitData.CODEC
+                    .parse(NbtOps.INSTANCE, tag.get("RibbitData"))
+                    .resultOrPartial(RibbitsCommon.LOGGER::error)
+                    .ifPresent(this::setRibbitData);
         }
 
-        if (tag.contains("Offers", 10)) {
-            this.offers = new MerchantOffers(tag.getCompound("Offers"));
+        if (tag.contains("Offers", CompoundTag.TAG_COMPOUND)) {
+            MerchantOffers.CODEC
+                    .parse(this.registryAccess().createSerializationContext(NbtOps.INSTANCE), tag.get("Offers"))
+                    .resultOrPartial(Util.prefix("Failed to load offers: ", RibbitsCommon.LOGGER::warn))
+                    .ifPresent(offers -> this.offers = offers);
         }
 
         if (tag.contains("HomePosX") && tag.contains("HomePosY") && tag.contains("HomePosZ")) {
@@ -255,9 +262,13 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
                 .resultOrPartial(RibbitsCommon.LOGGER::error)
                 .ifPresent(t -> tag.put("RibbitData", t));
 
-        MerchantOffers merchantOffers = this.getOffers();
-        if (!merchantOffers.isEmpty()) {
-            tag.put("Offers", merchantOffers.createTag());
+        if (!this.level().isClientSide) {
+            MerchantOffers offers = this.getOffers();
+            if (!offers.isEmpty()) {
+                tag.put("Offers", MerchantOffers.CODEC
+                        .encodeStart(this.registryAccess().createSerializationContext(NbtOps.INSTANCE), offers)
+                        .getOrThrow());
+            }
         }
 
         if (this.homePosition != null) {
@@ -268,7 +279,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     }
 
     @Override
-    public void onSyncedDataUpdated(EntityDataAccessor<?> dataAccessor) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> dataAccessor) {
         super.onSyncedDataUpdated(dataAccessor);
 
         if (RIBBIT_DATA.equals(dataAccessor)) {
@@ -287,27 +298,30 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData groupData, @Nullable CompoundTag tag) {
-        SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
+    @ParametersAreNonnullByDefault
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData groupData)
+    {
+        SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, groupData);
 
         if (spawnType == MobSpawnType.SPAWN_EGG || spawnType == MobSpawnType.DISPENSER) {
-            if (tag.contains("Profession")) {
-                String[] professionId = tag.getString("Profession").split(":");
-                RibbitProfession profession = RibbitProfessionModule.getProfession(new ResourceLocation(professionId[0], professionId[1]));
-                if (profession == null) {
-                    RibbitsCommon.LOGGER.error("Invalid Ribbit profession ID: {}", tag.getString("Profession"));
-                    profession = RibbitProfessionModule.NITWIT; // default to nitwit
-                }
-                this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
-            }
+//            if (tag.contains("Profession")) {
+//                String[] professionId = tag.getString("Profession").split(":");
+//                RibbitProfession profession = RibbitProfessionModule.getProfession(new ResourceLocation(professionId[0], professionId[1]));
+//                if (profession == null) {
+//                    RibbitsCommon.LOGGER.error("Invalid Ribbit profession ID: {}", tag.getString("Profession"));
+//                    profession = RibbitProfessionModule.NITWIT; // default to nitwit
+//                }
+//                this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
+//            }
         } else {
-            CompoundTag ribbitDataTag = tag != null ? tag.getCompound("RibbitData") : new CompoundTag();
-            RibbitProfession profession = RibbitProfessionModule.NITWIT;
-
-            if (ribbitDataTag.contains("profession", CompoundTag.TAG_STRING)) {
-                profession = RibbitProfessionModule.getProfession(new ResourceLocation(ribbitDataTag.getString("profession")));
-            }
-            this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
+//            CompoundTag ribbitDataTag = tag != null ? tag.getCompound("RibbitData") : new CompoundTag();
+//            RibbitProfession profession = RibbitProfessionModule.NITWIT;
+//
+//            if (ribbitDataTag.contains("profession", CompoundTag.TAG_STRING)) {
+//                profession = RibbitProfessionModule.getProfession(new ResourceLocation(ribbitDataTag.getString("profession")));
+//            }
+//            this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
         }
 
         this.reassessGoals();
@@ -322,7 +336,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand interactionHand) {
+    public @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand interactionHand) {
         ItemStack itemStack = player.getItemInHand(interactionHand);
 
         if (player.isSecondaryUseActive() && itemStack.is(Items.AMETHYST_SHARD)) {
@@ -395,10 +409,10 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
         }
     }
 
-    @Override
-    public double getMyRidingOffset() {
-        return 0.3d;
-    }
+//    @Override
+//    public double getMyRidingOffset() {
+//        return 0.3d;
+//    }
 
     @Override
     public int getMaxHeadXRot() {
@@ -622,11 +636,6 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     protected void playStepSound(BlockPos pos, BlockState blockstate) {
         super.playStepSound(pos, blockstate);
         this.playSound(SoundModule.ENTITY_RIBBIT_STEP.get(), 1.0F, 1.0F);
-    }
-
-    @Override
-    public boolean canBreatheUnderwater() {
-        return true;
     }
 
     public boolean isPrideRibbit() {

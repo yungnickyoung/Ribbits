@@ -14,13 +14,13 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class RibbitSpawnEggDispenseItemBehaviorFabric implements DispenseItemBehavior {
+public class RibbitSpawnEggDispenseItemBehaviorNeoForge implements DispenseItemBehavior {
     @Override
     public @NotNull ItemStack dispense(BlockSource blockSource, ItemStack itemStack) {
         Direction direction = blockSource.state().getValue(DispenserBlock.FACING);
 
         // CUSTOM BEHAVIOR - attach profession to item stack used when spawning the entity
-        RibbitSpawnEggItemFabric ribbitSpawnEggItem = (RibbitSpawnEggItemFabric) itemStack.getItem();
+        RibbitSpawnEggItemNeoForge ribbitSpawnEggItem = (RibbitSpawnEggItemNeoForge) itemStack.getItem();
         RibbitProfession profession = ribbitSpawnEggItem.getProfession();
 //        CustomData customData = CustomData.EMPTY.update(tag -> tag.putString("Profession", profession.toString()));
 //        itemStack.set(DataComponents.ENTITY_DATA, customData);

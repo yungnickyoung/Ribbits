@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.supporters;
 
-import com.yungnickyoung.minecraft.ribbits.network.packet.RequestSupporterHatStatePacket;
+import com.yungnickyoung.minecraft.ribbits.network.payload.RequestSupporterHatStatePayload;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 
 import java.util.List;
@@ -12,6 +12,6 @@ public class SupporterEventsFabric {
         List<UUID> playersWithSupporterHat = SupportersListServer.getPlayersWithSupporterHat().stream().toList();
 
         // Send the list of players with the supporter hat enabled to the new player, and request their own supporter hat state
-        sender.sendPacket(new RequestSupporterHatStatePacket(playersWithSupporterHat));
+        sender.sendPacket(new RequestSupporterHatStatePayload(playersWithSupporterHat));
     }
 }

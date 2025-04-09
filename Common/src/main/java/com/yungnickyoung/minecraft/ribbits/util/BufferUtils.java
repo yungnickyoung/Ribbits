@@ -1,13 +1,31 @@
 package com.yungnickyoung.minecraft.ribbits.util;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class BufferUtils {
+//    StreamCodec<FriendlyByteBuf, UUID> UUID_STREAM_CODEC = StreamCodec.composite(
+//            ByteBufCodecs.
+//            (buf, uuid) -> buf.writeUUID(uuid)
+//    );
+StreamCodec<FriendlyByteBuf, UUID> UUID = new StreamCodec<>() {
+    public @NotNull UUID decode(FriendlyByteBuf buf) {
+        return buf.readUUID();
+    }
+
+    public void encode(FriendlyByteBuf buf, @NotNull UUID uuid) {
+        buf.writeUUID(uuid);
+    }
+};
+
     public static List<Integer> readIntList(FriendlyByteBuf buf) {
         int size = buf.readInt();
         List<Integer> list = new ArrayList<>(size);

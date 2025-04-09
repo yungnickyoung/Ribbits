@@ -36,12 +36,12 @@ public interface IPlatformHelper {
     Path getConfigPath();
 
     /**
-     * Called when a ribbit starts playing music. This method should send a packet to all clients to play the music.
+     * Called when a ribbit starts playing music. This method should send a payload to all clients to play the music.
      */
     void onRibbitStartMusicGoal(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit);
 
     /**
-     * Called when a player enters the band range of a ribbit. This method should send a packet to the player to play the music.
+     * Called when a player enters the band range of a ribbit. This method should send a payload to the player to play the music.
      */
     void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit);
 

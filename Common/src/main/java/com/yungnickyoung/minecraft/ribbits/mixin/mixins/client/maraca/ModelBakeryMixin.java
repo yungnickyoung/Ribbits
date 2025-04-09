@@ -16,20 +16,16 @@ import java.util.Map;
 
 @Mixin(ModelBakery.class)
 public abstract class ModelBakeryMixin {
-
     @Shadow
-    protected abstract void loadTopLevel(ModelResourceLocation $$0);
+    abstract UnbakedModel getModel(ResourceLocation $$0);
 
-    @Shadow
-    @Final
-    private Map<ResourceLocation, UnbakedModel> topLevelModels;
+    @Shadow protected abstract void loadSpecialItemModelAndDependencies(ModelResourceLocation $$0);
 
-    @Shadow
-    public abstract UnbakedModel getModel(ResourceLocation $$0);
+    @Shadow @Final private Map<ModelResourceLocation, UnbakedModel> topLevelModels;
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void ribbits$addMaracaModelToBakery(CallbackInfo ci) {
-        this.loadTopLevel(MaracaInHandRenderer.MARACA_IN_HAND_MODEL);
+        this.loadSpecialItemModelAndDependencies(MaracaInHandRenderer.MARACA_IN_HAND_MODEL);
         UnbakedModel unbakedModel = this.topLevelModels.get(MaracaInHandRenderer.MARACA_IN_HAND_MODEL);
         unbakedModel.resolveParents(this::getModel);
     }

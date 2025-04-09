@@ -5,31 +5,32 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
 
 public class AmethystForItems implements ItemListing {
     private final Item item;
-    private final int countMin;
-    private final int countMax;
+    private final int costCountMin;
+    private final int costCountMax;
     private final int maxUses;
     private final float priceMultiplier;
-    private final int amethystMin;
-    private final int amethystMax;
+    private final int resultCountMin;
+    private final int resultCountMax;
 
-    public AmethystForItems(ItemLike item, int countMin, int countMax, int amethystMin, int amethystMax, int maxUses) {
+    public AmethystForItems(ItemLike item, int costCountMin, int costCountMax, int resultCountMin, int resultCountMax, int maxUses) {
         this.item = item.asItem();
-        this.countMin = countMin;
-        this.countMax = countMax;
-        this.amethystMin = amethystMin;
-        this.amethystMax = amethystMax;
+        this.costCountMin = costCountMin;
+        this.costCountMax = costCountMax;
+        this.resultCountMin = resultCountMin;
+        this.resultCountMax = resultCountMax;
         this.maxUses = maxUses;
         this.priceMultiplier = 0.05F;
     }
 
     public MerchantOffer getOffer(Entity entity, RandomSource rand) {
-        ItemStack offeredStack = new ItemStack(this.item, rand.nextIntBetweenInclusive(this.countMin, this.countMax));
-
-        return new MerchantOffer(offeredStack, new ItemStack(Items.AMETHYST_SHARD, rand.nextIntBetweenInclusive(this.amethystMin, this.amethystMax)), this.maxUses, 0, this.priceMultiplier);
+        ItemCost cost = new ItemCost(this.item, rand.nextIntBetweenInclusive(this.costCountMin, this.costCountMax));
+        ItemStack result = new ItemStack(Items.AMETHYST_SHARD, rand.nextIntBetweenInclusive(this.resultCountMin, this.resultCountMax));
+        return new MerchantOffer(cost, result, this.maxUses, 0, this.priceMultiplier);
     }
 }

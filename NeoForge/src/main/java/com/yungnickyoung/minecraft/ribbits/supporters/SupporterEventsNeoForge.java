@@ -1,9 +1,9 @@
 package com.yungnickyoung.minecraft.ribbits.supporters;
 
-import com.yungnickyoung.minecraft.ribbits.module.NetworkModuleNeoForge;
-import com.yungnickyoung.minecraft.ribbits.network.RequestSupporterHatStateS2CPacket;
+import com.yungnickyoung.minecraft.ribbits.network.payload.RequestSupporterHatStatePayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +16,6 @@ public class SupporterEventsNeoForge {
         List<UUID> playersWithSupporterHat = SupportersListServer.getPlayersWithSupporterHat().stream().toList();
 
         // Send the list of players with the supporter hat enabled to the new player, and request their own supporter hat state
-        NetworkModuleNeoForge.sendToClient(new RequestSupporterHatStateS2CPacket(playersWithSupporterHat), serverPlayer);
+        PacketDistributor.sendToPlayer(serverPlayer, new RequestSupporterHatStatePayload(playersWithSupporterHat));
     }
 }
