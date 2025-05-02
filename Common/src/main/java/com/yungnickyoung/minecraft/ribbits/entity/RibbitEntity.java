@@ -303,29 +303,7 @@ public class RibbitEntity extends AgeableMob implements
                                         MobSpawnType spawnType, @Nullable SpawnGroupData groupData)
     {
         SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, groupData);
-
-        if (spawnType == MobSpawnType.SPAWN_EGG || spawnType == MobSpawnType.DISPENSER) {
-//            if (tag.contains("Profession")) {
-//                String[] professionId = tag.getString("Profession").split(":");
-//                RibbitProfession profession = RibbitProfessionModule.getProfession(new ResourceLocation(professionId[0], professionId[1]));
-//                if (profession == null) {
-//                    RibbitsCommon.LOGGER.error("Invalid Ribbit profession ID: {}", tag.getString("Profession"));
-//                    profession = RibbitProfessionModule.NITWIT; // default to nitwit
-//                }
-//                this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
-//            }
-        } else {
-//            CompoundTag ribbitDataTag = tag != null ? tag.getCompound("RibbitData") : new CompoundTag();
-//            RibbitProfession profession = RibbitProfessionModule.NITWIT;
-//
-//            if (ribbitDataTag.contains("profession", CompoundTag.TAG_STRING)) {
-//                profession = RibbitProfessionModule.getProfession(new ResourceLocation(ribbitDataTag.getString("profession")));
-//            }
-//            this.setRibbitData(new RibbitData(profession, RibbitUmbrellaTypeModule.getRandomUmbrellaType(), RibbitInstrumentModule.NONE));
-        }
-
         this.reassessGoals();
-
         this.homePosition = this.blockPosition();
         return data;
     }
@@ -408,11 +386,6 @@ public class RibbitEntity extends AgeableMob implements
             this.level().addParticle(particleOptions, this.getRandomX(1.0), this.getRandomY() + 1.0, this.getRandomZ(1.0), d, e, f);
         }
     }
-
-//    @Override
-//    public double getMyRidingOffset() {
-//        return 0.3d;
-//    }
 
     @Override
     public int getMaxHeadXRot() {

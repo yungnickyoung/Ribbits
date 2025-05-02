@@ -3,11 +3,9 @@ package com.yungnickyoung.minecraft.ribbits.item;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
-import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -18,7 +16,6 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -72,15 +69,13 @@ public class RibbitSpawnEggItemFabric extends SpawnEggItem {
 
         // Create and spawn ribbit entity
         BlockPos spawnPos = blockState.getCollisionShape(level, blockPos).isEmpty() ? blockPos : blockPos.relative(direction);
-//        CustomData customData = CustomData.EMPTY.update(tag -> tag.putString("Profession", this.profession.toString()));
-//        itemStack.set(DataComponents.ENTITY_DATA, customData);
         RibbitEntity ribbit = (RibbitEntity) entityType.spawn((ServerLevel) level, itemStack, useOnContext.getPlayer(),
                 spawnPos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, spawnPos) && direction == Direction.UP);
 
         if (ribbit != null) {
             ribbit.setRibbitData(new RibbitData(
                     this.profession,
-                    ribbit.getRibbitData().getUmbrellaType(),
+                    RibbitUmbrellaTypeModule.getRandomUmbrellaType(),
                     ribbit.getRibbitData().getInstrument()));
 
             itemStack.shrink(1);
@@ -112,8 +107,6 @@ public class RibbitSpawnEggItemFabric extends SpawnEggItem {
 
         // Create and spawn ribbit entity
         EntityType<?> entityType = this.getType(itemStack);
-//        CustomData customData = CustomData.EMPTY.update(tag -> tag.putString("Profession", this.profession.toString()));
-//        itemStack.set(DataComponents.ENTITY_DATA, customData);
         RibbitEntity ribbit = (RibbitEntity) entityType.spawn((ServerLevel) level, itemStack, player,
                 blockPos, MobSpawnType.SPAWN_EGG, false, false);
         if (ribbit == null) {
@@ -122,7 +115,7 @@ public class RibbitSpawnEggItemFabric extends SpawnEggItem {
 
         ribbit.setRibbitData(new RibbitData(
                 this.profession,
-                ribbit.getRibbitData().getUmbrellaType(),
+                RibbitUmbrellaTypeModule.getRandomUmbrellaType(),
                 ribbit.getRibbitData().getInstrument()));
 
         if (!player.getAbilities().instabuild) {

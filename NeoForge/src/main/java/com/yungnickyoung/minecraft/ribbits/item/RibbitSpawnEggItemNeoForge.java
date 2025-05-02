@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.ribbits.item;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
@@ -73,15 +74,13 @@ public class RibbitSpawnEggItemNeoForge extends DeferredSpawnEggItem {
 
         // Create and spawn the Ribbit entity
         BlockPos spawnPos = blockState.getCollisionShape(level, blockPos).isEmpty() ? blockPos : blockPos.relative(direction);
-//        CustomData customData = CustomData.EMPTY.update(tag -> tag.putString("Profession", this.profession.toString()));
-//        itemStack.set(DataComponents.ENTITY_DATA, customData);
         RibbitEntity ribbit = (RibbitEntity) entityType.spawn((ServerLevel) level, itemStack, useOnContext.getPlayer(),
                 spawnPos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(blockPos, spawnPos) && direction == Direction.UP);
 
         if (ribbit != null) {
             ribbit.setRibbitData(new RibbitData(
                     this.profession,
-                    ribbit.getRibbitData().getUmbrellaType(),
+                    RibbitUmbrellaTypeModule.getRandomUmbrellaType(),
                     ribbit.getRibbitData().getInstrument()));
 
             itemStack.shrink(1);
@@ -113,8 +112,6 @@ public class RibbitSpawnEggItemNeoForge extends DeferredSpawnEggItem {
 
         // Create and spawn ribbit entity
         EntityType<?> entityType = this.getType(itemStack);
-//        CustomData customData = CustomData.EMPTY.update(tag -> tag.putString("Profession", this.profession.toString()));
-//        itemStack.set(DataComponents.ENTITY_DATA, customData);
         RibbitEntity ribbit = (RibbitEntity) entityType.spawn((ServerLevel) level, itemStack, player,
                 blockPos, MobSpawnType.SPAWN_EGG, false, false);
         if (ribbit == null) {
@@ -123,7 +120,7 @@ public class RibbitSpawnEggItemNeoForge extends DeferredSpawnEggItem {
 
         ribbit.setRibbitData(new RibbitData(
                 this.profession,
-                ribbit.getRibbitData().getUmbrellaType(),
+                RibbitUmbrellaTypeModule.getRandomUmbrellaType(),
                 ribbit.getRibbitData().getInstrument()));
 
         if (!player.getAbilities().instabuild) {

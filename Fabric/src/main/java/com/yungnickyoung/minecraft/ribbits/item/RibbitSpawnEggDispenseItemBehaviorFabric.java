@@ -4,6 +4,7 @@ import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
@@ -18,13 +19,8 @@ public class RibbitSpawnEggDispenseItemBehaviorFabric implements DispenseItemBeh
     @Override
     public @NotNull ItemStack dispense(BlockSource blockSource, ItemStack itemStack) {
         Direction direction = blockSource.state().getValue(DispenserBlock.FACING);
-
-        // CUSTOM BEHAVIOR - attach profession to item stack used when spawning the entity
         RibbitSpawnEggItemFabric ribbitSpawnEggItem = (RibbitSpawnEggItemFabric) itemStack.getItem();
         RibbitProfession profession = ribbitSpawnEggItem.getProfession();
-//        CustomData customData = CustomData.EMPTY.update(tag -> tag.putString("Profession", profession.toString()));
-//        itemStack.set(DataComponents.ENTITY_DATA, customData);
-
         EntityType<?> entityType = ribbitSpawnEggItem.getType(itemStack);
         RibbitEntity ribbit;
 
@@ -39,7 +35,7 @@ public class RibbitSpawnEggDispenseItemBehaviorFabric implements DispenseItemBeh
         if (ribbit != null) {
             ribbit.setRibbitData(new RibbitData(
                     profession,
-                    ribbit.getRibbitData().getUmbrellaType(),
+                    RibbitUmbrellaTypeModule.getRandomUmbrellaType(),
                     ribbit.getRibbitData().getInstrument()));
         }
 
