@@ -14,7 +14,7 @@
     "kernel_size": 24,
     "kernel_distance": 24,
     "top": "carve",
-    "bottom": "carve"
+    "bottom": "bury"
   },
   "spawn_overrides": {}
 }
