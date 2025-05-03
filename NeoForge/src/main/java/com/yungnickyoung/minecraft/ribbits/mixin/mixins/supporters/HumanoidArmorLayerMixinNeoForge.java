@@ -1,4 +1,4 @@
-package com.yungnickyoung.minecraft.ribbits.mixin.mixins.client.supporters;
+package com.yungnickyoung.minecraft.ribbits.mixin.mixins.supporters;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.yungnickyoung.minecraft.ribbits.client.supporters.SupportersListClient;
@@ -16,13 +16,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HumanoidArmorLayer.class)
-public abstract class HumanoidArmorLayerMixin<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
-    public HumanoidArmorLayerMixin(RenderLayerParent<T, M> $$0) {
+public abstract class HumanoidArmorLayerMixinNeoForge<T extends LivingEntity, M extends HumanoidModel<T>, A extends HumanoidModel<T>> extends RenderLayer<T, M> {
+    public HumanoidArmorLayerMixinNeoForge(RenderLayerParent<T, M> $$0) {
         super($$0);
     }
 
-    @Inject(method = "renderArmorPiece", at = @At("HEAD"), cancellable = true)
-    private void ribbits$dontRenderHelmetWhenWearingSupporterHat(PoseStack poseStack, MultiBufferSource bufferSource, T entity, EquipmentSlot slot, int $$4, A model, CallbackInfo ci) {
+    @Inject(method = "renderArmorPiece(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;FFFFFF)V", at = @At("HEAD"), cancellable = true)
+    private void ribbits$dontRenderHelmetWhenWearingSupporterHat(PoseStack poseStack, MultiBufferSource bufferSource,
+                                                                 LivingEntity entity, EquipmentSlot slot, int p_117123_,
+                                                                 HumanoidModel model, float limbSwing, float limbSwingAmount,
+                                                                 float partialTick, float ageInTicks, float netHeadYaw,
+                                                                 float headPitch, CallbackInfo ci) {
         if (!(entity instanceof AbstractClientPlayer clientPlayer)) {
             return;
         }

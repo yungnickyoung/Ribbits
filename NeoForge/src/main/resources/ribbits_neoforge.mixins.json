@@ -6,6 +6,9 @@
   "mixins": [
     "MobMixinNeoForge"
   ],
+  "client": [
+    "supporters.HumanoidArmorLayerMixinNeoForge"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

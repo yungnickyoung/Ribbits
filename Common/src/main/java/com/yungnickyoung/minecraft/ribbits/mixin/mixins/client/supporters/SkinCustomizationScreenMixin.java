@@ -27,7 +27,8 @@ public abstract class SkinCustomizationScreenMixin extends OptionsSubScreen {
             at = @At(
                     target = "Ljava/util/List;add(Ljava/lang/Object;)Z",
                     value = "INVOKE",
-                    shift = At.Shift.AFTER),
+                    shift = At.Shift.AFTER,
+                    ordinal = 1),
             locals = LocalCapture.CAPTURE_FAILSOFT)
     public void ribbits$addSupporterHatToggleOption(CallbackInfo ci, List<AbstractWidget> list) {
         list.add(
