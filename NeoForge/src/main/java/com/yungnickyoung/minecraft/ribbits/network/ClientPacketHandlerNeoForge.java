@@ -1,55 +1,51 @@
 package com.yungnickyoung.minecraft.ribbits.network;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
-import com.yungnickyoung.minecraft.ribbits.client.sound.PlayerInstrumentSoundInstance;
-import com.yungnickyoung.minecraft.ribbits.client.sound.RibbitInstrumentSoundInstance;
+import com.yungnickyoung.minecraft.ribbits.client.ClientUtils;
 import com.yungnickyoung.minecraft.ribbits.client.supporters.RibbitOptionsJSON;
 import com.yungnickyoung.minecraft.ribbits.client.supporters.SupportersListClient;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
-import com.yungnickyoung.minecraft.ribbits.mixin.interfaces.client.ISoundManagerDuck;
 import com.yungnickyoung.minecraft.ribbits.mixin.mixins.client.accessor.ClientLevelAccessor;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
-import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
 import com.yungnickyoung.minecraft.ribbits.network.payload.RequestSupporterHatStatePayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStartMusicAllPayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStartMusicSinglePayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStopMusicSinglePayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.StartHearingMaracaPayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.StopHearingMaracaPayload;
-import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayload;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayloadS2C;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
-import net.minecraft.client.Minecraft;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ClientPacketHandlerNeoForge {
     public static void handleStartMusicSinglePayload(RibbitStartMusicSinglePayload payload, IPayloadContext context) {
-        RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) context.player().level())
-                .callGetEntities()
-                .get(payload.ribbitUUID());
+        context.enqueueWork(() -> {
+            RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) context.player().level())
+                    .callGetEntities()
+                    .get(payload.ribbitUUID());
 
-        RibbitInstrument instrument = RibbitInstrumentModule.getInstrument(payload.instrumentId());
+            RibbitInstrument instrument = RibbitInstrumentModule.getInstrument(payload.instrumentId());
 
-        if (ribbit == null) {
-            RibbitsCommon.LOGGER.error("Received Start Music payload for a ribbit with UUID {} that doesn't exist!", payload.ribbitUUID());
-            return;
-        }
+            if (ribbit == null) {
+                RibbitsCommon.LOGGER.error("Received Start Music payload for a ribbit with UUID {} that doesn't exist!", payload.ribbitUUID());
+                return;
+            }
 
-        if (instrument == null) {
-            RibbitsCommon.LOGGER.error("Tried to play music for a ribbit with null instrument!");
-            return;
-        }
+            if (instrument == null) {
+                RibbitsCommon.LOGGER.error("Tried to play music for a ribbit with null instrument!");
+                return;
+            }
 
-        if (instrument == RibbitInstrumentModule.NONE) {
-            RibbitsCommon.LOGGER.error("Tried to play music for a ribbit with NONE instrument!");
-            return;
-        }
+            if (instrument == RibbitInstrumentModule.NONE) {
+                RibbitsCommon.LOGGER.error("Tried to play music for a ribbit with NONE instrument!");
+                return;
+            }
 
-        SoundEvent instrumentSoundEvent = instrument.getSoundEvent();
-        Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, payload.tickOffset(), instrumentSoundEvent));
+            ClientUtils.playSound(ribbit, payload.tickOffset(), instrument);
+        });
     }
 
     public static void handleStartMusicAllPayload(RibbitStartMusicAllPayload payload, IPayloadContext context) {
@@ -80,8 +76,7 @@ public class ClientPacketHandlerNeoForge {
                 return;
             }
 
-            SoundEvent instrumentSoundEvent = instrument.getSoundEvent();
-            Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, payload.tickOffset(), instrumentSoundEvent));
+            ClientUtils.playSound(ribbit, payload.tickOffset(), instrument);
         }
     }
 
@@ -95,7 +90,7 @@ public class ClientPacketHandlerNeoForge {
             return;
         }
 
-        ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopRibbitsMusic(payload.ribbitUUID());
+        ClientUtils.stopRibbitSound(payload.ribbitUUID());
     }
 
     public static void handleStartHearingMaracaPayload(StartHearingMaracaPayload payload, IPayloadContext context) {
@@ -111,8 +106,7 @@ public class ClientPacketHandlerNeoForge {
             return;
         }
 
-        Minecraft.getInstance().getSoundManager().play(
-                new PlayerInstrumentSoundInstance((Player) performer, -1, SoundModule.MUSIC_MARACA.get()));
+        ClientUtils.startHearingMaraca((Player) performer);
     }
 
     public static void handleStopHearingMaracaPayload(StopHearingMaracaPayload payload, IPayloadContext context) {
@@ -128,10 +122,10 @@ public class ClientPacketHandlerNeoForge {
             return;
         }
 
-        ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopMaraca(payload.performerUUID());
+        ClientUtils.stopHearingMaraca(payload.performerUUID());
     }
 
-    public static void handleToggleSupporterHatPayload(ToggleSupporterHatPayload payload, IPayloadContext context) {
+    public static void handleToggleSupporterHatPayload(ToggleSupporterHatPayloadS2C payload, IPayloadContext context) {
         // Update the player's supporter hat status on the client
         SupportersListClient.toggleSupporterHat(payload.playerUUID(), payload.enabled());
     }

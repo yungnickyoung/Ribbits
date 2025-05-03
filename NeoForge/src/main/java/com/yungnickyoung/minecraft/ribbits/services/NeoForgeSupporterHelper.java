@@ -1,6 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.services;
 
-import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayload;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayloadC2S;
 import net.minecraft.client.Minecraft;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -16,7 +16,7 @@ public class NeoForgeSupporterHelper implements ISupporterHelper {
         // Only send payload if the player is connected to a server
         if (Minecraft.getInstance().getConnection() == null) return;
 
-        ToggleSupporterHatPayload payload = new ToggleSupporterHatPayload(playerUUID, enabled);
+        ToggleSupporterHatPayloadC2S payload = new ToggleSupporterHatPayloadC2S(playerUUID, enabled);
         PacketDistributor.sendToServer(payload);
     }
 }

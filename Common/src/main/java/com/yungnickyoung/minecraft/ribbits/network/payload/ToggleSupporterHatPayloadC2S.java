@@ -12,22 +12,21 @@ import java.util.UUID;
 
 /**
  * Packet to toggle the supporter hat for the given player.
- * The client sends this payload to the server to toggle the supporter hat for the player, and the server then
- * forwards the payload to all clients to keep all clients in sync.
+ * The client sends this payload to the server to toggle the supporter hat for the player.
  *
  * @param playerUUID The UUID of the player to toggle the supporter hat for
  * @param enabled    Whether to enable or disable the supporter hat
  */
-public record ToggleSupporterHatPayload(UUID playerUUID, boolean enabled) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<ToggleSupporterHatPayload> TYPE =
-            new CustomPacketPayload.Type<>(RibbitsCommon.id("toggle_supporter_hat"));
+public record ToggleSupporterHatPayloadC2S(UUID playerUUID, boolean enabled) implements CustomPacketPayload {
+    public static final Type<ToggleSupporterHatPayloadC2S> TYPE =
+            new Type<>(RibbitsCommon.id("toggle_supporter_hat_c2s"));
 
-    public static final StreamCodec<FriendlyByteBuf, ToggleSupporterHatPayload> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<FriendlyByteBuf, ToggleSupporterHatPayloadC2S> STREAM_CODEC = StreamCodec.composite(
             UUIDUtil.STREAM_CODEC,
-            ToggleSupporterHatPayload::playerUUID,
+            ToggleSupporterHatPayloadC2S::playerUUID,
             ByteBufCodecs.BOOL,
-            ToggleSupporterHatPayload::enabled,
-            ToggleSupporterHatPayload::new);
+            ToggleSupporterHatPayloadC2S::enabled,
+            ToggleSupporterHatPayloadC2S::new);
 
     @Override
     public @NotNull Type<? extends CustomPacketPayload> type() {

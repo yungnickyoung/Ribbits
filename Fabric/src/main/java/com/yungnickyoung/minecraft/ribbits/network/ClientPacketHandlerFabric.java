@@ -17,7 +17,7 @@ import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStartMusicSingl
 import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStopMusicSinglePayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.StartHearingMaracaPayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.StopHearingMaracaPayload;
-import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayload;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayloadS2C;
 import com.yungnickyoung.minecraft.ribbits.services.Services;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
@@ -140,7 +140,7 @@ public class ClientPacketHandlerFabric {
         });
     }
 
-    public static void handleToggleSupporterHatPayload(ToggleSupporterHatPayload packet, ClientPlayNetworking.Context context) {
+    public static void handleToggleSupporterHatPayload(ToggleSupporterHatPayloadS2C packet, ClientPlayNetworking.Context context) {
         // Update the player's supporter hat status on the client
         SupportersListClient.toggleSupporterHat(packet.playerUUID(), packet.enabled());
     }

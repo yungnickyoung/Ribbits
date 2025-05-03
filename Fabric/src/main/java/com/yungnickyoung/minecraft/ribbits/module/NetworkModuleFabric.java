@@ -8,7 +8,8 @@ import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStartMusicSingl
 import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStopMusicSinglePayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.StartHearingMaracaPayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.StopHearingMaracaPayload;
-import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayload;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayloadC2S;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayloadS2C;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -21,12 +22,12 @@ public class NetworkModuleFabric {
         PayloadTypeRegistry.playS2C().register(StartHearingMaracaPayload.TYPE, StartHearingMaracaPayload.STREAM_CODEC);
         PayloadTypeRegistry.playS2C().register(StopHearingMaracaPayload.TYPE, StopHearingMaracaPayload.STREAM_CODEC);
         PayloadTypeRegistry.playS2C().register(RequestSupporterHatStatePayload.TYPE, RequestSupporterHatStatePayload.STREAM_CODEC);
-        PayloadTypeRegistry.playS2C().register(ToggleSupporterHatPayload.TYPE, ToggleSupporterHatPayload.STREAM_CODEC);
-        PayloadTypeRegistry.playC2S().register(ToggleSupporterHatPayload.TYPE, ToggleSupporterHatPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(ToggleSupporterHatPayloadS2C.TYPE, ToggleSupporterHatPayloadS2C.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(ToggleSupporterHatPayloadC2S.TYPE, ToggleSupporterHatPayloadC2S.STREAM_CODEC);
     }
 
     public static void registerC2SHandlers() {
-        ServerPlayNetworking.registerGlobalReceiver(ToggleSupporterHatPayload.TYPE, ServerPacketHandlerFabric::receiveToggleSupporterHat);
+        ServerPlayNetworking.registerGlobalReceiver(ToggleSupporterHatPayloadC2S.TYPE, ServerPacketHandlerFabric::receiveToggleSupporterHat);
     }
 
     public static void registerS2CHandlers() {
@@ -36,10 +37,6 @@ public class NetworkModuleFabric {
         ClientPlayNetworking.registerGlobalReceiver(StartHearingMaracaPayload.TYPE, ClientPacketHandlerFabric::handleStartHearingMaracaPayload);
         ClientPlayNetworking.registerGlobalReceiver(StopHearingMaracaPayload.TYPE, ClientPacketHandlerFabric::handleStopHearingMaracaPayload);
         ClientPlayNetworking.registerGlobalReceiver(RequestSupporterHatStatePayload.TYPE, ClientPacketHandlerFabric::handleRequestSupporterHatStatePayload);
-
-        // ToggleSupporterPacket is handled in both the client and server handlers.
-        // When received on the server, it will update the server's SupportersListServer and forward the payload to all clients.
-        // When received on the client, it will update the player's local SupportersListClient.
-        ClientPlayNetworking.registerGlobalReceiver(ToggleSupporterHatPayload.TYPE, ClientPacketHandlerFabric::handleToggleSupporterHatPayload);
+        ClientPlayNetworking.registerGlobalReceiver(ToggleSupporterHatPayloadS2C.TYPE, ClientPacketHandlerFabric::handleToggleSupporterHatPayload);
     }
 }

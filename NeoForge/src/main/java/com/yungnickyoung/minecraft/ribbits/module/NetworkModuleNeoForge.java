@@ -8,20 +8,26 @@ import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStartMusicSingl
 import com.yungnickyoung.minecraft.ribbits.network.payload.RibbitStopMusicSinglePayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.StartHearingMaracaPayload;
 import com.yungnickyoung.minecraft.ribbits.network.payload.StopHearingMaracaPayload;
-import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayload;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayloadC2S;
+import com.yungnickyoung.minecraft.ribbits.network.payload.ToggleSupporterHatPayloadS2C;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+
+import java.util.function.BiConsumer;
 
 public class NetworkModuleNeoForge {
     private static final String PROTOCOL_VERSION = "1";
 
     public static void init(IEventBus eventBus) {
-        eventBus.addListener(NetworkModuleNeoForge::registerHandlers);
+        eventBus.addListener(NetworkModuleNeoForge::registerServerHandlers);
+        eventBus.addListener(NetworkModuleNeoForge::registerClientHandlers);
     }
 
-    private static void registerHandlers(final RegisterPayloadHandlersEvent event) {
+    private static void registerClientHandlers(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar(PROTOCOL_VERSION);
         registrar.playToClient(
                 RibbitStartMusicSinglePayload.TYPE,
@@ -53,13 +59,27 @@ public class NetworkModuleNeoForge {
                 RequestSupporterHatStatePayload.STREAM_CODEC,
                 ClientPacketHandlerNeoForge::handleRequestSupporterHatStatePayload
         );
-        registrar.playBidirectional(
-                ToggleSupporterHatPayload.TYPE,
-                ToggleSupporterHatPayload.STREAM_CODEC,
-                new DirectionalPayloadHandler<>(
-                        ClientPacketHandlerNeoForge::handleToggleSupporterHatPayload,
-                        ServerPacketHandlerNeoForge::handleToggleSupporterHatPayload
-                )
+        registrar.playToClient(
+                ToggleSupporterHatPayloadS2C.TYPE,
+                ToggleSupporterHatPayloadS2C.STREAM_CODEC,
+                ClientPacketHandlerNeoForge::handleToggleSupporterHatPayload
         );
+    }
+
+    private static void registerServerHandlers(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(PROTOCOL_VERSION);
+        registrar.playToServer(
+                ToggleSupporterHatPayloadC2S.TYPE,
+                ToggleSupporterHatPayloadC2S.STREAM_CODEC,
+                ServerPacketHandlerNeoForge::handleToggleSupporterHatPayload
+        );
+    }
+
+    private static <T extends CustomPacketPayload> IPayloadHandler<T> wrapClientHandler(BiConsumer<T, IPayloadContext> consumer) {
+        return (payload, payloadContext) -> {
+            payloadContext.enqueueWork(() -> {
+                consumer.accept(payload, payloadContext);
+            });
+        };
     }
 }
