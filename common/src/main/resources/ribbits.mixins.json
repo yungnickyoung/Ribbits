@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "package": "com.yungnickyoung.minecraft.ribbits.mixin.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "ribbits-common-common-refmap.json",
+  "mixins": [
+    "BeardifierMixin",
+    "accessor.BoundingBoxAccessor",
+    "accessor.DoorBlockAccessor",
+    "accessor.FeaturePoolElementAccessor",
+    "accessor.ListPoolElementAccessor",
+    "accessor.SinglePoolElementAccessor",
+    "accessor.StructureTemplatePoolAccessor"
+  ],
+  "client": [
+    "client.accessor.ClientLevelAccessor",
+    "client.accessor.SoundBufferAccessor",
+    "client.maraca.ConditionalItemModelPropertiesMixin",
+    "client.maraca.ItemInHandRendererMixin",
+    "client.music.ChannelMixin",
+    "client.music.SoundEngineMixin",
+    "client.music.SoundManagerMixin",
+    "client.supporters.AvatarRendererMixin",
+    "client.supporters.SkinCustomizationScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

@@ -1,0 +1,70 @@
+{
+  "entity.ribbit.ambient": {
+    "subtitle": "subtitles.entity.ribbit.ambient",
+    "sounds": [
+      "ribbits:entity/ribbit_ambient1",
+      "ribbits:entity/ribbit_ambient2",
+      "ribbits:entity/ribbit_ambient3",
+      "ribbits:entity/ribbit_ambient4",
+      "ribbits:entity/ribbit_ambient5"
+    ]
+  },
+  "entity.ribbit.death": {
+    "subtitle": "subtitles.entity.ribbit.death",
+    "sounds": [
+      "ribbits:entity/ribbit_death1",
+      "ribbits:entity/ribbit_death2"
+    ]
+  },
+  "entity.ribbit.hurt": {
+    "subtitle": "subtitles.entity.ribbit.hurt",
+    "sounds": [
+      "ribbits:entity/ribbit_hurt1",
+      "ribbits:entity/ribbit_hurt2",
+      "ribbits:entity/ribbit_hurt3"
+    ]
+  },
+  "entity.ribbit.step": {
+    "subtitle": "subtitles.entity.ribbit.step",
+    "sounds": [
+      "ribbits:entity/ribbit_step1",
+      "ribbits:entity/ribbit_step2"
+    ]
+  },
+  "entity.ribbit.magic": {
+    "subtitle": "subtitles.entity.ribbit.magic",
+    "sounds": [
+      "ribbits:entity/ribbit_magic"
+    ]
+  },
+  "music.ribbit.bass": {
+    "subtitle": "subtitles.music.ribbit.bass",
+    "sounds": [
+      "ribbits:music/ribbit_bass"
+    ]
+  },
+  "music.ribbit.bongo": {
+    "subtitle": "subtitles.music.ribbit.bongo",
+    "sounds": [
+      "ribbits:music/ribbit_bongo"
+    ]
+  },
+  "music.ribbit.flute": {
+    "subtitle": "subtitles.music.ribbit.flute",
+    "sounds": [
+      "ribbits:music/ribbit_flute"
+    ]
+  },
+  "music.ribbit.guitar": {
+    "subtitle": "subtitles.music.ribbit.guitar",
+    "sounds": [
+      "ribbits:music/ribbit_guitar"
+    ]
+  },
+  "music.ribbit.maraca": {
+    "subtitle": "subtitles.music.ribbit.maraca",
+    "sounds": [
+      "ribbits:music/maraca"
+    ]
+  }
+}

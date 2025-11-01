@@ -1,0 +1,61 @@
+{
+  "type": "minecraft:random_patch",
+  "config": {
+    "feature": {
+      "feature": {
+        "type": "ribbits:vegetation_block_feature",
+        "config": {
+          "on_solid_state_provider": {
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "weight": 1,
+                "data": {
+                  "Name": "ribbits:umbrella_leaf"
+                }
+              },
+              {
+                "weight": 3,
+                "data": {
+                  "Name": "ribbits:toadstool"
+                }
+              },
+              {
+                "weight": 1,
+                "data": {
+                  "Name": "ribbits:swamp_daisy"
+                }
+              }
+            ]
+          },
+          "on_liquid_state_provider": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "ribbits:giant_lilypad"
+            }
+          },
+          "cannot_place_on": [
+            {
+              "Name": "minecraft:podzol"
+            },
+            {
+              "Name": "minecraft:coarse_dirt"
+            }
+          ]
+        }
+      },
+      "placement": [
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
+          }
+        }
+      ]
+    },
+    "tries": 20,
+    "xz_spread": 6,
+    "y_spread": 2
+  }
+}

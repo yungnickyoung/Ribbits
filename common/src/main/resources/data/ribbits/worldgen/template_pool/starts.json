@@ -1,0 +1,15 @@
+{
+  "name": "ribbits:starts",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:paths/path_4_0",
+        "processors": "ribbits:main",
+        "projection": "terrain_matching",
+        "element_type": "ribbits:yung_single_element"
+      }
+    }
+  ]
+}

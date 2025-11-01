@@ -1,0 +1,7 @@
+{
+  "parent": "block/template_single_face",
+  "ambientocclusion": false,
+  "textures": {
+    "texture": "ribbits:block/toadstool_inside"
+  }
+}

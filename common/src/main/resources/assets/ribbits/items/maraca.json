@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "ribbits:maraca_using",
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "ribbits:item/maraca_in_hand"
+    },
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "ribbits:item/maraca"
+    }
+  }
+}

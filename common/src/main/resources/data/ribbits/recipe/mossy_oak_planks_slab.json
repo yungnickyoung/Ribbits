@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_slab",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": "ribbits:mossy_oak_planks"
+  },
+  "result": {
+    "id": "ribbits:mossy_oak_planks_slab",
+    "count": 6
+  }
+}

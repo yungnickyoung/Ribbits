@@ -1,0 +1,66 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "ribbits:block/swamp_daisy"
+      },
+      {
+        "model": "ribbits:block/swamp_daisy",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/swamp_daisy",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/swamp_daisy",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_2"
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_2",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_2",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_2",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_3"
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_3",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_3",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_3",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_4"
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_4",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_4",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/swamp_daisy_4",
+        "y": 270
+      }
+    ]
+  }
+}

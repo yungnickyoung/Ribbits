@@ -1,0 +1,6 @@
+accessWidener v2 named
+
+accessible method net/minecraft/core/particles/SimpleParticleType <init> (Z)V
+accessible field net/minecraft/world/level/levelgen/Beardifier pieces Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/Beardifier junctions Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/Beardifier affectedBox Lnet/minecraft/world/level/levelgen/structure/BoundingBox;

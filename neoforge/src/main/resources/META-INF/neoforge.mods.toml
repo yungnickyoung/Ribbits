@@ -1,0 +1,54 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
+license = "GNU LGPL 3.0"
+
+[[mods]]
+modId = "ribbits"
+version = "${version}"
+displayName = "Ribbits"
+authors="Joosh, YUNGNICKYOUNG, Flechazo, HellionGames, Refresh Studios"
+description = "Adds cute little frogs to swamps!"
+logoFile="logo.png"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/ribbits"
+
+[[dependencies.ribbits]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ribbits]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.9,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ribbits]]
+modId = "architectury"
+type = "required"
+versionRange = "[1.0.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.ribbits]]
+modId="geckolib"
+versionRange="[1.0.0,)"
+type="required"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.ribbits]]
+modId="cloth_config"
+versionRange="[1.0.0,)"
+type="required"
+ordering="NONE"
+side="BOTH"
+
+[[mixins]]
+config = "ribbits.mixins.json"
+
+[[mixins]]
+config = "ribbits.neoforge.mixins.json"

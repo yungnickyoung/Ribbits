@@ -1,0 +1,66 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "ribbits:block/giant_lilypad"
+      },
+      {
+        "model": "ribbits:block/giant_lilypad",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/giant_lilypad",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/giant_lilypad",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_2"
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_2",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_2",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_2",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_3"
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_3",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_3",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_3",
+        "y": 270
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_4"
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_4",
+        "y": 90
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_4",
+        "y": 180
+      },
+      {
+        "model": "ribbits:block/giant_lilypad_4",
+        "y": 270
+      }
+    ]
+  }
+}

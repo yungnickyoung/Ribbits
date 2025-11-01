@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.yungnickyoung.minecraft.ribbits.neoforge.mixin.mixins.supporters",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "ribbits-neoforge-neoforge.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "HumanoidArmorLayerMixinNeoForge"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

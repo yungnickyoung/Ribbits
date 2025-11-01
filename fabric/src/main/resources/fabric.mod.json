@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "ribbits",
+  "version": "${version}",
+  "name": "Ribbits",
+  "description": "Adds cute little frogs to swamps!",
+  "authors": [
+    "Joosh",
+    "YUNGNICKYOUNG",
+    "Flechazo",
+    "HellionGames",
+    "Refresh Studios"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/ribbits",
+    "sources": "https://github.com/yungnickyoung/Ribbits",
+    "issues": "https://github.com/yungnickyoung/Ribbits/issues",
+    "discord": "discord.gg/sGwxnFV"
+  },
+  "license": "LGPL-3.0",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.yungnickyoung.minecraft.ribbits.fabric.RibbitsFabric"
+    ],
+    "client": [
+      "com.yungnickyoung.minecraft.ribbits.fabric.client.RibbitsFabricClient"
+    ]
+  },
+  "mixins": [
+    "ribbits.mixins.json",
+    "ribbits.fabric.mixins.json"
+  ],
+  "accessWidener": "ribbits.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.17.3",
+    "minecraft": ">=1.21.9",
+    "java": ">=21",
+    "architectury": "*",
+    "fabric-api": "*",
+    "geckolib": "*",
+    "cloth-config2": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "ribbits:decor",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "ribbits:decor/lamp_post",
+        "processors": "ribbits:main",
+        "projection": "rigid",
+        "element_type": "ribbits:yung_single_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "feature": "ribbits:veg_patch",
+        "projection": "rigid",
+        "element_type": "minecraft:feature_pool_element"
+      }
+    }
+  ]
+}

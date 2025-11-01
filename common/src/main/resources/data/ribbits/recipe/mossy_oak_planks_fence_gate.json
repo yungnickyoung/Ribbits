@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_fence_gate",
+  "pattern": [
+    "#W#",
+    "#W#"
+  ],
+  "key": {
+    "#": "minecraft:stick",
+    "W": "ribbits:mossy_oak_planks"
+  },
+  "result": {
+    "id": "ribbits:mossy_oak_planks_fence_gate",
+    "count": 1
+  }
+}
