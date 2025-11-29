@@ -1,7 +1,7 @@
 package com.yungnickyoung.minecraft.ribbits.client.supporters;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
-import dev.architectury.platform.Platform;
+import com.yungnickyoung.minecraft.ribbits.platform.PlatformHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +16,7 @@ public class SupportersListClient {
 
     public static void toggleSupporterHat(UUID playerUUID, boolean enabled) {
         if (enabled) {
-            if (!Platform.isDevelopmentEnvironment() && !SupportersJSON.get().isSupporter(playerUUID)) {
+            if (!PlatformHelper.isDevelopmentEnvironment() && !SupportersJSON.get().isSupporter(playerUUID)) {
                 RibbitsCommon.LOGGER.warn("Player {} tried to enable supporter hat but is not a supporter.", playerUUID);
                 return;
             }

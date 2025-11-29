@@ -55,7 +55,7 @@ public class WarpedNyliumProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.WARPED_NYLIUM_PROCESSOR.get();
+        return StructureProcessorTypeModule.WARPED_NYLIUM_PROCESSOR;
     }
 
     public static MapCodec<WarpedNyliumProcessor> codec() {

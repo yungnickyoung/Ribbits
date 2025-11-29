@@ -2,10 +2,9 @@ package com.yungnickyoung.minecraft.ribbits.client.supporters;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.config.RibbitsConfig;
+import com.yungnickyoung.minecraft.ribbits.platform.PlatformHelper;
 import com.yungnickyoung.minecraft.yungsapi.io.JSON;
-import dev.architectury.platform.Platform;
 import me.shedaniel.autoconfig.AutoConfig;
-import net.fabricmc.api.EnvType;
 
 import java.io.*;
 import java.net.*;
@@ -44,7 +43,7 @@ public class SupportersJSON {
             "https://cdn.jsdelivr.net/gh/yungnickyoung/Ribbits@1.20.1/supporters.json"
     );
 
-    private static final Path CACHE_PATH = Platform.getConfigFolder().resolve("ribbits-supporters.json");
+    private static final Path CACHE_PATH = PlatformHelper.getConfigFolder().resolve("ribbits-supporters.json");
     private static final int MAX_ATTEMPTS = 2;
     private static final long RETRY_DELAY_SECONDS = 3;
 
@@ -67,7 +66,7 @@ public class SupportersJSON {
     public static void populateSupportersList() {
         RibbitsCommon.LOGGER.info("Starting supporters list population...");
         CompletableFuture.runAsync(() -> {
-            if (Platform.getEnv() == EnvType.SERVER) loadCacheIfAvailable();
+            if (PlatformHelper.isServer()) loadCacheIfAvailable();
             fetchAndCacheSupportersJsonAsync();
         }, EXECUTOR);
     }
@@ -172,7 +171,7 @@ public class SupportersJSON {
                         synchronized (SupportersJSON.class) {
                             instance = data;
                         }
-                        if (Platform.getEnv() == EnvType.SERVER) saveCache(data);
+                        if (PlatformHelper.isServer()) saveCache(data);
                         RibbitsCommon.LOGGER.info("Supporters.json loaded successfully: {} supporters, {} friends",
                                 data.supporters.size(), data.friends.size());
                     } else RibbitsCommon.LOGGER.error("Parsed JSON is null");

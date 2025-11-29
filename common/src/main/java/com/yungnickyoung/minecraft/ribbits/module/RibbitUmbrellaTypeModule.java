@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitUmbrellaType;
+import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
@@ -55,7 +56,8 @@ public class RibbitUmbrellaTypeModule {
      * The AutoRegister system will call this method after mod initialization is complete.
      * The method itself is a NO-OP, but calling it will trigger the static initialization above.
      */
-    public static void init() {
+    @AutoRegister("_ignored")
+    public static void initRibbitsUmbrellaTypes() {
         RibbitsCommon.LOGGER.info("Registering Ribbit umbrella types...");
     }
 }

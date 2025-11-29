@@ -1,27 +1,40 @@
 package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundEvent;
+import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
+import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterSoundEvent;
 
+@AutoRegister(RibbitsCommon.MOD_ID)
 public class SoundModule {
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(RibbitsCommon.MOD_ID, Registries.SOUND_EVENT);
 
-    public static final RegistrySupplier<SoundEvent> ENTITY_RIBBIT_AMBIENT = SOUND_EVENTS.register("entity.ribbit.ambient", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("entity.ribbit.ambient")));
-    public static final RegistrySupplier<SoundEvent> ENTITY_RIBBIT_DEATH = SOUND_EVENTS.register("entity.ribbit.death", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("entity.ribbit.death")));
-    public static final RegistrySupplier<SoundEvent> ENTITY_RIBBIT_HURT = SOUND_EVENTS.register("entity.ribbit.hurt", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("entity.ribbit.hurt")));
-    public static final RegistrySupplier<SoundEvent> ENTITY_RIBBIT_STEP = SOUND_EVENTS.register("entity.ribbit.step", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("entity.ribbit.step")));
-    public static final RegistrySupplier<SoundEvent> ENTITY_RIBBIT_MAGIC = SOUND_EVENTS.register("entity.ribbit.magic", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("entity.ribbit.magic")));
+    @AutoRegister("entity.ribbit.ambient")
+    public static final AutoRegisterSoundEvent ENTITY_RIBBIT_AMBIENT = AutoRegisterSoundEvent.create();
 
-    public static final RegistrySupplier<SoundEvent> MUSIC_RIBBIT_BASS = SOUND_EVENTS.register("music.ribbit.bass", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("music.ribbit.bass")));
-    public static final RegistrySupplier<SoundEvent> MUSIC_RIBBIT_BONGO = SOUND_EVENTS.register("music.ribbit.bongo", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("music.ribbit.bongo")));
-    public static final RegistrySupplier<SoundEvent> MUSIC_RIBBIT_FLUTE = SOUND_EVENTS.register("music.ribbit.flute", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("music.ribbit.flute")));
-    public static final RegistrySupplier<SoundEvent> MUSIC_RIBBIT_GUITAR = SOUND_EVENTS.register("music.ribbit.guitar", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("music.ribbit.guitar")));
-    public static final RegistrySupplier<SoundEvent> MUSIC_MARACA = SOUND_EVENTS.register("music.ribbit.maraca", () -> SoundEvent.createVariableRangeEvent(RibbitsCommon.id("music.ribbit.maraca")));
+    @AutoRegister("entity.ribbit.death")
+    public static final AutoRegisterSoundEvent ENTITY_RIBBIT_DEATH = AutoRegisterSoundEvent.create();
 
-    public static void init() {
-        SOUND_EVENTS.register();
-    }
+    @AutoRegister("entity.ribbit.hurt")
+    public static final AutoRegisterSoundEvent ENTITY_RIBBIT_HURT = AutoRegisterSoundEvent.create();
+
+    @AutoRegister("entity.ribbit.step")
+    public static final AutoRegisterSoundEvent ENTITY_RIBBIT_STEP = AutoRegisterSoundEvent.create();
+
+    @AutoRegister("entity.ribbit.magic")
+    public static final AutoRegisterSoundEvent ENTITY_RIBBIT_MAGIC = AutoRegisterSoundEvent.create();
+
+    @AutoRegister("music.ribbit.bass")
+    public static final AutoRegisterSoundEvent MUSIC_RIBBIT_BASS = AutoRegisterSoundEvent.create();
+
+    @AutoRegister("music.ribbit.bongo")
+    public static final AutoRegisterSoundEvent MUSIC_RIBBIT_BONGO = AutoRegisterSoundEvent.create();
+
+    @AutoRegister("music.ribbit.flute")
+    public static final AutoRegisterSoundEvent MUSIC_RIBBIT_FLUTE = AutoRegisterSoundEvent.create();
+
+    @AutoRegister("music.ribbit.guitar")
+    public static final AutoRegisterSoundEvent MUSIC_RIBBIT_GUITAR = AutoRegisterSoundEvent.create();
+
+    @AutoRegister("music.ribbit.maraca")
+    public static final AutoRegisterSoundEvent MUSIC_MARACA = AutoRegisterSoundEvent.create();
+
 }

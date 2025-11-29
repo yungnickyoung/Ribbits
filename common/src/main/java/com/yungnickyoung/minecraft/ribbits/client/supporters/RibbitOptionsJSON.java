@@ -2,8 +2,8 @@ package com.yungnickyoung.minecraft.ribbits.client.supporters;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.network.ClientNetworkHandler;
+import com.yungnickyoung.minecraft.ribbits.platform.PlatformHelper;
 import com.yungnickyoung.minecraft.yungsapi.io.JSON;
-import dev.architectury.platform.Platform;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -89,6 +89,6 @@ public class RibbitOptionsJSON {
     }
 
     private static Path getOptionsFilePath() {
-        return Platform.getConfigFolder().resolve("ribbits-options.json");
+        return PlatformHelper.getConfigFolder().resolve("ribbits-options.json");
     }
 }

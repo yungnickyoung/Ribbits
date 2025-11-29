@@ -86,7 +86,7 @@ public class PillarProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.PILLAR_PROCESSOR.get();
+        return StructureProcessorTypeModule.PILLAR_PROCESSOR;
     }
 
     public static MapCodec<PillarProcessor> codec() {

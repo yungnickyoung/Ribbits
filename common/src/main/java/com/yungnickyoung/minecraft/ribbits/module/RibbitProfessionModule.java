@@ -2,6 +2,7 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
+import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+@AutoRegister(RibbitsCommon.MOD_ID)
 public class RibbitProfessionModule {
     /**
      * Map of all Ribbit profession ResourceLocations to their RibbitProfession objects.
@@ -58,8 +60,8 @@ public class RibbitProfessionModule {
      * The AutoRegister system will call this method after mod initialization is complete.
      * The method itself is a NO-OP, but calling it will trigger the static initialization above.
      */
-
-    public static void init() {
+    @AutoRegister("_ignored")
+    public static void initRibbitsProfessions() {
         RibbitsCommon.LOGGER.info("Registering Ribbit professions...");
     }
 }

@@ -2,34 +2,26 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.world.processor.*;
-import dev.architectury.registry.registries.DeferredRegister;
-import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.registries.Registries;
+import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 
+@AutoRegister(RibbitsCommon.MOD_ID)
 public class StructureProcessorTypeModule {
-    public static final DeferredRegister<StructureProcessorType<?>> STRUCTURE_PROCESSOR_TYPES =
-            DeferredRegister.create(RibbitsCommon.MOD_ID, Registries.STRUCTURE_PROCESSOR);
+    @AutoRegister("pillar_processor")
+    public static StructureProcessorType<PillarProcessor> PILLAR_PROCESSOR = () -> PillarProcessor.CODEC;
 
-    public static final RegistrySupplier<StructureProcessorType<PillarProcessor>> PILLAR_PROCESSOR =
-            STRUCTURE_PROCESSOR_TYPES.register("pillar_processor", () -> PillarProcessor::codec);
+    @AutoRegister("podzol_processor")
+    public static StructureProcessorType<PodzolProcessor> PODZOL_PROCESSOR = () -> PodzolProcessor.CODEC;
 
-    public static final RegistrySupplier<StructureProcessorType<PodzolProcessor>> PODZOL_PROCESSOR =
-            STRUCTURE_PROCESSOR_TYPES.register("podzol_processor", () -> PodzolProcessor::codec);
+    @AutoRegister("warped_nylium_processor")
+    public static StructureProcessorType<WarpedNyliumProcessor> WARPED_NYLIUM_PROCESSOR = () -> WarpedNyliumProcessor.CODEC;
 
-    public static final RegistrySupplier<StructureProcessorType<WarpedNyliumProcessor>> WARPED_NYLIUM_PROCESSOR =
-            STRUCTURE_PROCESSOR_TYPES.register("warped_nylium_processor", () -> WarpedNyliumProcessor::codec);
+    @AutoRegister("block_replace_processor")
+    public static StructureProcessorType<BlockReplaceProcessor> BLOCK_REPLACE_PROCESSOR = () -> BlockReplaceProcessor.CODEC;
 
-    public static final RegistrySupplier<StructureProcessorType<BlockReplaceProcessor>> BLOCK_REPLACE_PROCESSOR =
-            STRUCTURE_PROCESSOR_TYPES.register("block_replace_processor", () -> BlockReplaceProcessor::codec);
+    @AutoRegister("lapis_block_processor")
+    public static StructureProcessorType<LapisBlockProcessor> LAPIS_BLOCK_PROCESSOR = () -> LapisBlockProcessor.CODEC;
 
-    public static final RegistrySupplier<StructureProcessorType<LapisBlockProcessor>> LAPIS_BLOCK_PROCESSOR =
-            STRUCTURE_PROCESSOR_TYPES.register("lapis_block_processor", () -> LapisBlockProcessor::codec);
-
-    public static final RegistrySupplier<StructureProcessorType<BrewingStandProcessor>> BREWING_STAND_PROCESSOR =
-            STRUCTURE_PROCESSOR_TYPES.register("brewing_stand_processor", () -> BrewingStandProcessor::codec);
-
-    public static void init() {
-        STRUCTURE_PROCESSOR_TYPES.register();
-    }
+    @AutoRegister("brewing_stand_processor")
+    public static StructureProcessorType<BrewingStandProcessor> BREWING_STAND_PROCESSOR = () -> BrewingStandProcessor.CODEC;
 }

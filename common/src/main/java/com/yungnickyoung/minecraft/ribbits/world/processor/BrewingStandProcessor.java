@@ -53,7 +53,7 @@ public class BrewingStandProcessor extends StructureProcessor {
 
     @Override
     protected @NotNull StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.BREWING_STAND_PROCESSOR.get();
+        return StructureProcessorTypeModule.BREWING_STAND_PROCESSOR;
     }
 
     public static MapCodec<BrewingStandProcessor> codec() {

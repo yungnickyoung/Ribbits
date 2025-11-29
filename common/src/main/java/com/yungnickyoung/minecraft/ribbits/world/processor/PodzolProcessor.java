@@ -61,7 +61,7 @@ public class PodzolProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.PODZOL_PROCESSOR.get();
+        return StructureProcessorTypeModule.PODZOL_PROCESSOR;
     }
 
     public static MapCodec<PodzolProcessor> codec() {

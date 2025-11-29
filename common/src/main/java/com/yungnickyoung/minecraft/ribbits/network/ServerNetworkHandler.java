@@ -6,12 +6,10 @@ import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import com.yungnickyoung.minecraft.ribbits.network.payload.*;
 import com.yungnickyoung.minecraft.ribbits.platform.PlatformHelper;
 import com.yungnickyoung.minecraft.ribbits.supporters.SupportersListServer;
-import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +17,9 @@ import java.util.UUID;
 
 public class ServerNetworkHandler {
 
-    public static void handleToggleSupporterHatC2S(ToggleSupporterHatPayloadC2S payload, NetworkManager.PacketContext ctx) {
-        Player senderPlayer = ctx.getPlayer();
-        if (!(senderPlayer instanceof ServerPlayer sender)) {
-            return;
-        }
+    public static void handleToggleSupporterHatC2S(ToggleSupporterHatPayloadC2S payload) {
 
-        UUID senderUUID = sender.getUUID();
-
-        if (!payload.playerUUID().equals(senderUUID)) {
-            RibbitsCommon.LOGGER.warn("Ignoring supporter hat toggle for mismatched UUID {} by {}", payload.playerUUID(), senderUUID);
-            return;
-        }
+        UUID senderUUID = payload.playerUUID();
 
         if (!SupportersJSON.get().isSupporter(senderUUID)) {
             RibbitsCommon.LOGGER.warn("Non-supporter {} attempted to toggle supporter hat.", senderUUID);
@@ -58,23 +47,23 @@ public class ServerNetworkHandler {
             ribbitIds.add(r.getUUID());
             instrumentIds.add(r.getRibbitData().getInstrument().id());
         });
-        NetworkManager.sendToPlayer(player, new RibbitStartMusicAllPayload(ribbitIds, instrumentIds, masterRibbit.getTicksPlayingMusic()));
+        PlatformHelper.sendToPlayer(player, new RibbitStartMusicAllPayload(ribbitIds, instrumentIds, masterRibbit.getTicksPlayingMusic()));
     }
 
     public static void onPlayerExitBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit) {
-        NetworkManager.sendToPlayer(player, new RibbitStopMusicSinglePayload(masterRibbit.getUUID()));
-        masterRibbit.getRibbitsPlayingMusic().forEach(r -> NetworkManager.sendToPlayer(player, new RibbitStopMusicSinglePayload(r.getUUID())));
+        PlatformHelper.sendToPlayer(player, new RibbitStopMusicSinglePayload(masterRibbit.getUUID()));
+        masterRibbit.getRibbitsPlayingMusic().forEach(r -> PlatformHelper.sendToPlayer(player, new RibbitStopMusicSinglePayload(r.getUUID())));
     }
 
     public static void startHearingMaraca(ServerPlayer performer, ServerPlayer audienceMember) {
-        NetworkManager.sendToPlayer(audienceMember, new StartHearingMaracaPayload(performer.getUUID()));
+        PlatformHelper.sendToPlayer(audienceMember, new StartHearingMaracaPayload(performer.getUUID()));
     }
 
     public static void stopHearingMaraca(ServerPlayer performer, ServerPlayer audienceMember) {
-        NetworkManager.sendToPlayer(audienceMember, new StopHearingMaracaPayload(performer.getUUID()));
+        PlatformHelper.sendToPlayer(audienceMember, new StopHearingMaracaPayload(performer.getUUID()));
     }
 
     public static <T extends CustomPacketPayload> void sendToAllPlayers(T payload) {
-        NetworkManager.sendToPlayers(PlatformHelper.getCurrentServer().getPlayerList().getPlayers(), payload);
+        PlatformHelper.sendToPlayers(PlatformHelper.getCurrentServer().getPlayerList().getPlayers(), payload);
     }
 }

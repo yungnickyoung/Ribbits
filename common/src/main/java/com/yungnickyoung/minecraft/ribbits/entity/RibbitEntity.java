@@ -27,6 +27,7 @@ import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.trading.Merchant;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
@@ -54,8 +55,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
-
-import net.minecraft.world.item.SpawnEggItem;
 
 public class RibbitEntity extends AgeableMob implements
         GeoEntity,
@@ -192,7 +191,7 @@ public class RibbitEntity extends AgeableMob implements
         if (this.getBuffing() && this.level().isClientSide()) {
             double radius = 1.25;
             for (float theta = 0; theta < Mth.TWO_PI; theta += this.random.nextFloat() * 0.8F + 0.5F) {
-                this.level().addParticle(ParticleTypeModule.SPELL.get(),
+                this.level().addParticle((ParticleOptions) ParticleTypeModule.SPELL.get(),
                         this.getX() + Mth.cos(theta) * radius, this.getY(), this.getZ() + Mth.sin(theta) * radius,
                         0.0D, 0.0D, 0.0D);
             }

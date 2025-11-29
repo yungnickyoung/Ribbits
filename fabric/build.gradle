@@ -42,11 +42,11 @@ dependencies {
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
-    modImplementation "dev.architectury:architectury-fabric:$rootProject.architectury_api_version"
     modApi("me.shedaniel.cloth:cloth-config-fabric:$rootProject.cloth_version") {
         exclude(group: "net.fabricmc")
         exclude(group: "net.fabricmc.fabric-api")
     }
+    modImplementation files("../libs/YungsApi-1.21.10-Fabric-5.4.0.jar")
     modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
     modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.10:$rootProject.geckolib_version"
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

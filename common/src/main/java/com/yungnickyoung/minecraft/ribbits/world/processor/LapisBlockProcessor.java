@@ -58,7 +58,7 @@ public class LapisBlockProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.LAPIS_BLOCK_PROCESSOR.get();
+        return StructureProcessorTypeModule.LAPIS_BLOCK_PROCESSOR;
     }
 
     public static MapCodec<LapisBlockProcessor> codec() {

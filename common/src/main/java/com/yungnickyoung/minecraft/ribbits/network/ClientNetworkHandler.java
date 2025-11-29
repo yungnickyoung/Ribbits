@@ -12,7 +12,7 @@ import com.yungnickyoung.minecraft.ribbits.mixin.mixins.client.accessor.ClientLe
 import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
 import com.yungnickyoung.minecraft.ribbits.module.SoundModule;
 import com.yungnickyoung.minecraft.ribbits.network.payload.*;
-import dev.architectury.networking.NetworkManager;
+import com.yungnickyoung.minecraft.ribbits.platform.PlatformHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
@@ -95,6 +95,6 @@ public class ClientNetworkHandler {
     public static void notifyServerOfSupporterHatState(boolean enabled) {
         UUID playerUUID = Minecraft.getInstance().getUser().getProfileId();
         if (Minecraft.getInstance().getConnection() == null) return;
-        NetworkManager.sendToServer(new ToggleSupporterHatPayloadC2S(playerUUID, enabled));
+        PlatformHelper.sendToServer(new ToggleSupporterHatPayloadC2S(playerUUID, enabled));
     }
 }

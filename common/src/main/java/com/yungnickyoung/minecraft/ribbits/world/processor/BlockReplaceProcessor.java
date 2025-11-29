@@ -150,7 +150,7 @@ public class BlockReplaceProcessor extends StructureProcessor {
 
     @Override
     protected StructureProcessorType<?> getType() {
-        return StructureProcessorTypeModule.BLOCK_REPLACE_PROCESSOR.get();
+        return StructureProcessorTypeModule.BLOCK_REPLACE_PROCESSOR;
     }
 
     public static MapCodec<BlockReplaceProcessor> codec() {

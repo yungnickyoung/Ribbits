@@ -2,30 +2,29 @@ package com.yungnickyoung.minecraft.ribbits.module;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
+import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+@AutoRegister(RibbitsCommon.MOD_ID)
 public class RibbitInstrumentModule {
     /**
      * Map of all Ribbit instrument ResourceLocations to their RibbitInstrument objects.
      */
     private static final Map<ResourceLocation, RibbitInstrument> INSTRUMENT_REGISTRY = new HashMap<>();
 
-    /**
-     * Set of all valid RibbitInstruments. Same as the registry without the dummy NONE instrument.
-     */
+    /** Set of all valid RibbitInstruments. Same as the registry without the dummy NONE instrument. */
     private static final Set<RibbitInstrument> VALID_INSTRUMENTS = new HashSet<>();
 
     /* Registration of built-in RibbitInstruments. */
     public static final RibbitInstrument NONE = register("none", "", "", null);
-    // Defer these: created when sound events are ready
-    public static RibbitInstrument BASS;
-    public static RibbitInstrument BONGO;
-    public static RibbitInstrument FLUTE;
-    public static RibbitInstrument GUITAR;
+    public static final RibbitInstrument BASS = register("bass", "geo/bass_ribbit.geo.json", "play_bass", SoundModule.MUSIC_RIBBIT_BASS.get());
+    public static final RibbitInstrument BONGO = register("bongo", "geo/bongo_ribbit.geo.json", "play_bongo", SoundModule.MUSIC_RIBBIT_BONGO.get());
+    public static final RibbitInstrument FLUTE = register("flute", "geo/flute_ribbit.geo.json", "play_flute", SoundModule.MUSIC_RIBBIT_FLUTE.get());
+    public static final RibbitInstrument GUITAR = register("guitar", "geo/guitar_ribbit.geo.json", "play_guitar", SoundModule.MUSIC_RIBBIT_GUITAR.get());
 
     /**
      * Registers a RibbitInstrument with the given name, model, and sound event.
@@ -40,7 +39,6 @@ public class RibbitInstrumentModule {
 
     /**
      * Gets a RibbitInstrument by its ResourceLocation.
-     *
      * @param id ResourceLocation of the RibbitInstrument to get.
      * @return RibbitInstrument with the given ResourceLocation, or null if not found.
      */
@@ -50,19 +48,16 @@ public class RibbitInstrumentModule {
 
     /**
      * Gets a random RibbitInstrument.
-     *
      * @return Random RibbitInstrument.
      */
     public static RibbitInstrument getRandomInstrument() {
         Random random = new Random();
         List<RibbitInstrument> instrumentList = VALID_INSTRUMENTS.stream().toList();
-        if (instrumentList.isEmpty()) return NONE; // guard while registry suppliers resolve
         return instrumentList.get(random.nextInt(instrumentList.size()));
     }
 
     /**
      * Gets a random RibbitInstrument excluding current band member instruments.
-     *
      * @return Random RibbitInstrument.
      */
     public static RibbitInstrument getRandomInstrument(Set<RibbitInstrument> currBandMembers) {
@@ -76,7 +71,6 @@ public class RibbitInstrumentModule {
 
     /**
      * Gets the number of RibbitInstruments.
-     *
      * @return number of Valid RibbitInstruments.
      */
     public static int getNumInstruments() {
@@ -87,17 +81,8 @@ public class RibbitInstrumentModule {
      * The AutoRegister system will call this method after mod initialization is complete.
      * The method itself is a NO-OP, but calling it will trigger the static initialization above.
      */
-    public static void init() {
+    @AutoRegister("_ignored")
+    public static void initRibbitsInstruments() {
         RibbitsCommon.LOGGER.info("Registering Ribbit instruments...");
-
-        // Defer instrument creation until sound events exist
-        SoundModule.MUSIC_RIBBIT_BASS.listen(evt ->
-                BASS = register("bass", "bass_ribbit", "play_bass", evt));
-        SoundModule.MUSIC_RIBBIT_BONGO.listen(evt ->
-                BONGO = register("bongo", "bongo_ribbit", "play_bongo", evt));
-        SoundModule.MUSIC_RIBBIT_FLUTE.listen(evt ->
-                FLUTE = register("flute", "flute_ribbit", "play_flute", evt));
-        SoundModule.MUSIC_RIBBIT_GUITAR.listen(evt ->
-                GUITAR = register("guitar", "guitar_ribbit", "play_guitar", evt));
     }
 }
