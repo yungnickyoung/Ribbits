@@ -29,6 +29,13 @@ side = "BOTH"
 [[dependencies.ribbits]]
 modId="geckolib"
 versionRange="[1.0.0,)"
+type = "required"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.ribbits]]
+modId = "yungsapi"
+versionRange = "[1.0.0,)"
 type="required"
 ordering="NONE"
 side="BOTH"

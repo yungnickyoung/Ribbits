@@ -13,11 +13,39 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.base.GeoRenderState;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class RibbitModel extends GeoModel<RibbitEntity> {
     private static final ResourceLocation TEXTURE = RibbitsCommon.id("textures/entity/ribbit.png");
     private static final ResourceLocation ANIMATIONS = RibbitsCommon.id("ribbit");
+    private static final Map<Object, Set<String>> PROFESSION_BONES = Map.of(
+            RibbitProfessionModule.GARDENER, Set.of("watering_can", "gardener_hat"),
+            RibbitProfessionModule.SORCERER, Set.of("sourcerer_hat"),
+            RibbitProfessionModule.FISHERMAN, Set.of("accessories", "fishing_rod", "fishing_rod_2", "fishing_rod_3"),
+            RibbitProfessionModule.MERCHANT, Set.of("leaf")
+    );
+
+    private static final Map<RibbitInstrument, String> INSTRUMENT_BONES = Map.of(
+            RibbitInstrumentModule.BASS, "bass",
+            RibbitInstrumentModule.BONGO, "bongo",
+            RibbitInstrumentModule.FLUTE, "flute",
+            RibbitInstrumentModule.GUITAR, "guitar"
+    );
+
+    private static final Map<String, String> UMBRELLA_BONES = Map.of(
+            "1", "umbrella",
+            "2", "umbrella2",
+            "3", "umbrella3"
+    );
+
+    private static final Set<String> ALL_DYNAMIC_BONES = Set.of(
+            "gardener_hat", "sourcerer_hat", "leaf", "watering_can",
+            "accessories", "fishing_rod", "fishing_rod_2", "fishing_rod_3",
+            "guitar", "flute", "bongo", "bass",
+            "umbrella", "umbrella2", "umbrella3",
+            "pride"
+    );
 
     @Override
     public ResourceLocation getModelResource(GeoRenderState renderState) {
@@ -42,7 +70,8 @@ public class RibbitModel extends GeoModel<RibbitEntity> {
         boolean inRain = Boolean.TRUE.equals(state.getData(DataTicketModule.DT_IN_RAIN));
         boolean isPride = Boolean.TRUE.equals(state.getData(DataTicketModule.DT_IS_PRIDE_RIBBIT));
 
-        Set<String> desired = new HashSet<>();
+        Set<String> desired = new HashSet<>(8);
+
         if (data.getProfession().equals(RibbitProfessionModule.MERCHANT)) {
             desired.add("body_merchant");
         } else {
@@ -50,77 +79,55 @@ public class RibbitModel extends GeoModel<RibbitEntity> {
         }
 
         if (playingInstrument && data.getInstrument() != RibbitInstrumentModule.NONE) {
-            String instrumentBone = instrumentBoneName(data.getInstrument());
-            if (instrumentBone != null) desired.add(instrumentBone);
+            String inst = INSTRUMENT_BONES.get(data.getInstrument());
+            if (inst != null) desired.add(inst);
         } else {
-            if (data.getProfession().equals(RibbitProfessionModule.GARDENER)) {
-                desired.add("watering_can");
-                desired.add("gardener_hat");
-            } else if (data.getProfession().equals(RibbitProfessionModule.SORCERER)) {
-                desired.add("sourcerer_hat");
-            } else if (data.getProfession().equals(RibbitProfessionModule.FISHERMAN)) {
-                desired.add("accessories");
-                desired.add("fishing_rod");
-                desired.add("fishing_rod_2");
-                desired.add("fishing_rod_3");
-            } else if (data.getProfession().equals(RibbitProfessionModule.MERCHANT)) {
-                desired.add("leaf");
-            }
+            desired.addAll(PROFESSION_BONES.getOrDefault(data.getProfession(), Set.of()));
 
             if (isPride) {
                 desired.add("pride");
+
             } else if (umbrellaFalling || inRain) {
                 String suffix = data.getUmbrellaType().modelLocationSuffix();
-                if (suffix.contains("1")) {
-                    desired.add("umbrella");
-                } else if (suffix.contains("2")) {
-                    desired.add("umbrella2");
-                } else if (suffix.contains("3")) {
-                    desired.add("umbrella3");
-                }
+                UMBRELLA_BONES.forEach((k, v) -> {
+                    if (suffix.contains(k)) desired.add(v);
+                });
             }
         }
 
-        Set<String> currently = (Set<String>) state.getDataOrDefault(DataTicketModule.DT_VISIBLE_BONES, new HashSet<>());
+        Set<String> currently = (Set<String>) state.getDataOrDefault(
+                DataTicketModule.DT_VISIBLE_BONES,
+                new HashSet<>()
+        );
+
         if (currently.isEmpty()) {
-            getBone("body_default").ifPresent(b -> b.setHidden(true));
-            getBone("body_merchant").ifPresent(b -> b.setHidden(true));
-            String[] dynamicBones = new String[]{
-                    "gardener_hat", "sourcerer_hat", "leaf", "watering_can",
-                    "accessories", "fishing_rod", "fishing_rod_2", "fishing_rod_3",
-                    "guitar", "flute", "bongo", "bass",
-                    "umbrella", "umbrella2", "umbrella3",
-                    "pride"
-            };
-            for (String b : dynamicBones) {
-                getBone(b).ifPresent(bone -> bone.setHidden(true));
-            }
+            hideBone("body_default");
+            hideBone("body_merchant");
+            ALL_DYNAMIC_BONES.forEach(this::hideBone);
         }
 
         for (String prev : new HashSet<>(currently)) {
             if (!desired.contains(prev)) {
-                getBone(prev).ifPresent(bone -> bone.setHidden(true));
+                hideBone(prev);
                 currently.remove(prev);
             }
         }
-        for (String name : desired) {
-            if (!currently.contains(name)) {
-                showBone(name);
-                currently.add(name);
+
+        for (String need : desired) {
+            if (!currently.contains(need)) {
+                showBone(need);
+                currently.add(need);
             }
         }
+
         state.setData(DataTicketModule.DT_VISIBLE_BONES, currently);
     }
 
-    private void showBone(String name) {
-        getBone(name).ifPresent(bone -> bone.setHidden(false));
+    private void hideBone(String name) {
+        getBone(name).ifPresent(b -> b.setHidden(true));
     }
 
-    private String instrumentBoneName(RibbitInstrument instrument) {
-        if (instrument == RibbitInstrumentModule.BASS) return "bass";
-        if (instrument == RibbitInstrumentModule.BONGO) return "bongo";
-        if (instrument == RibbitInstrumentModule.FLUTE) return "flute";
-        if (instrument == RibbitInstrumentModule.GUITAR) return "guitar";
-        return null;
+    private void showBone(String name) {
+        getBone(name).ifPresent(b -> b.setHidden(false));
     }
 }

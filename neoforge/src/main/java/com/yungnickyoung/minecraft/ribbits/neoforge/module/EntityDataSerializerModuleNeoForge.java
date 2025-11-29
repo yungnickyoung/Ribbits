@@ -17,4 +17,5 @@ public class EntityDataSerializerModuleNeoForge {
             () -> EntityDataSerializerModule.RIBBIT_DATA_SERIALIZER
     );
 
+
 }
