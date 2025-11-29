@@ -8,7 +8,7 @@
         "location": "ribbits:paths/path_4_0",
         "processors": "ribbits:main",
         "projection": "terrain_matching",
-        "element_type": "ribbits:yung_single_element"
+        "element_type": "yungsapi:yung_single_element"
       }
     }
   ]

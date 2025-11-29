@@ -1,5 +1,5 @@
 {
-  "type": "ribbits:yung_jigsaw",
+  "type": "yungsapi:yung_jigsaw",
   "biomes": "#ribbits:has_structure/ribbit_village",
   "step": "surface_structures",
   "start_pool": "ribbits:starts",
@@ -10,7 +10,7 @@
   },
   "max_distance_from_center": 80,
   "enhanced_terrain_adaptation": {
-    "type": "ribbits:custom",
+    "type": "yungsapi:custom",
     "kernel_size": 24,
     "kernel_distance": 24,
     "top": "carve",

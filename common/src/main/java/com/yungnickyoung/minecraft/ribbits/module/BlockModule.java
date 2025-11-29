@@ -4,6 +4,7 @@ import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.block.*;
 import com.yungnickyoung.minecraft.ribbits.mixin.mixins.accessor.DoorBlockAccessor;
 import com.yungnickyoung.minecraft.ribbits.platform.PlatformHelper;
+import com.yungnickyoung.minecraft.ribbits.util.RegisterHelper;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegisterBlock;
 import net.minecraft.world.item.Item;
@@ -28,7 +29,9 @@ public class BlockModule {
                             .strength(0.2f)
                             .instrument(NoteBlockInstrument.BASS)
                             .ignitedByLava()
-                            .sound(SoundType.WOOD)))
+                            .sound(SoundType.WOOD)
+                            .setId(RegisterHelper.blockKey("brown_toadstool"))
+            ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("red_toadstool")
@@ -39,7 +42,9 @@ public class BlockModule {
                             .strength(0.2f)
                             .instrument(NoteBlockInstrument.BASS)
                             .ignitedByLava()
-                            .sound(SoundType.WOOD)))
+                            .sound(SoundType.WOOD)
+                            .setId(RegisterHelper.blockKey("red_toadstool"))
+            ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("toadstool_stem")
@@ -50,7 +55,9 @@ public class BlockModule {
                             .strength(0.2f)
                             .instrument(NoteBlockInstrument.BASS)
                             .ignitedByLava()
-                            .sound(SoundType.WOOD)))
+                            .sound(SoundType.WOOD)
+                            .setId(RegisterHelper.blockKey("toadstool_stem"))
+            ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("swamp_lantern")
@@ -63,19 +70,22 @@ public class BlockModule {
                             .sound(SoundType.LANTERN)
                             .lightLevel(_ignored -> 15)
                             .noOcclusion()
-                            .pushReaction(PushReaction.DESTROY)))
+                            .pushReaction(PushReaction.DESTROY)
+                            .setId(RegisterHelper.blockKey("swamp_lantern"))
+            ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("giant_lilypad")
     public static final AutoRegisterBlock GIANT_LILYPAD = AutoRegisterBlock.of(() -> new GiantLilyPadBlock(
                     BlockBehaviour.Properties
                             .of()
-                    .mapColor(MapColor.PLANT)
-                    .instabreak()
-                    .sound(SoundType.LILY_PAD)
-                    .noOcclusion()
-                            .pushReaction(PushReaction.DESTROY)))
-            .withItem(Item.Properties::new);
+                            .mapColor(MapColor.PLANT)
+                            .instabreak()
+                            .sound(SoundType.LILY_PAD)
+                            .noOcclusion()
+                            .pushReaction(PushReaction.DESTROY)
+                            .setId(RegisterHelper.blockKey("giant_lilypad"))
+    ));
 
     @AutoRegister("swamp_daisy")
     public static final AutoRegisterBlock SWAMP_DAISY = AutoRegisterBlock.of(() -> new SwampDaisyBlock(
@@ -86,7 +96,9 @@ public class BlockModule {
                             .noCollision()
                             .noOcclusion()
                             .sound(SoundType.BIG_DRIPLEAF)
-                            .ignitedByLava()))
+                            .ignitedByLava()
+                            .setId(RegisterHelper.blockKey("swamp_daisy"))
+            ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("toadstool")
@@ -97,7 +109,9 @@ public class BlockModule {
                             .instabreak()
                             .noCollision()
                             .sound(SoundType.SMALL_DRIPLEAF)
-                            .ignitedByLava()))
+                            .ignitedByLava()
+                            .setId(RegisterHelper.blockKey("toadstool"))
+            ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("mossy_oak_planks")
@@ -108,7 +122,9 @@ public class BlockModule {
                             .instrument(NoteBlockInstrument.BASS)
                             .strength(2.0f, 3.0f)
                             .sound(SoundType.WOOD)
-                            .ignitedByLava()))
+                            .ignitedByLava()
+                            .setId(RegisterHelper.blockKey("mossy_oak_planks"))
+            ))
             .withItem(Item.Properties::new)
             .withSlab()
             .withStairs()
@@ -127,7 +143,9 @@ public class BlockModule {
                                     .noOcclusion()
                                     .ignitedByLava()
                                     .pushReaction(PushReaction.DESTROY)
-                                    .sound(SoundType.WOOD)))
+                                    .sound(SoundType.WOOD)
+                                    .setId(RegisterHelper.blockKey("mossy_oak_door"))
+                    ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("umbrella_leaf")
@@ -138,7 +156,9 @@ public class BlockModule {
                             .instabreak()
                             .noCollision()
                             .ignitedByLava()
-                            .sound(SoundType.SMALL_DRIPLEAF)))
+                            .sound(SoundType.SMALL_DRIPLEAF)
+                            .setId(RegisterHelper.blockKey("umbrella_leaf"))
+            ))
             .withItem(Item.Properties::new);
 
     @AutoRegister("_ignored")

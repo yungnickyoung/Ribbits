@@ -46,6 +46,8 @@ dependencies {
         exclude(group: "net.fabricmc")
         exclude(group: "net.fabricmc.fabric-api")
     }
+    implementation("org.reflections:reflections:0.10.2")
+    implementation("org.javassist:javassist:3.29.2-GA")
     modImplementation files("../libs/YungsApi-1.21.10-Fabric-5.4.0.jar")
     modImplementation("com.terraformersmc:modmenu:${rootProject.modmenu_version}")
     modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.10:$rootProject.geckolib_version"

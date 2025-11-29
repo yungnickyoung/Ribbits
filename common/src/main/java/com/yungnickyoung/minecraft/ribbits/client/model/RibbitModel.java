@@ -12,6 +12,9 @@ import software.bernie.geckolib.animatable.processing.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.base.GeoRenderState;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class RibbitModel extends GeoModel<RibbitEntity> {
     private static final ResourceLocation TEXTURE = RibbitsCommon.id("textures/entity/ribbit.png");
     private static final ResourceLocation ANIMATIONS = RibbitsCommon.id("ribbit");
@@ -39,59 +42,74 @@ public class RibbitModel extends GeoModel<RibbitEntity> {
         boolean inRain = Boolean.TRUE.equals(state.getData(DataTicketModule.DT_IN_RAIN));
         boolean isPride = Boolean.TRUE.equals(state.getData(DataTicketModule.DT_IS_PRIDE_RIBBIT));
 
-        getBone("body_default").ifPresent(b -> b.setHidden(true));
-        getBone("body_merchant").ifPresent(b -> b.setHidden(true));
+        Set<String> desired = new HashSet<>();
         if (data.getProfession().equals(RibbitProfessionModule.MERCHANT)) {
-            showBone("body_merchant");
+            desired.add("body_merchant");
         } else {
-            showBone("body_default");
-        }
-
-        String[] dynamicBones = new String[] {
-                "gardener_hat", "sourcerer_hat", "leaf", "watering_can",
-                "accessories", "fishing_rod", "fishing_rod_2", "fishing_rod_3",
-                "guitar", "flute", "bongo", "bass",
-                "umbrella", "umbrella2", "umbrella3",
-                "pride"
-        };
-        for (String b : dynamicBones) {
-            getBone(b).ifPresent(bone -> bone.setHidden(true));
+            desired.add("body_default");
         }
 
         if (playingInstrument && data.getInstrument() != RibbitInstrumentModule.NONE) {
             String instrumentBone = instrumentBoneName(data.getInstrument());
-            if (instrumentBone != null) {
-                showBone(instrumentBone);
+            if (instrumentBone != null) desired.add(instrumentBone);
+        } else {
+            if (data.getProfession().equals(RibbitProfessionModule.GARDENER)) {
+                desired.add("watering_can");
+                desired.add("gardener_hat");
+            } else if (data.getProfession().equals(RibbitProfessionModule.SORCERER)) {
+                desired.add("sourcerer_hat");
+            } else if (data.getProfession().equals(RibbitProfessionModule.FISHERMAN)) {
+                desired.add("accessories");
+                desired.add("fishing_rod");
+                desired.add("fishing_rod_2");
+                desired.add("fishing_rod_3");
+            } else if (data.getProfession().equals(RibbitProfessionModule.MERCHANT)) {
+                desired.add("leaf");
             }
-            return;
-        }
 
-        if (data.getProfession().equals(RibbitProfessionModule.GARDENER)) {
-            showBone("watering_can");
-            showBone("gardener_hat");
-        } else if (data.getProfession().equals(RibbitProfessionModule.SORCERER)) {
-            showBone("sourcerer_hat");
-        } else if (data.getProfession().equals(RibbitProfessionModule.FISHERMAN)) {
-            showBone("accessories");
-            showBone("fishing_rod");
-            showBone("fishing_rod_2");
-            showBone("fishing_rod_3");
-        } else if (data.getProfession().equals(RibbitProfessionModule.MERCHANT)) {
-            showBone("leaf");
-        }
-
-        if (isPride) {
-            showBone("pride");
-        } else if (umbrellaFalling || inRain) {
-            String suffix = data.getUmbrellaType().modelLocationSuffix();
-            if (suffix.contains("1")) {
-                showBone("umbrella");
-            } else if (suffix.contains("2")) {
-                showBone("umbrella2");
-            } else if (suffix.contains("3")) {
-                showBone("umbrella3");
+            if (isPride) {
+                desired.add("pride");
+            } else if (umbrellaFalling || inRain) {
+                String suffix = data.getUmbrellaType().modelLocationSuffix();
+                if (suffix.contains("1")) {
+                    desired.add("umbrella");
+                } else if (suffix.contains("2")) {
+                    desired.add("umbrella2");
+                } else if (suffix.contains("3")) {
+                    desired.add("umbrella3");
+                }
             }
         }
+
+        Set<String> currently = (Set<String>) state.getDataOrDefault(DataTicketModule.DT_VISIBLE_BONES, new HashSet<>());
+        if (currently.isEmpty()) {
+            getBone("body_default").ifPresent(b -> b.setHidden(true));
+            getBone("body_merchant").ifPresent(b -> b.setHidden(true));
+            String[] dynamicBones = new String[]{
+                    "gardener_hat", "sourcerer_hat", "leaf", "watering_can",
+                    "accessories", "fishing_rod", "fishing_rod_2", "fishing_rod_3",
+                    "guitar", "flute", "bongo", "bass",
+                    "umbrella", "umbrella2", "umbrella3",
+                    "pride"
+            };
+            for (String b : dynamicBones) {
+                getBone(b).ifPresent(bone -> bone.setHidden(true));
+            }
+        }
+
+        for (String prev : new HashSet<>(currently)) {
+            if (!desired.contains(prev)) {
+                getBone(prev).ifPresent(bone -> bone.setHidden(true));
+                currently.remove(prev);
+            }
+        }
+        for (String name : desired) {
+            if (!currently.contains(name)) {
+                showBone(name);
+                currently.add(name);
+            }
+        }
+        state.setData(DataTicketModule.DT_VISIBLE_BONES, currently);
     }
 
     private void showBone(String name) {

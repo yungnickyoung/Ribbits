@@ -26,6 +26,9 @@
     ],
     "client": [
       "com.yungnickyoung.minecraft.ribbits.fabric.client.RibbitsFabricClient"
+    ],
+    "modmenu": [
+      "com.yungnickyoung.minecraft.ribbits.fabric.compat.ModMenuCompat"
     ]
   },
   "mixins": [
@@ -37,7 +40,6 @@
     "fabricloader": ">=0.17.3",
     "minecraft": ">=1.21.9",
     "java": ">=21",
-    "architectury": "*",
     "fabric-api": "*",
     "geckolib": "*",
     "cloth-config2": "*"

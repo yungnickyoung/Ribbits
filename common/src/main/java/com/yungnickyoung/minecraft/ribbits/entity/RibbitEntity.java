@@ -540,6 +540,7 @@ public class RibbitEntity extends AgeableMob implements
         this.bandMembers = new HashSet<>(bandMembers);
     }
 
+
     @Override
     public void remove(RemovalReason reason) {
         if (this.isMasterRibbit()) {

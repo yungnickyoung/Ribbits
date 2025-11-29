@@ -27,13 +27,6 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.ribbits]]
-modId = "architectury"
-type = "required"
-versionRange = "[1.0.0,)"
-ordering = "AFTER"
-side = "BOTH"
-
-[[dependencies.ribbits]]
 modId="geckolib"
 versionRange="[1.0.0,)"
 type="required"

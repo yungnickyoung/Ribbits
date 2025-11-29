@@ -5,12 +5,7 @@
   "refmap": "ribbits-common-common-refmap.json",
   "mixins": [
     "BeardifierMixin",
-    "accessor.BoundingBoxAccessor",
     "accessor.DoorBlockAccessor",
-    "accessor.FeaturePoolElementAccessor",
-    "accessor.ListPoolElementAccessor",
-    "accessor.SinglePoolElementAccessor",
-    "accessor.StructureTemplatePoolAccessor"
   ],
   "client": [
     "client.accessor.ClientLevelAccessor",
