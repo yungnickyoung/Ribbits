@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": {
+    "ribbits:swamp_daisy": {
+      "chance": 0.65
+    },
+    "ribbits:giant_lilypad": {
+      "chance": 0.65
+    },
+    "ribbits:umbrella_leaf": {
+      "chance": 0.65
+    },
+    "ribbits:toadstool": {
+      "chance": 0.65
+    },
+    "ribbits:toadstool_stem": {
+      "chance": 0.85
+    },
+    "ribbits:brown_toadstool": {
+      "chance": 0.85
+    },
+    "ribbits:red_toadstool": {
+      "chance": 0.85
+    }
+  }
+}
