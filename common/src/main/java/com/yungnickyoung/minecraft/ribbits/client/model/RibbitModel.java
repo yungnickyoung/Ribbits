@@ -39,11 +39,18 @@ public class RibbitModel extends GeoModel<RibbitEntity> {
             "3", "umbrella3"
     );
 
+    private static final Map<String, String> FISHERMAN_UMBRELLA_BONES = Map.of(
+            "1", "fisherman_umbrella",
+            "2", "fisherman_umbrella2",
+            "3", "fisherman_umbrella3"
+    );
+
     private static final Set<String> ALL_DYNAMIC_BONES = Set.of(
             "gardener_hat", "sourcerer_hat", "leaf", "watering_can",
             "accessories", "fishing_rod", "fishing_rod_2", "fishing_rod_3",
             "guitar", "flute", "bongo", "bass",
             "umbrella", "umbrella2", "umbrella3",
+            "fisherman_umbrella", "fisherman_umbrella2", "fisherman_umbrella3",
             "pride"
     );
 
@@ -89,7 +96,12 @@ public class RibbitModel extends GeoModel<RibbitEntity> {
 
             } else if (umbrellaFalling || inRain) {
                 String suffix = data.getUmbrellaType().modelLocationSuffix();
-                UMBRELLA_BONES.forEach((k, v) -> {
+                Map<String, String> currentUmbrellaMap =
+                        RibbitProfessionModule.FISHERMAN.equals(data.getProfession())
+                                ? FISHERMAN_UMBRELLA_BONES
+                                : UMBRELLA_BONES;
+
+                currentUmbrellaMap.forEach((k, v) -> {
                     if (suffix.contains(k)) desired.add(v);
                 });
             }

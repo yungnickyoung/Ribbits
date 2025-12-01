@@ -19,4 +19,5 @@ public class SupporterEventsNeoForge {
         // Send the list of players with the supporter hat enabled to the new player, and request their own supporter hat state
         PacketDistributor.sendToPlayer(serverPlayer, new RequestSupporterHatStatePayload(playersWithSupporterHat));
     }
+
 }

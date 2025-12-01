@@ -24,6 +24,7 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
         fireBlock.setFlammable(block, igniteChance, burnChance);
     }
 
+
     @Override
     public MinecraftServer getCurrentServer() {
         return ServerLifecycleHooks.getCurrentServer();
