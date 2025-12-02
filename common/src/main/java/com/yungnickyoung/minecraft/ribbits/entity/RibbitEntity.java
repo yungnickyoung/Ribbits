@@ -4,6 +4,7 @@ import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
 import com.yungnickyoung.minecraft.ribbits.entity.goal.*;
 import com.yungnickyoung.minecraft.ribbits.module.*;
+import com.yungnickyoung.minecraft.ribbits.util.GeoIP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -585,6 +586,7 @@ public class RibbitEntity extends AgeableMob implements
     }
 
     public boolean isPrideRibbit() {
+        if (ConfigModule.getConfig().general.disablePrideFlagCN && GeoIP.isInChina()) return false;
         Random rand = new Random(this.getUUID().getLeastSignificantBits());
 
         return isPrideMonth() && this.getRibbitData().getProfession().equals(RibbitProfessionModule.NITWIT) && rand.nextFloat() < 0.33f;

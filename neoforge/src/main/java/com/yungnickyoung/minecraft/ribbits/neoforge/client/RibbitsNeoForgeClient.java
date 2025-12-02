@@ -5,11 +5,10 @@ import com.yungnickyoung.minecraft.ribbits.client.RibbitsCommonClient;
 import com.yungnickyoung.minecraft.ribbits.client.model.SupporterHatModel;
 import com.yungnickyoung.minecraft.ribbits.client.particle.RibbitSpellParticle;
 import com.yungnickyoung.minecraft.ribbits.client.render.RibbitRenderer;
-import com.yungnickyoung.minecraft.ribbits.config.RibbitsConfig;
+import com.yungnickyoung.minecraft.ribbits.client.screen.RibbitsClothScreen;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.ParticleTypeModule;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.neoforged.api.distmarker.Dist;
@@ -27,7 +26,10 @@ public class RibbitsNeoForgeClient {
     private static void clientSetup(final FMLClientSetupEvent event) {
         RibbitsCommonClient.init();
         var modContainer = event.getContainer();
-        modContainer.registerExtensionPoint(IConfigScreenFactory.class, (container, parent) -> AutoConfig.getConfigScreen(RibbitsConfig.class, parent).get());
+        modContainer.registerExtensionPoint(
+                IConfigScreenFactory.class,
+                (container, parent) -> RibbitsClothScreen.create(parent)
+        );
         ItemBlockRenderTypes.setRenderLayer(BlockModule.SWAMP_LANTERN.get(), ChunkSectionLayer.CUTOUT);
         ItemBlockRenderTypes.setRenderLayer(BlockModule.GIANT_LILYPAD.get(), ChunkSectionLayer.CUTOUT);
         ItemBlockRenderTypes.setRenderLayer(BlockModule.SWAMP_DAISY.get(), ChunkSectionLayer.CUTOUT);

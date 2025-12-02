@@ -18,6 +18,9 @@ public class RibbitsConfig implements ConfigData {
     public static class General {
         @ConfigEntry.Gui.Tooltip
         public boolean prideFlagAllYear = false;
+
+        @ConfigEntry.Gui.Tooltip
+        public boolean disablePrideFlagCN = true;
     }
 
     public static class Network {

@@ -54,6 +54,8 @@
   "text.autoconfig.ribbits-1_21_10.option.general": "常规",
   "text.autoconfig.ribbits-1_21_10.option.general.prideFlagAllYear": "全年展示骄傲旗帜",
   "text.autoconfig.ribbits-1_21_10.option.general.prideFlagAllYear.@Tooltip": "如果启用，骄傲呱呱将全年出现，而不是仅在六月出现",
+  "text.autoconfig.ribbits-1_21_10.option.general.disablePrideFlagCN": "关闭骄傲旗帜",
+  "text.autoconfig.ribbits-1_21_10.option.general.disablePrideFlagCN.@Tooltip": "我知道有些人不喜欢",
   "text.autoconfig.ribbits-1_21_10.option.network": "网络",
   "text.autoconfig.ribbits-1_21_10.option.network.@Tooltip": "网络配置：用于下载和缓存支持者列表。服务端会将数据缓存到本地文件，客户端仅在内存中缓存。如果服务端日志显示网络问题，请修改服务端配置；如果客户端出现问题，请修改客户端配置。",
   "text.autoconfig.ribbits-1_21_10.option.network.proxyHost": "代理主机",
