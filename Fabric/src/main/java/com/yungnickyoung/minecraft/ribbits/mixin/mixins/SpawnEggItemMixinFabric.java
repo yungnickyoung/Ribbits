@@ -2,8 +2,10 @@ package com.yungnickyoung.minecraft.ribbits.mixin.mixins;
 
 import com.google.common.collect.Iterables;
 import com.yungnickyoung.minecraft.ribbits.module.ItemModule;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,11 +24,19 @@ public class SpawnEggItemMixinFabric {
         Iterable<SpawnEggItem> original = cir.getReturnValue();
         List<SpawnEggItem> allEggs = new ArrayList<>();
         original.forEach(allEggs::add);
-        allEggs.add((SpawnEggItem) ItemModule.RIBBIT_FISHERMAN_SPAWN_EGG.get());
-        allEggs.add((SpawnEggItem) ItemModule.RIBBIT_GARDENER_SPAWN_EGG.get());
-        allEggs.add((SpawnEggItem) ItemModule.RIBBIT_MERCHANT_SPAWN_EGG.get());
-        allEggs.add((SpawnEggItem) ItemModule.RIBBIT_NITWIT_SPAWN_EGG.get());
-        allEggs.add((SpawnEggItem) ItemModule.RIBBIT_SORCERER_SPAWN_EGG.get());
+        addEgg(allEggs, ItemModule.RIBBIT_FISHERMAN_SPAWN_EGG.get());
+        addEgg(allEggs, ItemModule.RIBBIT_GARDENER_SPAWN_EGG.get());
+        addEgg(allEggs, ItemModule.RIBBIT_MERCHANT_SPAWN_EGG.get());
+        addEgg(allEggs, ItemModule.RIBBIT_NITWIT_SPAWN_EGG.get());
+        addEgg(allEggs, ItemModule.RIBBIT_SORCERER_SPAWN_EGG.get());
         cir.setReturnValue(Iterables.unmodifiableIterable(allEggs));
+    }
+
+    @Unique
+    private static void addEgg(List<SpawnEggItem> list, Item egg) {
+        SpawnEggItem spawnEggItem = (SpawnEggItem) egg;
+        if (!list.contains(spawnEggItem)) {
+            list.add(spawnEggItem);
+        }
     }
 }
