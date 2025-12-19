@@ -1,0 +1,43 @@
+{
+  "itemGroup.ribbits.general": "Ribbits",
+
+  "block.ribbits.brown_toadstool": "Bloque de seta marrón",
+  "block.ribbits.red_toadstool": "Seta roja",
+  "block.ribbits.toadstool_stem": "Tallo de seta",
+  "block.ribbits.swamp_lantern": "Linterna de pantano",
+  "block.ribbits.giant_lilypad": "Nenúfar gigante",
+  "block.ribbits.swamp_daisy": "Margarita de pantano",
+  "block.ribbits.toadstool": "Seta venenosa",
+  "block.ribbits.mossy_oak_planks": "Plantas de roble musgoso",
+  "block.ribbits.mossy_oak_planks_stairs": "Escaleras de roble musgoso",
+  "block.ribbits.mossy_oak_planks_slab": "Loseta de roble musgoso",
+  "block.ribbits.mossy_oak_planks_fence": "Valla de roble musgoso",
+  "block.ribbits.mossy_oak_planks_fence_gate": "Puerta de valla de roble musgoso",
+  "block.ribbits.mossy_oak_door": "Puerta de roble musgoso",
+  "block.ribbits.umbrella_leaf": "Hoja de paraguas",
+
+  "item.ribbits.ribbit_nitwit_spawn_egg": "Generar Ribbit Nitwit",
+  "item.ribbits.ribbit_fisherman_spawn_egg": "Generar Ribbit pescador",
+  "item.ribbits.ribbit_gardener_spawn_egg": "Generar Ribbit jardinero",
+  "item.ribbits.ribbit_merchant_spawn_egg": "Generar Ribbit mercante",
+  "item.ribbits.ribbit_sorcerer_spawn_egg": "Generar Ribbit hechicero",
+  "item.ribbits.maraca": "Maraca",
+
+  "entity.ribbits.ribbit": "Ribbit",
+
+  "subtitles.entity.ribbit.ambient": "Ribbit croa",
+  "subtitles.entity.ribbit.death": "Ribbit muere",
+  "subtitles.entity.ribbit.hurt": "Ribbit sufre daño",
+  "subtitles.entity.ribbit.step": "Ribbit salta",
+  "subtitles.music.ribbit.bass": "Ribbit toca el bajo",
+  "subtitles.music.ribbit.bongo": "Ribbit toca los bongós",
+  "subtitles.music.ribbit.flute": "Ribbit toca la flauta",
+  "subtitles.music.ribbit.guitar": "Ribbit toca la guitarra",
+  "subtitles.music.ribbit.maraca": "El jugador toca la maraca",
+
+  "text.autoconfig.ribbits-fabric-1_20_1.title": "Ribbits",
+  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear": "Mostrar banderas del orgullo todo el año",
+  "text.autoconfig.ribbits-fabric-1_20_1.option.general.prideFlagAllYear.@Tooltip": "Si está habilitado, los Ribbits del orgullo existirán todo el año en lugar de solo en junio",
+
+  "ribbits.options.supporter_hat_button": "Sombrero de supporter de Ribbits"
+}
