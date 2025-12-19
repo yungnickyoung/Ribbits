@@ -29,13 +29,16 @@
   "subtitles.entity.ribbit.death": "呱呱：死亡",
   "subtitles.entity.ribbit.hurt": "呱呱：受伤",
   "subtitles.entity.ribbit.step": "呱呱：跳跃",
+  "subtitles.entity.ribbit.magic": "巫师呱呱：施法",
   "subtitles.music.ribbit.bass": "呱呱：弹奏贝斯",
   "subtitles.music.ribbit.bongo": "呱呱：敲打小鼓",
   "subtitles.music.ribbit.flute": "呱呱：吹奏长笛",
   "subtitles.music.ribbit.guitar": "呱呱：弹奏吉他",
-  "subtitles.music.ribbit.maraca": "呱呱：摇响沙锤",
+  "subtitles.music.ribbit.maraca": "玩家：摇响沙锤",
 
   "text.autoconfig.ribbits-fabric-1_21_1.title": "呱呱",
   "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear": "全年展示骄傲旗帜",
   "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear.@Tooltip": "如果启用，骄傲呱呱将全年出现，而不是仅在六月出现"
+
+  "ribbits.options.supporter_hat_button": "呱呱模组赞助者帽子"
 }
