@@ -7,8 +7,11 @@ import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.NetworkModuleFabric;
 import com.yungnickyoung.minecraft.ribbits.module.ParticleTypeModule;
+import com.yungnickyoung.minecraft.ribbits.network.ClientPacketHandlerFabric;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -31,5 +34,8 @@ public class RibbitsFabricClient implements ClientModInitializer {
 
         // Particle rendering
         ParticleFactoryRegistry.getInstance().register(ParticleTypeModule.SPELL.get(), RibbitSpellParticle.Factory::new);
+
+        ClientEntityEvents.ENTITY_LOAD.register((entity, world) -> ClientPacketHandlerFabric.onEntityLoad(entity));
+        ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ClientPacketHandlerFabric.clearPendingActions());
     }
 }

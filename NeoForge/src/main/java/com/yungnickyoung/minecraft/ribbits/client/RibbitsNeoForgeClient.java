@@ -7,6 +7,7 @@ import com.yungnickyoung.minecraft.ribbits.client.render.RibbitRenderer;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.ParticleTypeModule;
+import com.yungnickyoung.minecraft.ribbits.network.ClientPacketHandlerNeoForge;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
@@ -16,6 +17,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(value = RibbitsCommon.MOD_ID, dist = Dist.CLIENT)
 public class RibbitsNeoForgeClient {
@@ -25,6 +27,9 @@ public class RibbitsNeoForgeClient {
         eventBus.addListener(RibbitsNeoForgeClient::registerRenderers);
         eventBus.addListener(RibbitsNeoForgeClient::registerLayers);
         eventBus.addListener(RibbitsNeoForgeClient::registerParticleFactories);
+
+        NeoForge.EVENT_BUS.addListener(ClientPacketHandlerNeoForge::onEntityJoinLevel);
+        NeoForge.EVENT_BUS.addListener(ClientPacketHandlerNeoForge::onLevelUnload);
     }
 
     private static void clientSetup(final FMLClientSetupEvent event) {
