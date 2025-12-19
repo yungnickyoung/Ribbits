@@ -6,11 +6,13 @@ import com.yungnickyoung.minecraft.ribbits.client.render.RibbitRenderer;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.ParticleTypeModule;
+import com.yungnickyoung.minecraft.ribbits.network.ClientPacketHandlerForge;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -30,6 +32,9 @@ public class RibbitsForgeClient {
         ItemBlockRenderTypes.setRenderLayer(BlockModule.TOADSTOOL.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlockModule.UMBRELLA_LEAF.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlockModule.MOSSY_OAK_DOOR.get(), RenderType.cutout());
+
+        MinecraftForge.EVENT_BUS.addListener(ClientPacketHandlerForge::onEntityJoinLevel);
+        MinecraftForge.EVENT_BUS.addListener(ClientPacketHandlerForge::onLevelUnload);
      }
 
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {

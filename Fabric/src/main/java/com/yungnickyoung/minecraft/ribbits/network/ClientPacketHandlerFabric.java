@@ -17,6 +17,7 @@ import com.yungnickyoung.minecraft.ribbits.services.Services;
 import com.yungnickyoung.minecraft.ribbits.util.BufferUtils;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -25,24 +26,48 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class ClientPacketHandlerFabric {
+    private static final Map<UUID, List<Consumer<Entity>>> pendingEntityActions = new HashMap<>();
+
+    public static void onEntityLoad(Entity entity) {
+        UUID entityId = entity.getUUID();
+        if (pendingEntityActions.containsKey(entityId)) {
+            List<Consumer<Entity>> actions = pendingEntityActions.remove(entityId);
+            for (Consumer<Entity> action : actions) {
+                action.accept(entity);
+            }
+        }
+    }
+
+    public static void clearPendingActions() {
+        pendingEntityActions.clear();
+    }
+
+    private static void queueOrExecute(Minecraft client, UUID entityId, Consumer<Entity> action) {
+        ClientLevel clientLevel = client.level;
+        if (clientLevel == null) {
+            return;
+        }
+
+        Entity entity = ((ClientLevelAccessor) clientLevel).callGetEntities().get(entityId);
+        if (entity == null) {
+            pendingEntityActions.computeIfAbsent(entityId, k -> new ArrayList<>()).add(action);
+        } else {
+            action.accept(entity);
+        }
+    }
+
     public static void receiveStartSingle(Minecraft client,
                                           ClientPacketListener clientPacketListener,
                                           FriendlyByteBuf buf,
                                           PacketSender responseSender) {
         UUID entityId = buf.readUUID();
-        RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) client.level).callGetEntities().get(entityId);
 
         RibbitInstrument instrument = RibbitInstrumentModule.getInstrument(buf.readResourceLocation());
         int tickOffset = buf.readInt();
-
-        if (ribbit == null) {
-            RibbitsCommon.LOGGER.error("Received Start Music packet for a ribbit with UUID {} that doesn't exist!", entityId);
-            return;
-        }
 
         if (instrument == null) {
             RibbitsCommon.LOGGER.error("Tried to play music for a ribbit with null instrument!");
@@ -53,10 +78,18 @@ public class ClientPacketHandlerFabric {
             RibbitsCommon.LOGGER.error("Tried to play music for a ribbit with NONE instrument!");
             return;
         }
-        SoundEvent instrumentSoundEvent = instrument.getSoundEvent();
 
-        client.execute(() -> {
-            Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, tickOffset, instrumentSoundEvent));
+        queueOrExecute(client, entityId, entity -> {
+            if (!(entity instanceof RibbitEntity ribbit)) {
+                RibbitsCommon.LOGGER.error("Tried to play music for a non-ribbit entity!");
+                return;
+            }
+
+            SoundEvent instrumentSoundEvent = instrument.getSoundEvent();
+
+            client.execute(() -> {
+                Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, tickOffset, instrumentSoundEvent));
+            });
         });
     }
 
@@ -74,12 +107,6 @@ public class ClientPacketHandlerFabric {
         }
 
         for (int i = 0; i < entityIds.size(); i++) {
-            RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) client.level).callGetEntities().get(entityIds.get(i));
-            if (ribbit == null) {
-                RibbitsCommon.LOGGER.error("Received Start Music All packet for a ribbit with UUID {} that doesn't exist!", entityIds.get(i));
-                return;
-            }
-
             RibbitInstrument instrument = RibbitInstrumentModule.getInstrument(instrumentIds.get(i));
             if (instrument == null) {
                 RibbitsCommon.LOGGER.error("Tried to play music in receiveStartAll for a ribbit with null instrument!");
@@ -90,10 +117,18 @@ public class ClientPacketHandlerFabric {
                 RibbitsCommon.LOGGER.error("Tried to play music in receiveStartAll for a ribbit with NONE instrument!");
                 return;
             }
-            SoundEvent instrumentSoundEvent = instrument.getSoundEvent();
 
-            client.execute(() -> {
-                Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, tickOffset, instrumentSoundEvent));
+            queueOrExecute(client, entityIds.get(i), entity -> {
+                if (!(entity instanceof RibbitEntity ribbit)) {
+                    RibbitsCommon.LOGGER.error("Tried to play music in receiveStartAll for a non-ribbit entity!");
+                    return;
+                }
+
+                SoundEvent instrumentSoundEvent = instrument.getSoundEvent();
+
+                client.execute(() -> {
+                    Minecraft.getInstance().getSoundManager().play(new RibbitInstrumentSoundInstance(ribbit, tickOffset, instrumentSoundEvent));
+                });
             });
         }
     }
@@ -103,15 +138,11 @@ public class ClientPacketHandlerFabric {
                                    FriendlyByteBuf buf,
                                    PacketSender responseSender) {
         UUID entityId = buf.readUUID();
-        RibbitEntity ribbit = (RibbitEntity) ((ClientLevelAccessor) client.level).callGetEntities().get(entityId);
 
-        if (ribbit == null) {
-            RibbitsCommon.LOGGER.error("Received Stop Music packet for a ribbit with UUID {} that doesn't exist!", entityId);
-            return;
-        }
-
-        client.execute(() -> {
-            ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopRibbitsMusic(entityId);
+        queueOrExecute(client, entityId, entity -> {
+            client.execute(() -> {
+                ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopRibbitsMusic(entityId);
+            });
         });
     }
 
@@ -120,18 +151,16 @@ public class ClientPacketHandlerFabric {
                                           FriendlyByteBuf buf,
                                           PacketSender responseSender) {
         UUID performerId = buf.readUUID();
-        Entity performer = ((ClientLevelAccessor) client.level).callGetEntities().get(performerId);
 
-        if (performer == null) {
-            RibbitsCommon.LOGGER.error("Received Start Maraca packet for Player performer with UUID {} that doesn't exist!", performerId);
-            return;
-        } else if (!(performer instanceof Player)) {
-            RibbitsCommon.LOGGER.error("Received Start Maraca packet for non-Player performer with UUID {}!", performerId);
-            return;
-        }
+        queueOrExecute(client, performerId, performer -> {
+            if (!(performer instanceof Player playerPerformer)) {
+                RibbitsCommon.LOGGER.error("Received Start Maraca packet for non-Player performer with UUID {}!", performerId);
+                return;
+            }
 
-        client.execute(() -> {
-            Minecraft.getInstance().getSoundManager().play(new PlayerInstrumentSoundInstance((Player) performer, -1, SoundModule.MUSIC_MARACA.get()));
+            client.execute(() -> {
+                Minecraft.getInstance().getSoundManager().play(new PlayerInstrumentSoundInstance(playerPerformer, -1, SoundModule.MUSIC_MARACA.get()));
+            });
         });
     }
 
@@ -140,18 +169,11 @@ public class ClientPacketHandlerFabric {
                                          FriendlyByteBuf buf,
                                          PacketSender responseSender) {
         UUID performerId = buf.readUUID();
-        Entity performer = ((ClientLevelAccessor) client.level).callGetEntities().get(performerId);
 
-        if (performer == null) {
-            RibbitsCommon.LOGGER.error("Received Stop Maraca packet for Player performer with UUID {} that doesn't exist!", performerId);
-            return;
-        } else if (!(performer instanceof Player)) {
-            RibbitsCommon.LOGGER.error("Received Stop Maraca packet for non-Player performer with UUID {}!", performerId);
-            return;
-        }
-
-        client.execute(() -> {
-            ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopMaraca(performerId);
+        queueOrExecute(client, performerId, performer -> {
+            client.execute(() -> {
+                ((ISoundManagerDuck) Minecraft.getInstance().getSoundManager()).ribbits$stopMaraca(performerId);
+            });
         });
     }
 
