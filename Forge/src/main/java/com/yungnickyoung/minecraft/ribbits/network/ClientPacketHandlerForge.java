@@ -27,8 +27,14 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ClientPacketHandlerForge {
+    /**
+     * Maps entity UUIDs to a list of actions to perform once the entity is loaded on the client.
+     */
     private static final Map<UUID, List<Consumer<Entity>>> pendingEntityActions = new HashMap<>();
 
+    /**
+     * Executes any pending actions for the given entity now that it has been loaded.
+     */
     public static void onEntityJoinLevel(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide()) {
             return;
@@ -52,6 +58,10 @@ public class ClientPacketHandlerForge {
         pendingEntityActions.clear();
     }
 
+    /**
+     * Queues the action to be performed on the entity with the given UUID once it is loaded,
+     * or executes it immediately if the entity is already loaded.
+     */
     private static void queueOrExecute(UUID entityId, Consumer<Entity> action) {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         if (clientLevel == null) {

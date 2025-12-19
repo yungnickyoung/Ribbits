@@ -30,8 +30,14 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class ClientPacketHandlerFabric {
+    /**
+     * Maps entity UUIDs to a list of actions to perform once the entity is loaded on the client.
+     */
     private static final Map<UUID, List<Consumer<Entity>>> pendingEntityActions = new HashMap<>();
 
+    /**
+     * Executes any pending actions for the given entity now that it has been loaded.
+     */
     public static void onEntityLoad(Entity entity) {
         UUID entityId = entity.getUUID();
         if (pendingEntityActions.containsKey(entityId)) {
@@ -46,6 +52,10 @@ public class ClientPacketHandlerFabric {
         pendingEntityActions.clear();
     }
 
+    /**
+     * Queues the action to be performed on the entity with the given UUID once it is loaded,
+     * or executes it immediately if the entity is already loaded.
+     */
     private static void queueOrExecute(Minecraft client, UUID entityId, Consumer<Entity> action) {
         ClientLevel clientLevel = client.level;
         if (clientLevel == null) {
