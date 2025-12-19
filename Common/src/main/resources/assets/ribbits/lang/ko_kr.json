@@ -1,0 +1,44 @@
+{
+  "itemGroup.ribbits.general": "Ribbits",
+
+  "block.ribbits.brown_toadstool": "갈색 독버섯 블록",
+  "block.ribbits.red_toadstool": "빨간 독버섯 블록",
+  "block.ribbits.toadstool_stem": "버섯대",
+  "block.ribbits.swamp_lantern": "늪지 랜턴",
+  "block.ribbits.giant_lilypad": "무성한 연잎",
+  "block.ribbits.swamp_daisy": "늪지 데이지",
+  "block.ribbits.toadstool": "독버섯",
+  "block.ribbits.mossy_oak_planks": "이끼 낀 참나무 판자",
+  "block.ribbits.mossy_oak_planks_stairs": "이끼 낀 참나무 계단",
+  "block.ribbits.mossy_oak_planks_slab": "이끼 낀 참나무 반 블록",
+  "block.ribbits.mossy_oak_planks_fence": "이끼 낀 참나무 울타리",
+  "block.ribbits.mossy_oak_planks_fence_gate": "이끼 낀 참나무 울타리 문",
+  "block.ribbits.mossy_oak_door": "이끼 낀 참나무 문",
+  "block.ribbits.umbrella_leaf": "우산잎",
+
+  "item.ribbits.ribbit_nitwit_spawn_egg": "멍청이 리빗 생성 알",
+  "item.ribbits.ribbit_fisherman_spawn_egg": "어부 리빗 생성 알",
+  "item.ribbits.ribbit_gardener_spawn_egg": "정원사 리빗 생성 알",
+  "item.ribbits.ribbit_merchant_spawn_egg": "상인 리빗 생성 알",
+  "item.ribbits.ribbit_sorcerer_spawn_egg": "마법사 리빗 생성 알",
+  "item.ribbits.maraca": "마라카",
+
+  "entity.ribbits.ribbit": "리빗",
+
+  "subtitles.entity.ribbit.ambient": "리빗이 개굴댄다",
+  "subtitles.entity.ribbit.death": "리빗이 죽는다",
+  "subtitles.entity.ribbit.hurt": "리빗이 다친다",
+  "subtitles.entity.ribbit.step": "리빗이 깡충 뛴다",
+  "subtitles.entity.ribbit.magic": "마법사 리빗이 주문을 건다",
+  "subtitles.music.ribbit.bass": "리빗이 베이스를 연주한다",
+  "subtitles.music.ribbit.bongo": "리빗이 봉고를 연주한다",
+  "subtitles.music.ribbit.flute": "리빗이 플루트를 연주한다",
+  "subtitles.music.ribbit.guitar": "리빗이 기타를 연주한다",
+  "subtitles.music.ribbit.maraca": "플레이어가 마라카를 흔든다",
+
+  "text.autoconfig.ribbits-fabric-1_21_1.title": "Ribbits",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear": "1년 내내 프라이드 깃발 표시",
+  "text.autoconfig.ribbits-fabric-1_21_1.option.general.prideFlagAllYear.@Tooltip": "활성화 시, 프라이드 리빗이 6월뿐 아니라 1년 내내 등장합니다.",
+
+  "ribbits.options.supporter_hat_button": "리빗 후원자 모자"
+}
