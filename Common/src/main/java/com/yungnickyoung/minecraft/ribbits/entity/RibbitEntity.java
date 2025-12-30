@@ -31,16 +31,13 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -48,6 +45,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -57,6 +55,7 @@ import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.*;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -151,7 +150,8 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     public RibbitEntity(EntityType<RibbitEntity> entityType, Level level) {
         super(entityType, level);
 
-        ((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
+        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.setPathfindingMalus(BlockPathTypes.WATER_BORDER, 0.0F);
 
         this.reassessGoals();
     }
@@ -161,7 +161,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
         super.registerGoals();
         this.goalSelector.addGoal(0, new OpenDoorGoal(this, true));
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new RibbitGoHomeGoal(this, 1.8f, 1f, 60));
+        this.goalSelector.addGoal(1, new RibbitGoHomeGoal(this, 3.0F, 1.0F, 60));
         this.goalSelector.addGoal(2, new PanicGoal(this, 1.5D));
         this.goalSelector.addGoal(3, new RibbitStopAndStareAtFrogGoal(this, 4.0F));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
@@ -326,8 +326,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
         ItemStack itemStack = player.getItemInHand(interactionHand);
 
         if (player.isSecondaryUseActive() && itemStack.is(Items.AMETHYST_SHARD)) {
-            this.homePosition = this.blockPosition();
-            this.level().broadcastEntityEvent(this, (byte) 12);
+            this.setNewHomePosition();
 
             if (!player.getAbilities().instabuild) {
                 itemStack.shrink(1);
@@ -349,6 +348,16 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
         return super.mobInteract(player, interactionHand);
+    }
+
+    private void setNewHomePosition() {
+        this.homePosition = this.blockPosition();
+        this.level().broadcastEntityEvent(this, (byte) 12);
+
+        this.fishGoal.stopFishing();
+        this.waterCropsGoal.stopWateringCrops();
+        this.musicGoal.stopPlayingMusic();
+        this.getNavigation().stop();
     }
 
     public void reassessGoals() {
@@ -872,5 +881,51 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
     @Override
     public boolean isClientSide() {
         return this.level().isClientSide();
+    }
+
+    @Override
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
+        return new RibbitPathNavigation(this, level);
+    }
+
+    private static class RibbitPathNavigation extends GroundPathNavigation {
+        public RibbitPathNavigation(Mob mob, Level level) {
+            super(mob, level);
+        }
+
+        @Override
+        protected @NotNull PathFinder createPathFinder(int maxVisitedNodes) {
+            this.nodeEvaluator = new WalkNodeEvaluator() {
+                @Override
+                protected boolean isAmphibious() {
+                    return true;
+                }
+            };
+
+            this.nodeEvaluator.setCanPassDoors(true);
+            this.nodeEvaluator.setCanOpenDoors(true);
+            this.nodeEvaluator.setCanFloat(true);
+
+            return new PathFinder(this.nodeEvaluator, maxVisitedNodes);
+        }
+
+        @Override
+        protected boolean hasValidPathType(@NotNull BlockPathTypes pathType) {
+            if (pathType == BlockPathTypes.WATER || pathType == BlockPathTypes.WATER_BORDER) {
+                return true;
+            }
+
+            return super.hasValidPathType(pathType);
+        }
+
+        @Override
+        public boolean isStableDestination(@NotNull BlockPos pos) {
+            return this.level.getFluidState(pos).is(FluidTags.WATER) || super.isStableDestination(pos);
+        }
+
+        @Override
+        public boolean canCutCorner(@NotNull BlockPathTypes pathType) {
+            return pathType != BlockPathTypes.WATER_BORDER && super.canCutCorner(pathType);
+        }
     }
 }
