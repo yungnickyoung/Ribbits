@@ -177,7 +177,7 @@ public class RibbitEntity extends AgeableMob implements GeoEntity, Merchant {
                 this.setHealth(Math.min(this.getHealth() + 1, this.getMaxHealth()));
             }
 
-            if (this.onGround() && this.isUmbrellaFalling()) {
+            if ((this.onGround() || this.isInWater()) && this.isUmbrellaFalling()) {
                 this.setUmbrellaFalling(false);
             }
 
