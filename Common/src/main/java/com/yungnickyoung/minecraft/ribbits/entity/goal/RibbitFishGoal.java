@@ -26,6 +26,7 @@ public class RibbitFishGoal extends Goal {
     private int ticksFishing;
     private BlockPos waterPos;
     private Vec3 dryPos;
+    private boolean shouldStop = false;
 
     public RibbitFishGoal(RibbitEntity ribbit, double range, float speedModifier, int minRequiredFishTicks, int maxRequiredFishTicks) {
         this.ribbit = ribbit;
@@ -51,6 +52,7 @@ public class RibbitFishGoal extends Goal {
         this.waterPos = null;
         this.dryPos = null;
         this.ticksFishing = 0;
+        this.shouldStop = false;
 
         this.ribbit.setFishing(false);
     }
@@ -104,6 +106,10 @@ public class RibbitFishGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
+        if (shouldStop) {
+            return false;
+        }
+
         Iterable<BlockPos> nearbyPositions = BlockPos.betweenClosed(Mth.floor(this.ribbit.getX() - 1.5), Mth.floor(this.ribbit.getY() - 1.5), Mth.floor(this.ribbit.getZ() - 1.5), Mth.floor(this.ribbit.getX() + 1.5), this.ribbit.getBlockY(), Mth.floor(this.ribbit.getZ() + 1.5));
 
         boolean waterNearby = false;
@@ -133,5 +139,9 @@ public class RibbitFishGoal extends Goal {
             this.ribbit.setFishing(false);
             this.ribbit.getNavigation().moveTo(this.dryPos.x(), this.dryPos.y(), this.dryPos.z(), this.speedModifier * waterModifier);
         }
+    }
+
+    public void stopFishing() {
+        this.shouldStop = true;
     }
 }

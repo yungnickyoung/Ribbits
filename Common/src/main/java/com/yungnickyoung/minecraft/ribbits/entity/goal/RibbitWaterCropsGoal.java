@@ -117,7 +117,7 @@ public class RibbitWaterCropsGoal extends Goal {
                     tryGrowCropAtPos(this.ribbit.level(), pos);
                 }
 
-                this.wateringTicks = -1; // Prevents watering again until the goal is stopped
+                this.stopWateringCrops(); // Prevents watering again until the goal is stopped
             }
         } else if (this.ribbit.distanceToSqr(this.targetCropPos.getX() + 0.5f, this.targetCropPos.getY(), this.targetCropPos.getZ() + 0.5f) < 3.0f) {
             this.ribbit.setWatering(false);
@@ -158,5 +158,9 @@ public class RibbitWaterCropsGoal extends Goal {
                 Mth.floor(this.ribbit.getX() + 1.0),
                 Mth.floor(this.ribbit.getBlockY() + 1.0),
                 Mth.floor(this.ribbit.getZ() + 1.0));
+    }
+
+    public void stopWateringCrops() {
+        this.wateringTicks = -1;
     }
 }

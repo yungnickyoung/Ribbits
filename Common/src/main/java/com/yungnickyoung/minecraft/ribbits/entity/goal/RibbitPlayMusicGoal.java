@@ -29,6 +29,7 @@ public class RibbitPlayMusicGoal extends Goal {
     private double pathedTargetY;
     private double pathedTargetZ;
     private int ticksUntilNextPathRecalculation;
+    private boolean shouldStop = false;
 
     public RibbitPlayMusicGoal(RibbitEntity ribbit, double speedModifier, int minRequiredPlayTicks, int maxRequiredPlayTicks) {
         this.ribbit = ribbit;
@@ -61,7 +62,7 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return !this.ribbit.isUmbrellaFalling() && !this.ribbit.isDeadOrDying() && (this.ribbit.getPlayingInstrument() || this.ribbit.getMasterRibbit() == null || !this.ribbit.getMasterRibbit().isBandFull());
+        return !this.shouldStop && !this.ribbit.isUmbrellaFalling() && !this.ribbit.isDeadOrDying() && (this.ribbit.getPlayingInstrument() || this.ribbit.getMasterRibbit() == null || !this.ribbit.getMasterRibbit().isBandFull());
     }
 
     @Override
@@ -84,7 +85,7 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public void stop() {
-        if (this.ribbit.getMasterRibbit() != null) {
+        if (this.ribbit.getMasterRibbit() != null && !this.ribbit.isMasterRibbit()) {
             this.ribbit.getMasterRibbit().removeRibbitFromPlayingMusic(this.ribbit);
             this.ribbit.getMasterRibbit().removeBandMember(this.ribbit.getRibbitData().getInstrument());
         }
@@ -97,6 +98,11 @@ public class RibbitPlayMusicGoal extends Goal {
         this.ribbit.setTicksPlayingMusic(0);
 
         this.ribbit.setInstrument(RibbitInstrumentModule.NONE);
+
+        if (this.shouldStop) {
+            this.ribbit.setMasterRibbit(null);
+            this.shouldStop = false;
+        }
     }
 
     @Override
@@ -106,8 +112,8 @@ public class RibbitPlayMusicGoal extends Goal {
 
     @Override
     public boolean isInterruptable() {
-        return (this.ribbit.getLastHurtByMob() != null || this.ribbit.isFreezing() || this.ribbit.isOnFire()) ||
-                this.ribbit.getTicksPlayingMusic() > this.requiredPlayTicks;
+        return this.shouldStop || (this.ribbit.getLastHurtByMob() != null || this.ribbit.isFreezing() ||
+                this.ribbit.isOnFire()) || this.ribbit.getTicksPlayingMusic() > this.requiredPlayTicks;
     }
 
     @Override
@@ -132,8 +138,13 @@ public class RibbitPlayMusicGoal extends Goal {
 
         RibbitEntity masterRibbit = this.ribbit.getMasterRibbit();
 
-        this.ribbit.getLookControl().setLookAt(masterRibbit, 30.0f, 30.0f);
         double d = this.ribbit.distanceToSqr(masterRibbit.getX(), masterRibbit.getY(), masterRibbit.getZ());
+        if (d > 64 * 64) {
+            this.shouldStop = true;
+            return;
+        }
+
+        this.ribbit.getLookControl().setLookAt(masterRibbit, 30.0f, 30.0f);
         this.ticksUntilNextPathRecalculation = Math.max(this.ticksUntilNextPathRecalculation - 1, 0);
 
         float waterModifier = this.ribbit.isInWater() ? RibbitEntity.WATER_SPEED_MULTIPLIER : 1.0f;
@@ -221,5 +232,9 @@ public class RibbitPlayMusicGoal extends Goal {
 
             this.ribbit.setTicksPlayingMusic(this.ribbit.getTicksPlayingMusic() + 1);
         }
+    }
+
+    public void stopPlayingMusic() {
+        this.shouldStop = true;
     }
 }
