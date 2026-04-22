@@ -1,8 +1,6 @@
 package com.yungnickyoung.minecraft.ribbits.client.render;
 
 import com.mojang.serialization.MapCodec;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
  * Custom conditional item model property for Maraca that checks if the item is being used
  * in first-person context.
  */
-@Environment(EnvType.CLIENT)
 public record MaracaUsingProperty() implements ConditionalItemModelProperty {
     public static final MapCodec<MaracaUsingProperty> MAP_CODEC = MapCodec.unit(new MaracaUsingProperty());
 

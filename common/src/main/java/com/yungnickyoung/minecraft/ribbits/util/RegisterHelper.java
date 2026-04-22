@@ -3,13 +3,13 @@ package com.yungnickyoung.minecraft.ribbits.util;
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public class RegisterHelper {
-    public static ResourceLocation id(String name) {
-        return ResourceLocation.fromNamespaceAndPath(RibbitsCommon.MOD_ID, name);
+    public static Identifier id(String name) {
+        return Identifier.fromNamespaceAndPath(RibbitsCommon.MOD_ID, name);
     }
 
     public static ResourceKey<Block> blockKey(String name) {

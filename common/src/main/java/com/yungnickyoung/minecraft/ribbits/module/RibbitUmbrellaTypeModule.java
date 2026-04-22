@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.ribbits.module;
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitUmbrellaType;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +12,9 @@ import java.util.Random;
 
 public class RibbitUmbrellaTypeModule {
     /**
-     * Map of all RibbitUmbrellaType ResourceLocations to their RibbitUmbrellaType objects.
+     * Map of all RibbitUmbrellaType Identifiers to their RibbitUmbrellaType objects.
      */
-    private static final Map<ResourceLocation, RibbitUmbrellaType> UMBRELLA_TYPE_REGISTRY = new HashMap<>();
+    private static final Map<Identifier, RibbitUmbrellaType> UMBRELLA_TYPE_REGISTRY = new HashMap<>();
 
     /* Registration of built-in RibbitUmbrellaTypes. */
     public static final RibbitUmbrellaType UMBRELLA_1 = register("umbrella_1", "umbrella_1");
@@ -25,19 +25,19 @@ public class RibbitUmbrellaTypeModule {
      * Registers a RibbitUmbrellaType with the given name and model path.
      */
     public static RibbitUmbrellaType register(String name, String modelPathSuffix) {
-        ResourceLocation id = RibbitsCommon.id(name);
+        Identifier id = RibbitsCommon.id(name);
         RibbitUmbrellaType umbrellaType = new RibbitUmbrellaType(id, modelPathSuffix);
         UMBRELLA_TYPE_REGISTRY.put(id, umbrellaType);
         return umbrellaType;
     }
 
     /**
-     * Gets a RibbitUmbrellaType by its ResourceLocation.
+     * Gets a RibbitUmbrellaType by its Identifier.
      *
-     * @param id ResourceLocation of the RibbitUmbrellaType to get.
-     * @return RibbitUmbrellaType with the given ResourceLocation, or null if not found.
+     * @param id Identifier of the RibbitUmbrellaType to get.
+     * @return RibbitUmbrellaType with the given Identifier, or null if not found.
      */
-    public static RibbitUmbrellaType getUmbrellaType(ResourceLocation id) {
+    public static RibbitUmbrellaType getUmbrellaType(Identifier id) {
         return UMBRELLA_TYPE_REGISTRY.get(id);
     }
 

@@ -1,6 +1,8 @@
 package com.yungnickyoung.minecraft.ribbits.neoforge;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
+import com.yungnickyoung.minecraft.ribbits.module.ConfigModule;
+import com.yungnickyoung.minecraft.ribbits.neoforge.config.NeoForgeConfigContext;
 import com.yungnickyoung.minecraft.ribbits.neoforge.module.EntityDataSerializerModuleNeoForge;
 import com.yungnickyoung.minecraft.ribbits.network.payload.RequestSupporterHatStatePayload;
 import com.yungnickyoung.minecraft.ribbits.player.PlayerInstrumentTracker;
@@ -22,6 +24,7 @@ public class RibbitsNeoForge {
 
     public RibbitsNeoForge(IEventBus eventBus, ModContainer container) {
         EntityDataSerializerModuleNeoForge.DATA_SERIALIZERS.register(eventBus);
+        ConfigModule.init(new NeoForgeConfigContext(container, eventBus));
         RibbitsCommon.init();
         NeoForge.EVENT_BUS.addListener(RibbitsNeoForge::onServerTickStart);
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e) -> {

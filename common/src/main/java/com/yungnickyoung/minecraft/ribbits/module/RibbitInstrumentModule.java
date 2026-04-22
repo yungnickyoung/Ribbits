@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.ribbits.module;
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,9 +12,9 @@ import java.util.*;
 @AutoRegister(RibbitsCommon.MOD_ID)
 public class RibbitInstrumentModule {
     /**
-     * Map of all Ribbit instrument ResourceLocations to their RibbitInstrument objects.
+     * Map of all Ribbit instrument Identifiers to their RibbitInstrument objects.
      */
-    private static final Map<ResourceLocation, RibbitInstrument> INSTRUMENT_REGISTRY = new HashMap<>();
+    private static final Map<Identifier, RibbitInstrument> INSTRUMENT_REGISTRY = new HashMap<>();
 
     /** Set of all valid RibbitInstruments. Same as the registry without the dummy NONE instrument. */
     private static final Set<RibbitInstrument> VALID_INSTRUMENTS = new HashSet<>();
@@ -30,7 +30,7 @@ public class RibbitInstrumentModule {
      * Registers a RibbitInstrument with the given name, model, and sound event.
      */
     public static RibbitInstrument register(String name, String modelPath, String animationName, SoundEvent instrumentSoundEvent) {
-        ResourceLocation id = RibbitsCommon.id(name);
+        Identifier id = RibbitsCommon.id(name);
         RibbitInstrument instrument = new RibbitInstrument(id, RibbitsCommon.id(modelPath), animationName, instrumentSoundEvent);
         INSTRUMENT_REGISTRY.put(id, instrument);
         if (!name.equals("none")) VALID_INSTRUMENTS.add(instrument);
@@ -38,11 +38,11 @@ public class RibbitInstrumentModule {
     }
 
     /**
-     * Gets a RibbitInstrument by its ResourceLocation.
-     * @param id ResourceLocation of the RibbitInstrument to get.
-     * @return RibbitInstrument with the given ResourceLocation, or null if not found.
+     * Gets a RibbitInstrument by its Identifier.
+     * @param id Identifier of the RibbitInstrument to get.
+     * @return RibbitInstrument with the given Identifier, or null if not found.
      */
-    public static @Nullable RibbitInstrument getInstrument(ResourceLocation id) {
+    public static @Nullable RibbitInstrument getInstrument(Identifier id) {
         return INSTRUMENT_REGISTRY.get(id);
     }
 

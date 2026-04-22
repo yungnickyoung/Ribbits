@@ -3,7 +3,7 @@ package com.yungnickyoung.minecraft.ribbits.module;
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
 import com.yungnickyoung.minecraft.yungsapi.api.autoregister.AutoRegister;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -14,9 +14,9 @@ import java.util.Random;
 @AutoRegister(RibbitsCommon.MOD_ID)
 public class RibbitProfessionModule {
     /**
-     * Map of all Ribbit profession ResourceLocations to their RibbitProfession objects.
+     * Map of all Ribbit profession Identifiers to their RibbitProfession objects.
      */
-    private static final Map<ResourceLocation, RibbitProfession> PROFESSION_REGISTRY = new HashMap<>();
+    private static final Map<Identifier, RibbitProfession> PROFESSION_REGISTRY = new HashMap<>();
 
     /* Registration of built-in RibbitProfessions. */
     public static final RibbitProfession NITWIT = register("nitwit", "nitwit_ribbit");
@@ -29,19 +29,19 @@ public class RibbitProfessionModule {
      * Registers a RibbitProfession with the given name and model path.
      */
     public static RibbitProfession register(String name, String modelPath) {
-        ResourceLocation id = RibbitsCommon.id(name);
+        Identifier id = RibbitsCommon.id(name);
         RibbitProfession profession = new RibbitProfession(id, RibbitsCommon.id(modelPath));
         PROFESSION_REGISTRY.put(id, profession);
         return profession;
     }
 
     /**
-     * Gets a RibbitProfession by its ResourceLocation.
+     * Gets a RibbitProfession by its Identifier.
      *
-     * @param id ResourceLocation of the RibbitProfession to get.
-     * @return RibbitProfession with the given ResourceLocation, or null if not found.
+     * @param id Identifier of the RibbitProfession to get.
+     * @return RibbitProfession with the given Identifier, or null if not found.
      */
-    public static @Nullable RibbitProfession getProfession(ResourceLocation id) {
+    public static @Nullable RibbitProfession getProfession(Identifier id) {
         return PROFESSION_REGISTRY.get(id);
     }
 

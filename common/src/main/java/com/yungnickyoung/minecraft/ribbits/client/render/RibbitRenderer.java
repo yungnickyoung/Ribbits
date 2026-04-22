@@ -1,21 +1,62 @@
 package com.yungnickyoung.minecraft.ribbits.client.render;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.geckolib.renderer.GeoEntityRenderer;
+import com.geckolib.renderer.base.BoneSnapshots;
+import com.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.renderer.base.RenderPassInfo;
 import com.yungnickyoung.minecraft.ribbits.client.model.RibbitModel;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
+import com.yungnickyoung.minecraft.ribbits.data.RibbitInstrument;
+import com.yungnickyoung.minecraft.ribbits.data.RibbitProfession;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
 import com.yungnickyoung.minecraft.ribbits.module.DataTicketModule;
-import net.minecraft.client.renderer.RenderType;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitInstrumentModule;
+import com.yungnickyoung.minecraft.ribbits.module.RibbitProfessionModule;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib.cache.object.GeoBone;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
-import software.bernie.geckolib.renderer.base.GeoRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class RibbitRenderer<R extends LivingEntityRenderState & GeoRenderState> extends GeoEntityRenderer<RibbitEntity, R> {
+    private static final Map<RibbitProfession, Set<String>> PROFESSION_BONES = Map.of(
+            RibbitProfessionModule.GARDENER, Set.of("watering_can", "gardener_hat"),
+            RibbitProfessionModule.SORCERER, Set.of("sourcerer_hat"),
+            RibbitProfessionModule.FISHERMAN, Set.of("accessories", "fishing_rod", "fishing_rod_2", "fishing_rod_3"),
+            RibbitProfessionModule.MERCHANT, Set.of("leaf")
+    );
+
+    private static final Map<RibbitInstrument, String> INSTRUMENT_BONES = Map.of(
+            RibbitInstrumentModule.BASS, "bass",
+            RibbitInstrumentModule.BONGO, "bongo",
+            RibbitInstrumentModule.FLUTE, "flute",
+            RibbitInstrumentModule.GUITAR, "guitar"
+    );
+
+    private static final Map<String, String> UMBRELLA_BONES = Map.of(
+            "1", "umbrella",
+            "2", "umbrella2",
+            "3", "umbrella3"
+    );
+
+    private static final Map<String, String> FISHERMAN_UMBRELLA_BONES = Map.of(
+            "1", "fisherman_umbrella",
+            "2", "fisherman_umbrella2",
+            "3", "fisherman_umbrella3"
+    );
+
+    private static final Set<String> ALL_DYNAMIC_BONES = Set.of(
+            "gardener_hat", "sourcerer_hat", "leaf", "watering_can",
+            "accessories", "fishing_rod", "fishing_rod_2", "fishing_rod_3",
+            "guitar", "flute", "bongo", "bass",
+            "umbrella", "umbrella2", "umbrella3",
+            "fisherman_umbrella", "fisherman_umbrella2", "fisherman_umbrella3",
+            "pride"
+    );
 
     public RibbitRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new RibbitModel());
@@ -32,21 +73,71 @@ public class RibbitRenderer<R extends LivingEntityRenderState & GeoRenderState> 
     }
 
     @Override
-    public void renderBone(R renderState, PoseStack poseStack, GeoBone bone, VertexConsumer buffer,
-                           CameraRenderState cameraState, int packedLight, int packedOverlay, int renderColor) {
-        if ("instrument".equals(bone.getName())) {
-            bone.setHidden(true);
+    public void adjustModelBonesForRender(RenderPassInfo<R> renderPassInfo, BoneSnapshots snapshots) {
+        RibbitData data = renderPassInfo.renderState().getGeckolibData(DataTicketModule.DT_RIBBIT_DATA);
+        if (data == null) {
+            return;
         }
-        super.renderBone(renderState, poseStack, bone, buffer, cameraState, packedLight, packedOverlay, renderColor);
+
+        boolean playingInstrument = Boolean.TRUE.equals(renderPassInfo.renderState().getGeckolibData(DataTicketModule.DT_PLAYING_INSTRUMENT));
+        boolean umbrellaFalling = Boolean.TRUE.equals(renderPassInfo.renderState().getGeckolibData(DataTicketModule.DT_UMBRELLA_FALLING));
+        boolean inRain = Boolean.TRUE.equals(renderPassInfo.renderState().getGeckolibData(DataTicketModule.DT_IN_RAIN));
+        boolean isPride = Boolean.TRUE.equals(renderPassInfo.renderState().getGeckolibData(DataTicketModule.DT_IS_PRIDE_RIBBIT));
+
+        Set<String> desired = new HashSet<>(8);
+
+        if (data.getProfession().equals(RibbitProfessionModule.MERCHANT)) {
+            desired.add("body_merchant");
+        } else {
+            desired.add("body_default");
+        }
+
+        if (playingInstrument && data.getInstrument() != RibbitInstrumentModule.NONE) {
+            String inst = INSTRUMENT_BONES.get(data.getInstrument());
+            if (inst != null) desired.add(inst);
+        } else {
+            desired.addAll(PROFESSION_BONES.getOrDefault(data.getProfession(), Set.of()));
+
+            if (isPride) {
+                desired.add("pride");
+            } else if (umbrellaFalling || inRain) {
+                String suffix = data.getUmbrellaType().modelLocationSuffix();
+                Map<String, String> currentUmbrellaMap =
+                        RibbitProfessionModule.FISHERMAN.equals(data.getProfession())
+                                ? FISHERMAN_UMBRELLA_BONES
+                                : UMBRELLA_BONES;
+
+                currentUmbrellaMap.forEach((k, v) -> {
+                    if (suffix.contains(k)) desired.add(v);
+                });
+            }
+        }
+
+        hideBone(snapshots, "instrument");
+        hideBone(snapshots, "body_default");
+        hideBone(snapshots, "body_merchant");
+        ALL_DYNAMIC_BONES.forEach(name -> hideBone(snapshots, name));
+
+        for (String boneName : desired) {
+            showBone(snapshots, boneName);
+        }
+    }
+
+    private static void hideBone(BoneSnapshots snapshots, String boneName) {
+        snapshots.ifPresent(boneName, snapshot -> snapshot.skipRender(true).skipChildrenRender(true));
+    }
+
+    private static void showBone(BoneSnapshots snapshots, String boneName) {
+        snapshots.ifPresent(boneName, snapshot -> snapshot.skipRender(false).skipChildrenRender(false));
     }
 
     @Override
-    public RenderType getRenderType(R renderState, ResourceLocation texture) {
-        return RenderType.entityCutoutNoCull(texture);
+    public RenderType getRenderType(R renderState, Identifier texture) {
+        return RenderTypes.entityCutout(texture);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(R renderState) {
+    public Identifier getTextureLocation(R renderState) {
         return super.getTextureLocation(renderState);
     }
 

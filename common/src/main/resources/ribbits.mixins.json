@@ -5,7 +5,7 @@
   "refmap": "ribbits-common-common-refmap.json",
   "mixins": [
     "BeardifierMixin",
-    "accessor.DoorBlockAccessor",
+    "accessor.DoorBlockAccessor"
   ],
   "client": [
     "client.accessor.ClientLevelAccessor",

@@ -1,0 +1,12 @@
+accessWidener v2 official
+# Generated from common/src/main/resources/META-INF/accesstransformer.cfg
+# Only Minecraft vanilla (net.minecraft.*) access widening is auto-converted.
+# For non-vanilla entries or unsupported directives, handle manually.
+# Descriptor inference source: common\build\moddev\artifacts\vanilla-26.1-1-sources.jar
+
+accessible field net/minecraft/world/level/levelgen/Beardifier pieces Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/Beardifier junctions Ljava/util/List;
+accessible method net/minecraft/world/level/block/FireBlock setFlammable (Lnet/minecraft/world/level/block/Block;II)V
+accessible field net/minecraft/world/level/levelgen/Beardifier affectedBox Lnet/minecraft/world/level/levelgen/structure/BoundingBox;
+accessible class net/minecraft/world/item/CreativeModeTab$Output
+

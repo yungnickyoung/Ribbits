@@ -6,6 +6,7 @@ import com.yungnickyoung.minecraft.ribbits.fabric.module.NetworkModuleFabric;
 import com.yungnickyoung.minecraft.ribbits.network.payload.RequestSupporterHatStatePayload;
 import com.yungnickyoung.minecraft.ribbits.player.PlayerInstrumentTracker;
 import com.yungnickyoung.minecraft.ribbits.supporters.SupportersListServer;
+import com.yungnickyoung.minecraft.ribbits.module.ConfigModule;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -29,6 +30,7 @@ public class RibbitsFabric implements ModInitializer {
         });
         EntityDataSerializerModuleFabric.init();
         NetworkModuleFabric.register();
+        ConfigModule.init(null);
         RibbitsCommon.init();
 
         // Player join: send supporter hat state

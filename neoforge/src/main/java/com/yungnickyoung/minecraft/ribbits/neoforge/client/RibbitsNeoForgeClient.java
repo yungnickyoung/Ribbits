@@ -5,19 +5,16 @@ import com.yungnickyoung.minecraft.ribbits.client.RibbitsCommonClient;
 import com.yungnickyoung.minecraft.ribbits.client.model.SupporterHatModel;
 import com.yungnickyoung.minecraft.ribbits.client.particle.RibbitSpellParticle;
 import com.yungnickyoung.minecraft.ribbits.client.render.RibbitRenderer;
-import com.yungnickyoung.minecraft.ribbits.client.screen.RibbitsClothScreen;
-import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.ParticleTypeModule;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 @EventBusSubscriber(modid = RibbitsCommon.MOD_ID, value = Dist.CLIENT)
 public class RibbitsNeoForgeClient {
@@ -28,14 +25,8 @@ public class RibbitsNeoForgeClient {
         var modContainer = event.getContainer();
         modContainer.registerExtensionPoint(
                 IConfigScreenFactory.class,
-                (container, parent) -> RibbitsClothScreen.create(parent)
+                ConfigurationScreen::new
         );
-        ItemBlockRenderTypes.setRenderLayer(BlockModule.SWAMP_LANTERN.get(), ChunkSectionLayer.CUTOUT);
-        ItemBlockRenderTypes.setRenderLayer(BlockModule.GIANT_LILYPAD.get(), ChunkSectionLayer.CUTOUT);
-        ItemBlockRenderTypes.setRenderLayer(BlockModule.SWAMP_DAISY.get(), ChunkSectionLayer.CUTOUT);
-        ItemBlockRenderTypes.setRenderLayer(BlockModule.TOADSTOOL.get(), ChunkSectionLayer.CUTOUT);
-        ItemBlockRenderTypes.setRenderLayer(BlockModule.UMBRELLA_LEAF.get(), ChunkSectionLayer.CUTOUT);
-        ItemBlockRenderTypes.setRenderLayer(BlockModule.MOSSY_OAK_DOOR.get(), ChunkSectionLayer.CUTOUT);
     }
 
     @SubscribeEvent

@@ -5,19 +5,19 @@ import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.client.model.SupporterHatModel;
 import com.yungnickyoung.minecraft.ribbits.client.supporters.SupportersListClient;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class SupporterHatRenderLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
-    private static final ResourceLocation TEXTURE = RibbitsCommon.id("textures/entity/player/supporter_hat.png");
+    private static final Identifier TEXTURE = RibbitsCommon.id("textures/entity/player/supporter_hat.png");
 
     private SupporterHatModel hatModel;
 
@@ -48,7 +48,7 @@ public class SupporterHatRenderLayer extends RenderLayer<AvatarRenderState, Play
                 this.hatModel,
                 state,
                 poseStack,
-                RenderType.entityCutoutNoCull(TEXTURE),
+                RenderTypes.entityCutout(TEXTURE),
                 packedLight,
                 OverlayTexture.NO_OVERLAY,
                 state.outlineColor,

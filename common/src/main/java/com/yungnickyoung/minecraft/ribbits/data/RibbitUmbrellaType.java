@@ -1,8 +1,8 @@
 package com.yungnickyoung.minecraft.ribbits.data;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
-public record RibbitUmbrellaType(ResourceLocation id, String modelLocationSuffix) {
+public record RibbitUmbrellaType(Identifier id, String modelLocationSuffix) {
 
     @Override
     public String toString() {
