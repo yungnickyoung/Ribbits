@@ -2,7 +2,7 @@ package com.yungnickyoung.minecraft.ribbits.util;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -56,19 +56,19 @@ public class BufferUtils {
         }
     }
 
-    public static List<ResourceLocation> readResourceLocationList(FriendlyByteBuf buf) {
+    public static List<Identifier> readIdentifierList(FriendlyByteBuf buf) {
         int size = buf.readInt();
-        List<ResourceLocation> list = new ArrayList<>(size);
+        List<Identifier> list = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            list.add(buf.readResourceLocation());
+            list.add(buf.readIdentifier());
         }
         return list;
     }
 
-    public static void writeResourceLocationList(List<ResourceLocation> list, FriendlyByteBuf buf) {
+    public static void writeIdentifierList(List<Identifier> list, FriendlyByteBuf buf) {
         buf.writeInt(list.size());
-        for (ResourceLocation resourceLocation : list) {
-            buf.writeResourceLocation(resourceLocation);
+        for (Identifier Identifier : list) {
+            buf.writeIdentifier(Identifier);
         }
     }
 }

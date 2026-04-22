@@ -8,7 +8,7 @@ import com.yungnickyoung.minecraft.ribbits.entity.trade.AmethystForItems;
 import com.yungnickyoung.minecraft.ribbits.entity.trade.EnchantedItemForAmethyst;
 import com.yungnickyoung.minecraft.ribbits.entity.trade.ItemListing;
 import com.yungnickyoung.minecraft.ribbits.entity.trade.ItemsForAmethysts;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
 

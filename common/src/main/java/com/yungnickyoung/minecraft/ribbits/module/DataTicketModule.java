@@ -1,9 +1,7 @@
 package com.yungnickyoung.minecraft.ribbits.module;
 
+import com.geckolib.constant.dataticket.DataTicket;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
-import software.bernie.geckolib.constant.dataticket.DataTicket;
-
-import java.util.Set;
 
 public class DataTicketModule {
     public static final DataTicket<RibbitData> DT_RIBBIT_DATA =
@@ -16,7 +14,4 @@ public class DataTicketModule {
             DataTicket.create("ribbit_in_rain", Boolean.class);
     public static final DataTicket<Boolean> DT_IS_PRIDE_RIBBIT =
             DataTicket.create("ribbit_is_pride", Boolean.class);
-
-    public static final DataTicket<Set> DT_VISIBLE_BONES =
-            DataTicket.create("ribbit_visible_bones", java.util.Set.class);
 }

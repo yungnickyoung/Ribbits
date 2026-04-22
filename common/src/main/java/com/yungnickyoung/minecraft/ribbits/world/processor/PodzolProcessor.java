@@ -3,7 +3,6 @@ package com.yungnickyoung.minecraft.ribbits.world.processor;
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
 import com.yungnickyoung.minecraft.yungsapi.api.world.randomize.BlockStateRandomizer;
-import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
@@ -17,12 +16,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.material.FluidState;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Randomly replaces some podzol with coarse dirt.
  * Forcibly replaces it with oak planks if there is water at the location instead.
  */
-@MethodsReturnNonnullByDefault
+@NullMarked
 public class PodzolProcessor extends StructureProcessor {
     public static final PodzolProcessor INSTANCE = new PodzolProcessor();
     public static final MapCodec<PodzolProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
@@ -38,7 +38,7 @@ public class PodzolProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().is(Blocks.PODZOL)) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
 

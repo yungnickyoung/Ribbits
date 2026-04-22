@@ -1,61 +1,42 @@
 {
-  "type": "minecraft:random_patch",
+  "type": "ribbits:vegetation_block_feature",
   "config": {
-    "feature": {
-      "feature": {
-        "type": "ribbits:vegetation_block_feature",
-        "config": {
-          "on_solid_state_provider": {
-            "type": "minecraft:weighted_state_provider",
-            "entries": [
-              {
-                "weight": 1,
-                "data": {
-                  "Name": "ribbits:umbrella_leaf"
-                }
-              },
-              {
-                "weight": 3,
-                "data": {
-                  "Name": "ribbits:toadstool"
-                }
-              },
-              {
-                "weight": 1,
-                "data": {
-                  "Name": "ribbits:swamp_daisy"
-                }
-              }
-            ]
-          },
-          "on_liquid_state_provider": {
-            "type": "minecraft:simple_state_provider",
-            "state": {
-              "Name": "ribbits:giant_lilypad"
-            }
-          },
-          "cannot_place_on": [
-            {
-              "Name": "minecraft:podzol"
-            },
-            {
-              "Name": "minecraft:coarse_dirt"
-            }
-          ]
-        }
-      },
-      "placement": [
+    "on_solid_state_provider": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
         {
-          "type": "minecraft:block_predicate_filter",
-          "predicate": {
-            "type": "minecraft:matching_blocks",
-            "blocks": "minecraft:air"
+          "weight": 1,
+          "data": {
+            "Name": "ribbits:umbrella_leaf"
+          }
+        },
+        {
+          "weight": 3,
+          "data": {
+            "Name": "ribbits:toadstool"
+          }
+        },
+        {
+          "weight": 1,
+          "data": {
+            "Name": "ribbits:swamp_daisy"
           }
         }
       ]
     },
-    "tries": 20,
-    "xz_spread": 6,
-    "y_spread": 2
+    "on_liquid_state_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "ribbits:giant_lilypad"
+      }
+    },
+    "cannot_place_on": [
+      {
+        "Name": "minecraft:podzol"
+      },
+      {
+        "Name": "minecraft:coarse_dirt"
+      }
+    ]
   }
 }

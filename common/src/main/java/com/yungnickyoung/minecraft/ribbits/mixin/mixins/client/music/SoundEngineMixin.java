@@ -38,7 +38,7 @@ public class SoundEngineMixin implements ISoundEngineDuck {
 
     @Inject(method = "play",
             at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/client/sounds/SoundBufferLibrary;getCompleteBuffer(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/concurrent/CompletableFuture;",
+                    target = "Lnet/minecraft/client/sounds/SoundBufferLibrary;getCompleteBuffer(Lnet/minecraft/resources/Identifier;)Ljava/util/concurrent/CompletableFuture;",
                     shift = At.Shift.BEFORE),
             cancellable = true)
     private void ribbits$handleRibbitsOffsetSounds(SoundInstance soundInstance, CallbackInfoReturnable<SoundEngine.PlayResult> cir, @Local Sound sound, @Local ChannelAccess.ChannelHandle channelHandle) {

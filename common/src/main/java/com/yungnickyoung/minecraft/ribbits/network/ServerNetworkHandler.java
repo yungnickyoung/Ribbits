@@ -7,7 +7,7 @@ import com.yungnickyoung.minecraft.ribbits.network.payload.*;
 import com.yungnickyoung.minecraft.ribbits.platform.PlatformHelper;
 import com.yungnickyoung.minecraft.ribbits.supporters.SupportersListServer;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -33,14 +33,14 @@ public class ServerNetworkHandler {
 
     public static void onRibbitStartMusicGoal(ServerLevel serverLevel, RibbitEntity newRibbit, RibbitEntity masterRibbit) {
         int tickOffset = newRibbit.equals(masterRibbit) ? masterRibbit.getTicksPlayingMusic() : -1;
-        ResourceLocation instrumentId = newRibbit.getRibbitData().getInstrument().id();
+        Identifier instrumentId = newRibbit.getRibbitData().getInstrument().id();
         sendToAllPlayers(new RibbitStartMusicSinglePayload(newRibbit.getUUID(), instrumentId, tickOffset));
     }
 
     public static void onPlayerEnterBandRange(ServerPlayer player, ServerLevel serverLevel, RibbitEntity masterRibbit) {
         List<RibbitEntity> members = masterRibbit.getRibbitsPlayingMusic().stream().toList();
         List<UUID> ribbitIds = new ArrayList<>();
-        List<ResourceLocation> instrumentIds = new ArrayList<>();
+        List<Identifier> instrumentIds = new ArrayList<>();
         ribbitIds.add(masterRibbit.getUUID());
         instrumentIds.add(masterRibbit.getRibbitData().getInstrument().id());
         members.forEach(r -> {

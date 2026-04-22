@@ -5,7 +5,7 @@ import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.client.render.MaracaUsingProperty;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,11 +19,11 @@ public class ConditionalItemModelPropertiesMixin {
 
     @Shadow
     @Final
-    private static ExtraCodecs.LateBoundIdMapper<ResourceLocation, MapCodec<? extends ConditionalItemModelProperty>> ID_MAPPER;
+    private static ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends ConditionalItemModelProperty>> ID_MAPPER;
 
     @Inject(method = "bootstrap", at = @At("RETURN"))
     private static void ribbits$registerMaracaUsingProperty(CallbackInfo ci) {
-        ResourceLocation propertyId = RibbitsCommon.id("maraca_using");
+        Identifier propertyId = RibbitsCommon.id("maraca_using");
         ID_MAPPER.put(propertyId, MaracaUsingProperty.MAP_CODEC);
     }
 }

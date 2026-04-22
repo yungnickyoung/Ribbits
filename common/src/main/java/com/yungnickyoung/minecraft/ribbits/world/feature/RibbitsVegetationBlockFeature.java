@@ -31,7 +31,7 @@ public class RibbitsVegetationBlockFeature extends Feature<RibbitsVegetationFeat
         // Check for water, in which case we place lily pads instead.
         if (ctx.config().onLiquidStateProvider().isPresent() && worldGenLevel.getBlockState(origin.below()).is(Blocks.WATER)) {
             BlockStateProvider onWaterBlockStates = ctx.config().onLiquidStateProvider().get();
-            worldGenLevel.setBlock(origin, onWaterBlockStates.getState(ctx.random(), origin), 2);
+            worldGenLevel.setBlock(origin, onWaterBlockStates.getState(worldGenLevel, ctx.random(), origin), 2);
             return true;
         }
 
@@ -40,7 +40,7 @@ public class RibbitsVegetationBlockFeature extends Feature<RibbitsVegetationFeat
             return false;
         }
 
-        BlockState toPlace = onSolidBlockStates.get().getState(ctx.random(), origin);
+        BlockState toPlace = onSolidBlockStates.get().getState(worldGenLevel, ctx.random(), origin);
 
         // Place block if it can survive.
         if (toPlace.canSurvive(worldGenLevel, origin)) {

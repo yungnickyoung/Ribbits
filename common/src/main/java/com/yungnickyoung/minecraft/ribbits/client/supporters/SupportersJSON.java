@@ -2,9 +2,9 @@ package com.yungnickyoung.minecraft.ribbits.client.supporters;
 
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.config.RibbitsConfig;
+import com.yungnickyoung.minecraft.ribbits.module.ConfigModule;
 import com.yungnickyoung.minecraft.ribbits.platform.PlatformHelper;
 import com.yungnickyoung.minecraft.yungsapi.io.JSON;
-import me.shedaniel.autoconfig.AutoConfig;
 
 import java.io.*;
 import java.net.*;
@@ -101,7 +101,7 @@ public class SupportersJSON {
     }
 
     private static HttpClient createHttpClient() {
-        RibbitsConfig config = AutoConfig.getConfigHolder(RibbitsConfig.class).getConfig();
+        RibbitsConfig config = ConfigModule.getConfig();
         HttpClient.Builder clientBuilder = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(15))
                 .followRedirects(HttpClient.Redirect.NORMAL);

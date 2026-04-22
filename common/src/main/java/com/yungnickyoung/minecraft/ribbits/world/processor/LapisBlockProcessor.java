@@ -3,7 +3,6 @@ package com.yungnickyoung.minecraft.ribbits.world.processor;
 import com.mojang.serialization.MapCodec;
 import com.yungnickyoung.minecraft.ribbits.module.BlockModule;
 import com.yungnickyoung.minecraft.ribbits.module.StructureProcessorTypeModule;
-import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
@@ -15,12 +14,13 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import org.jspecify.annotations.NullMarked;
 
 /**
  * Replaces lapis blocks with water and seagrass.
  * Ensures solid block under the water.
  */
-@MethodsReturnNonnullByDefault
+@NullMarked
 public class LapisBlockProcessor extends StructureProcessor {
     public static final LapisBlockProcessor INSTANCE = new LapisBlockProcessor();
     public static final MapCodec<LapisBlockProcessor> CODEC = MapCodec.unit(() -> INSTANCE);
@@ -33,7 +33,7 @@ public class LapisBlockProcessor extends StructureProcessor {
                                                              StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                              StructurePlaceSettings structurePlacementData) {
         if (blockInfoGlobal.state().is(Blocks.LAPIS_BLOCK)) {
-            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(new ChunkPos(blockInfoGlobal.pos()))) {
+            if (levelReader instanceof WorldGenRegion worldGenRegion && !worldGenRegion.getCenter().equals(ChunkPos.containing(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
 

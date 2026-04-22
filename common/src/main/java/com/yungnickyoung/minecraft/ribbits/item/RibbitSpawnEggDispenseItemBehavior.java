@@ -3,6 +3,7 @@ package com.yungnickyoung.minecraft.ribbits.item;
 import com.yungnickyoung.minecraft.ribbits.RibbitsCommon;
 import com.yungnickyoung.minecraft.ribbits.data.RibbitData;
 import com.yungnickyoung.minecraft.ribbits.entity.RibbitEntity;
+import com.yungnickyoung.minecraft.ribbits.module.EntityTypeModule;
 import com.yungnickyoung.minecraft.ribbits.module.RibbitUmbrellaTypeModule;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.BlockSource;
@@ -20,7 +21,7 @@ public class RibbitSpawnEggDispenseItemBehavior implements DispenseItemBehavior 
     public @NotNull ItemStack dispense(BlockSource source, ItemStack stack) {
         Direction dir = source.state().getValue(DispenserBlock.FACING);
         RibbitSpawnEggItem item = (RibbitSpawnEggItem) stack.getItem();
-        EntityType<?> type = item.getType(stack);
+        EntityType<?> type = EntityTypeModule.RIBBIT.get();
 
         RibbitEntity ribbit;
         try {

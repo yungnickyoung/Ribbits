@@ -1,9 +1,9 @@
 package com.yungnickyoung.minecraft.ribbits.data;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 
-public record RibbitInstrument(ResourceLocation id, ResourceLocation modelId, String animationName,
+public record RibbitInstrument(Identifier id, Identifier modelId, String animationName,
                                SoundEvent soundEvent) {
 
     @Override

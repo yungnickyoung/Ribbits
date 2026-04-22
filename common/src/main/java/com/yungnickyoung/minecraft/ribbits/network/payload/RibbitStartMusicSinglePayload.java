@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -15,11 +15,11 @@ import java.util.UUID;
  * Packet sent from the server to the client to start playing music for a single Ribbit.
  *
  * @param ribbitUUID   The UUID of the Ribbit to start playing music for
- * @param instrumentId The ResourceLocation of the instrument to play
+ * @param instrumentId The Identifier of the instrument to play
  * @param tickOffset   The tick offset to start playing the music at
  */
 public record RibbitStartMusicSinglePayload(UUID ribbitUUID,
-                                            ResourceLocation instrumentId,
+                                            Identifier instrumentId,
                                             int tickOffset) implements CustomPacketPayload {
 
     public static final Type<RibbitStartMusicSinglePayload> TYPE =
@@ -28,7 +28,7 @@ public record RibbitStartMusicSinglePayload(UUID ribbitUUID,
     public static final StreamCodec<FriendlyByteBuf, RibbitStartMusicSinglePayload> STREAM_CODEC = StreamCodec.composite(
             UUIDUtil.STREAM_CODEC,
             RibbitStartMusicSinglePayload::ribbitUUID,
-            ResourceLocation.STREAM_CODEC,
+            Identifier.STREAM_CODEC,
             RibbitStartMusicSinglePayload::instrumentId,
             ByteBufCodecs.INT,
             RibbitStartMusicSinglePayload::tickOffset,

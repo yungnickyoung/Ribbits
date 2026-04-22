@@ -1,54 +1,46 @@
 modLoader = "javafml"
-loaderVersion = "[2,)"
+loaderVersion = "${neoforge_loader_version_range}"
 issueTrackerURL="https://github.com/yungnickyoung/Ribbits/issues"
-license = "GNU LGPL 3.0"
+license = "${license}"
 
 [[mods]]
-modId = "ribbits"
+modId = "${mod_id}"
 version = "${version}"
-displayName = "Ribbits"
-authors="Joosh, YUNGNICKYOUNG, Flechazo, HellionGames, Refresh Studios"
-description = "Adds cute little frogs to swamps!"
+displayName = "${mod_name}"
+authors = "${mod_author}"
+description = '''${description}'''
 logoFile="logo.png"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/ribbits"
 
-[[dependencies.ribbits]]
+[[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21,)"
+versionRange = "[${neoforge_version},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.ribbits]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.9,)"
+versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.ribbits]]
+[[dependencies.${mod_id}]]
 modId="geckolib"
 versionRange="[1.0.0,)"
 type = "required"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.ribbits]]
+[[dependencies.${mod_id}]]
 modId = "yungsapi"
 versionRange = "[1.0.0,)"
 type="required"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.ribbits]]
-modId="cloth_config"
-versionRange="[1.0.0,)"
-type="required"
-ordering="NONE"
-side="BOTH"
-
 [[mixins]]
-config = "ribbits.mixins.json"
-
+config = "${mod_id}.mixins.json"
 [[mixins]]
-config = "ribbits.neoforge.mixins.json"
+config = "${mod_id}.neoforge.mixins.json"

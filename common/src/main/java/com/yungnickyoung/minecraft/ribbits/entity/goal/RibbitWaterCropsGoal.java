@@ -135,8 +135,8 @@ public class RibbitWaterCropsGoal extends Goal {
         if (blockState.is(BlockTags.CROPS) && blockState.getBlock() instanceof BonemealableBlock bonemealableBlock) {
             if (bonemealableBlock.isValidBonemealTarget(level, pos, blockState)) {
                 if (level instanceof ServerLevel serverLevel) {
-                    if (bonemealableBlock.isBonemealSuccess(level, level.random, pos, blockState)) {
-                        bonemealableBlock.performBonemeal(serverLevel, level.random, pos, blockState);
+                    if (bonemealableBlock.isBonemealSuccess(level, level.getRandom(), pos, blockState)) {
+                        bonemealableBlock.performBonemeal(serverLevel, level.getRandom(), pos, blockState);
                         serverLevel.sendParticles(ParticleTypes.FALLING_WATER, pos.getX() + 0.5, pos.getY() + 0.6d, pos.getZ() + 0.5, 8, 0.0d, 0.0d, 0.0d, 0.0d);
                     }
                 }
