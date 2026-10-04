@@ -59,8 +59,12 @@ public class PlayerInstrumentTracker {
     }
 
     public static void removePerformer(Player performer) {
+        Set<Player> audience = performerToAudienceMap.get(performer);
+        if (audience == null) {
+            return;
+        }
         // Stop the sound for all players in the audience
-        for (Player audienceMember : performerToAudienceMap.get(performer)) {
+        for (Player audienceMember : audience) {
             Services.PLATFORM.stopHearingMaraca((ServerPlayer) performer, (ServerPlayer) audienceMember);
         }
 
