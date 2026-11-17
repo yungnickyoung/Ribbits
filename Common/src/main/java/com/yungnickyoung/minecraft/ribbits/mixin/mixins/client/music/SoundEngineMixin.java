@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Mixin(SoundEngine.class)
 public class SoundEngineMixin implements ISoundEngineDuck {
@@ -39,7 +41,28 @@ public class SoundEngineMixin implements ISoundEngineDuck {
 
     @Shadow
     @Final
+    @Mutable
     private List<TickableSoundInstance> tickingSounds;
+
+    /**
+     * Replaces vanilla's {@code tickingSounds} {@code ArrayList} with a {@link CopyOnWriteArrayList}.
+     *
+     * <p>Vanilla iterates {@code tickingSounds} with a fail-fast iterator in
+     * {@code SoundEngine#tickNonPaused()} (the {@code for (TickableSoundInstance ...)} loop). Ribbits adds
+     * instrument sounds to that same list from {@code playInstrumentSound} (invoked via the {@code play}
+     * mixin and the client packet handlers). When those two interleave — re-entrantly on the render thread
+     * or from a packet handler thread during a lag burst — the unsynchronized {@code ArrayList} iterator
+     * throws {@code ConcurrentModificationException} at {@code ArrayList$Itr.next}, crashing the game.
+     *
+     * <p>A {@code CopyOnWriteArrayList} iterates a stable snapshot (never throws CME) and supports
+     * thread-safe mutation, so adds can never corrupt an in-progress iteration. It is a drop-in
+     * {@code List}, so vanilla's {@code add}/{@code remove}/{@code clear}/for-each/stream usage is
+     * unchanged.
+     */
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void ribbits$useThreadSafeTickingSounds(CallbackInfo ci) {
+        this.tickingSounds = new CopyOnWriteArrayList<>(this.tickingSounds);
+    }
 
     @Inject(method = "play",
             at = @At(value = "INVOKE",
